@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
 
         // Test the connection to the database
-        /*EntityManager entityManager = null;
+        EntityManager entityManager = null;
         try {
             entityManager = Database.getEntityManager();
             System.out.println("Connection successful! Created EntityManager");
@@ -43,7 +43,7 @@ public class Main {
             if (entityManager != null) {
                 entityManager.close();
             }
-        }*/
+        }
 
         // Create a new Funcionario
         /*try{
