@@ -41,6 +41,9 @@ public class Recibo {
     @ManyToOne
     @JoinColumn(name = "id_tipopagamento", referencedColumnName = "id_tipopagamento", insertable = false, updatable = false)
     private TipoPagamento tipoPagamentoByIdTipopagamento;
+    @Basic
+    @Column(name = "iva")
+    private BigInteger iva;
 
     public Date getDataHoraEmissao() {
         return dataHoraEmissao;
@@ -155,5 +158,13 @@ public class Recibo {
 
     public void setPlanoByIdPlano(Plano planoByIdPlano) {
         this.planoByIdPlano = planoByIdPlano;
+    }
+
+    public BigInteger getIva() {
+        return iva;
+    }
+
+    public void setIva(BigInteger iva) {
+        this.iva = iva;
     }
 }
