@@ -7,9 +7,13 @@
   <groupId>org.example</groupId>
   <artifactId>Ginasio</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Ginasio</name>
+    <packaging>pom</packaging>
+    <name>Ginasio</name>
+    <modules>
+        <module>desktop</module>
+    </modules>
 
-  <properties>
+    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>11</maven.compiler.target>
     <maven.compiler.source>11</maven.compiler.source>
