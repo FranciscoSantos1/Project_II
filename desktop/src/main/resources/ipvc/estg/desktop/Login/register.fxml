@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipvc.estg.desktop.Login.RegisterController">
+   <left>
+        <AnchorPane prefHeight="500.0" prefWidth="705.0" style="-fx-background-color: #6AB27E;" BorderPane.alignment="CENTER">
+         <children>
+                <ImageView fitHeight="68.0" fitWidth="71.0" layoutX="93.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/gym-logo1.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="246.0" layoutY="14.0" text="Registar Conta">
+                    <font>
+                        <Font size="27.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="emailField" layoutX="102.0" layoutY="86.0" prefHeight="30.0" prefWidth="220.0" promptText="Email" />
+                <Button fx:id="registerButton2" layoutX="365.0" layoutY="447.0" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="165.0" text="Registar">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <PasswordField fx:id="passwordField" layoutX="102.0" layoutY="137.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" />
+            <TextField fx:id="fullNameField" layoutX="103.0" layoutY="216.0" prefHeight="30.0" prefWidth="505.0" />
+            <Label layoutX="103.0" layoutY="195.0" text="Nome Completo">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="382.0" layoutY="65.0" text="Tipo Utilizador">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="addressField" layoutX="103.0" layoutY="395.0" prefHeight="30.0" prefWidth="505.0" />
+            <Label layoutX="102.0" layoutY="323.0" text="Codigo-Postal">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="105.0" layoutY="246.0" text="NIF">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="334.0" layoutY="246.0" text="Telemovel">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="backButton" layoutX="551.0" layoutY="446.0" mnemonicParsing="false" onAction="#goBack" prefHeight="31.0" prefWidth="57.0" text="Voltar" />
+            <Label layoutX="104.0" layoutY="65.0" text="Email">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="106.0" layoutY="116.0" text="Password">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="UserTypeChoiceBox" layoutX="382.0" layoutY="86.0" prefHeight="30.0" prefWidth="220.0" />
+            <TextField fx:id="NIFField" layoutX="103.0" layoutY="267.0" prefHeight="30.0" prefWidth="220.0" />
+            <TextField fx:id="phoneNumberField" layoutX="334.0" layoutY="267.0" prefHeight="30.0" prefWidth="274.0" />
+            <TextField fx:id="CodigoPostalField" layoutX="102.0" layoutY="344.0" prefHeight="30.0" prefWidth="220.0" />
+            <Label layoutX="335.0" layoutY="323.0" text="Número da porta">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="DoorNumberField" layoutX="335.0" layoutY="344.0" prefHeight="30.0" prefWidth="272.0" />
+            <Label layoutX="104.0" layoutY="374.0" text="Rua">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+        </AnchorPane>
+   </left>
+</BorderPane>
