@@ -25,8 +25,7 @@ public class RegisterController{
     private TextField CodigoPostalField;
     @FXML
     private TextField DoorNumberField;
-    @FXML
-    private TextField NIFField;
+
     @FXML
     private ChoiceBox<String> UserTypeChoiceBox;
     @FXML
@@ -42,7 +41,7 @@ public class RegisterController{
     @FXML
     private TextField phoneNumberField;
     @FXML
-    private Button registerButton2;
+    private Button registerButton;
 
     public void initialize() {
         UserTypeChoiceBox.getItems().addAll("Instrutor", "Responsavel Instrutores", "Rececionista");
@@ -67,26 +66,43 @@ public class RegisterController{
         String doorNumber = DoorNumberField.getText();
         String postalCode = CodigoPostalField.getText();
         String phoneNumber = phoneNumberField.getText();
-        String NIF = NIFField.getText();
         String userType = UserTypeChoiceBox.getValue();
 
-        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || address.isEmpty() || doorNumber.isEmpty() || postalCode.isEmpty() || phoneNumber.isEmpty() || NIF.isEmpty() || userType == null) {
+        if (fieldsAreEmpty(fullName, email, password, address, doorNumber, postalCode, phoneNumber, userType)) {
             showAlert("Erro", "Preencha todos os campos", Alert.AlertType.ERROR);
             return;
         }
 
         Funcionario funcionario = new Funcionario();
+
         funcionario.setNome(fullName);
-        funcionario.setEmail(email);
+        if(FuncionarioBLL.emailExists(email)){
+            showAlert("Erro", "Este email já está a ser utilizado. Por favor, insira outro email.", Alert.AlertType.ERROR);
+            return;
+        } else {
+            funcionario.setEmail(email);
+        }
+        funcionario.setPassword(password);
+        funcionario.setIdTipofuncionario(UserTypeChoiceBox.getSelectionModel().getSelectedIndex() + 1);
         funcionario.setRua(address);
         funcionario.setnPorta(doorNumber);
         funcionario.setCodPostal(postalCode);
         funcionario.setContacto(phoneNumber);
-        funcionario.setPassword(password);
+
+
+
 
         try {
             FuncionarioBLL.createFuncionario(funcionario);
             showAlert("Sucesso", "Registado com sucesso", Alert.AlertType.INFORMATION);
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) registerButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("GymMaster - Login");
+            stage.show();
+
         } catch (Exception e) {
             showAlert("Erro", "Erro ao registar", Alert.AlertType.ERROR);
         }
@@ -98,5 +114,14 @@ public class RegisterController{
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private boolean fieldsAreEmpty(String... fields) {
+        for (String field : fields) {
+            if (field == null || field.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

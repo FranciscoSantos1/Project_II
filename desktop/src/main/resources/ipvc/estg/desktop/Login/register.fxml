@@ -26,7 +26,7 @@
                     </font>
                 </Label>
                 <TextField fx:id="emailField" layoutX="102.0" layoutY="86.0" prefHeight="30.0" prefWidth="220.0" promptText="Email" />
-                <Button fx:id="registerButton2" layoutX="365.0" layoutY="447.0" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="165.0" text="Registar">
+                <Button fx:id="registerButton" layoutX="365.0" layoutY="447.0" mnemonicParsing="false" onAction="#register" prefHeight="30.0" prefWidth="165.0" text="Registar">
                     <font>
                         <Font size="14.0" />
                     </font>
