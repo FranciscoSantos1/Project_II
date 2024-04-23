@@ -49,12 +49,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="105.0" layoutY="246.0" text="NIF">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="334.0" layoutY="246.0" text="Telemovel">
+            <Label layoutX="106.0" layoutY="257.0" text="Telemovel">
                <font>
                   <Font size="15.0" />
                </font>
@@ -71,8 +66,7 @@
                </font>
             </Label>
             <ChoiceBox fx:id="UserTypeChoiceBox" layoutX="382.0" layoutY="86.0" prefHeight="30.0" prefWidth="220.0" />
-            <TextField fx:id="NIFField" layoutX="103.0" layoutY="267.0" prefHeight="30.0" prefWidth="220.0" />
-            <TextField fx:id="phoneNumberField" layoutX="334.0" layoutY="267.0" prefHeight="30.0" prefWidth="274.0" />
+            <TextField fx:id="phoneNumberField" layoutX="103.0" layoutY="278.0" prefHeight="30.0" prefWidth="274.0" />
             <TextField fx:id="CodigoPostalField" layoutX="102.0" layoutY="344.0" prefHeight="30.0" prefWidth="220.0" />
             <Label layoutX="335.0" layoutY="323.0" text="Número da porta">
                <font>

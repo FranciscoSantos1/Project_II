@@ -3,11 +3,15 @@ package entity;
 import jakarta.persistence.*;
 
 @Entity
-@jakarta.persistence.Table(name = "estado_pagamento", schema = "public", catalog = "GinasioDB")
+@Table(name = "estado_pagamento", schema = "public", catalog = "GinasioDB")
 public class EstadoPagamento {
     @Basic
-    @jakarta.persistence.Column(name = "estado")
+    @Column(name = "estado")
     private String estado;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id_estadopagamento")
+    private int idEstadopagamento;
 
     public String getEstado() {
         return estado;
@@ -16,11 +20,6 @@ public class EstadoPagamento {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id_estadopagamento")
-    private int idEstadopagamento;
 
     public int getIdEstadopagamento() {
         return idEstadopagamento;

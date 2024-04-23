@@ -3,13 +3,20 @@ package entity;
 import jakarta.persistence.*;
 
 @Entity
-@jakarta.persistence.Table(name = "linha_aula", schema = "public", catalog = "GinasioDB")
-@IdClass(entity.LinhaAulaPK.class)
+@Table(name = "linha_aula", schema = "public", catalog = "GinasioDB")
+@IdClass(LinhaAulaPK.class)
 public class LinhaAula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @jakarta.persistence.Column(name = "id_aula")
+    @Column(name = "id_aula")
     private int idAula;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id_socio")
+    private int idSocio;
+    @Basic
+    @Column(name = "id_funcionario")
+    private int idFuncionario;
 
     public int getIdAula() {
         return idAula;
@@ -19,11 +26,6 @@ public class LinhaAula {
         this.idAula = idAula;
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @jakarta.persistence.Column(name = "id_socio")
-    private int idSocio;
-
     public int getIdSocio() {
         return idSocio;
     }
@@ -31,10 +33,6 @@ public class LinhaAula {
     public void setIdSocio(int idSocio) {
         this.idSocio = idSocio;
     }
-
-    @Basic
-    @Column(name = "id_funcionario")
-    private int idFuncionario;
 
     public int getIdFuncionario() {
         return idFuncionario;

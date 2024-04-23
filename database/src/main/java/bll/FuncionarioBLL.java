@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import database.Database;
 import entity.Funcionario;
+import entity.TipoFuncionario;
 import jakarta.persistence.EntityManager;
 
 public class FuncionarioBLL {
@@ -49,4 +50,32 @@ public class FuncionarioBLL {
         entityManager.merge(funcionario);
         entityManager.getTransaction().commit();
     }
+
+    public static List<TipoFuncionario> getAllTipoFuncionario() {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            TypedQuery<TipoFuncionario> query = entityManager.createQuery("SELECT t FROM TipoFuncionario t", TipoFuncionario.class);
+            return query.getResultList();
+        } finally {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+        }
+    }
+
+
+    public TipoFuncionario findTipoFuncionarioByTipo(String tipo) {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            TypedQuery<TipoFuncionario> query = entityManager.createQuery(
+                    "SELECT t FROM TipoFuncionario t WHERE t.tipo = :tipo", TipoFuncionario.class);
+            query.setParameter("tipo", tipo);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // or handle it according to your business logic
+        } finally {
+            entityManager.close();
+        }
+    }
+
 }

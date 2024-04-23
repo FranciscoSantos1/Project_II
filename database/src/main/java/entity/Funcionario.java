@@ -8,8 +8,38 @@ import java.math.BigInteger;
 public class Funcionario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @jakarta.persistence.Column(name = "id_funcionario")
+    @Column(name = "id_funcionario")
     private int idFuncionario;
+    @Basic
+    @Column(name = "nome")
+    private String nome;
+    @Basic
+    @Column(name = "contacto")
+    private String contacto;
+    @Basic
+    @Column(name = "rua")
+    private String rua;
+    @Basic
+    @Column(name = "n_porta")
+    private String nPorta;
+    @Basic
+    @Column(name = "valor_hora")
+    private BigInteger valorHora;
+    @Basic
+    @Column(name = "vencimento")
+    private BigInteger vencimento;
+    @Basic
+    @Column(name = "cod_postal")
+    private String codPostal;
+    @Basic
+    @Column(name = "id_tipofuncionario")
+    private int idTipofuncionario;
+    @Basic
+    @Column(name = "email")
+    private String email;
+    @Basic
+    @Column(name = "password")
+    private String password;
 
     public int getIdFuncionario() {
         return idFuncionario;
@@ -19,10 +49,6 @@ public class Funcionario {
         this.idFuncionario = idFuncionario;
     }
 
-    @Basic
-    @Column(name = "nome")
-    private String nome;
-
     public String getNome() {
         return nome;
     }
@@ -30,10 +56,6 @@ public class Funcionario {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    @Basic
-    @Column(name = "contacto")
-    private String contacto;
 
     public String getContacto() {
         return contacto;
@@ -43,10 +65,6 @@ public class Funcionario {
         this.contacto = contacto;
     }
 
-    @Basic
-    @Column(name = "rua")
-    private String rua;
-
     public String getRua() {
         return rua;
     }
@@ -54,10 +72,6 @@ public class Funcionario {
     public void setRua(String rua) {
         this.rua = rua;
     }
-
-    @Basic
-    @Column(name = "n_porta")
-    private String nPorta;
 
     public String getnPorta() {
         return nPorta;
@@ -67,10 +81,6 @@ public class Funcionario {
         this.nPorta = nPorta;
     }
 
-    @Basic
-    @Column(name = "valor_hora")
-    private BigInteger valorHora;
-
     public BigInteger getValorHora() {
         return valorHora;
     }
@@ -78,10 +88,6 @@ public class Funcionario {
     public void setValorHora(BigInteger valorHora) {
         this.valorHora = valorHora;
     }
-
-    @Basic
-    @Column(name = "vencimento")
-    private BigInteger vencimento;
 
     public BigInteger getVencimento() {
         return vencimento;
@@ -91,10 +97,6 @@ public class Funcionario {
         this.vencimento = vencimento;
     }
 
-    @Basic
-    @Column(name = "cod_postal")
-    private String codPostal;
-
     public String getCodPostal() {
         return codPostal;
     }
@@ -102,10 +104,6 @@ public class Funcionario {
     public void setCodPostal(String codPostal) {
         this.codPostal = codPostal;
     }
-
-    @Basic
-    @Column(name = "id_tipofuncionario")
-    private int idTipofuncionario;
 
     public int getIdTipofuncionario() {
         return idTipofuncionario;
@@ -147,5 +145,21 @@ public class Funcionario {
         result = 31 * result + (codPostal != null ? codPostal.hashCode() : 0);
         result = 31 * result + idTipofuncionario;
         return result;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

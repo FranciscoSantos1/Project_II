@@ -77,7 +77,7 @@ public class Recibo {
         this.mes = mes;
     }
 
-    public Object getValor() {
+    public BigInteger getValor() {
         return valor;
     }
 

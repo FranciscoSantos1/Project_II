@@ -6,8 +6,14 @@ import jakarta.persistence.*;
 public class Modalidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @jakarta.persistence.Column(name = "id_modalidade")
+    @Column(name = "id_modalidade")
     private int idModalidade;
+    @Basic
+    @Column(name = "modalidade")
+    private String modalidade;
+    @Basic
+    @Column(name = "descricao")
+    private String descricao;
 
     public int getIdModalidade() {
         return idModalidade;
@@ -17,10 +23,6 @@ public class Modalidade {
         this.idModalidade = idModalidade;
     }
 
-    @Basic
-    @Column(name = "modalidade")
-    private String modalidade;
-
     public String getModalidade() {
         return modalidade;
     }
@@ -28,10 +30,6 @@ public class Modalidade {
     public void setModalidade(String modalidade) {
         this.modalidade = modalidade;
     }
-
-    @Basic
-    @Column(name = "descricao")
-    private String descricao;
 
     public String getDescricao() {
         return descricao;

@@ -1,23 +1,25 @@
 package ipvc.estg.desktop.Login;
 
+import entity.TipoFuncionario;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import bll.FuncionarioBLL;
 import entity.Funcionario;
-
 import java.io.IOException;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class RegisterController {
+public class RegisterController{
 
     @FXML
     private TextField CodigoPostalField;
@@ -26,7 +28,7 @@ public class RegisterController {
     @FXML
     private TextField NIFField;
     @FXML
-    private ChoiceBox<String> UserTypeChoiceBox; // Ensure this is populated with the correct types
+    private ChoiceBox<String> UserTypeChoiceBox;
     @FXML
     private TextField addressField;
     @FXML
@@ -42,7 +44,9 @@ public class RegisterController {
     @FXML
     private Button registerButton2;
 
-    private FuncionarioBLL funcionarioBLL = new FuncionarioBLL();
+    public void initialize() {
+        UserTypeChoiceBox.getItems().addAll("Instrutor", "Responsavel Instrutores", "Rececionista");
+    }
 
     @FXML
     void goBack(ActionEvent event) throws IOException {
@@ -56,52 +60,43 @@ public class RegisterController {
 
     @FXML
     void register(ActionEvent event) {
-        UserTypeChoiceBox.getItems().addAll("Admin", "Instrutor", "Rececionista", "ResponsavelInstrutores");
+        String fullName = fullNameField.getText();
         String email = emailField.getText();
         String password = passwordField.getText();
-        String fullName = fullNameField.getText();
-        String userType = UserTypeChoiceBox.getValue();
-        String NIF = NIFField.getText();
-        String phoneNumber = phoneNumberField.getText();
-        String codigoPostal = CodigoPostalField.getText();
         String address = addressField.getText();
         String doorNumber = DoorNumberField.getText();
+        String postalCode = CodigoPostalField.getText();
+        String phoneNumber = phoneNumberField.getText();
+        String NIF = NIFField.getText();
+        String userType = UserTypeChoiceBox.getValue();
 
-        if (!validateInput(email, password, fullName, userType, NIF, phoneNumber, codigoPostal, address, doorNumber)) {
-
+        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || address.isEmpty() || doorNumber.isEmpty() || postalCode.isEmpty() || phoneNumber.isEmpty() || NIF.isEmpty() || userType == null) {
+            showAlert("Erro", "Preencha todos os campos", Alert.AlertType.ERROR);
             return;
         }
 
-        try {
-            String hashedPassword = hashPassword(password);
-            Funcionario newFuncionario = createFuncionario(email, hashedPassword, fullName, userType, NIF, phoneNumber, codigoPostal, address, doorNumber);
-            funcionarioBLL.createFuncionario(newFuncionario);
-            // Registration success, show confirmation and clear form or go back to login page
-
-        } catch (Exception e) {
-            // Handle exception, log it, and show an error message
-        }
-    }
-
-    private boolean validateInput(String... inputs) {
-        for (String input : inputs) {
-            if (input == null || input.trim().isEmpty()) {
-                return false;
-            }
-        }
-        // Add more complex validation as necessary
-        return true;
-    }
-
-    private String hashPassword(String password) throws NoSuchAlgorithmException {
-        return password; // Replace this with actual password hashing
-    }
-
-    private Funcionario createFuncionario(String email, String hashedPassword, String fullName, String userType, String NIF, String phoneNumber, String codigoPostal, String address, String doorNumber) {
-        // Create and return a new Funcionario with the given details
-        // The details need to be set according to your entity class' design
         Funcionario funcionario = new Funcionario();
-        // Set the properties on funcionario here
-        return funcionario;
+        funcionario.setNome(fullName);
+        funcionario.setEmail(email);
+        funcionario.setRua(address);
+        funcionario.setnPorta(doorNumber);
+        funcionario.setCodPostal(postalCode);
+        funcionario.setContacto(phoneNumber);
+        funcionario.setPassword(password);
+
+        try {
+            FuncionarioBLL.createFuncionario(funcionario);
+            showAlert("Sucesso", "Registado com sucesso", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            showAlert("Erro", "Erro ao registar", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

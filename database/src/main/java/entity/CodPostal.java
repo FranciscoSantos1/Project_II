@@ -3,11 +3,15 @@ package entity;
 import jakarta.persistence.*;
 
 @Entity
-@jakarta.persistence.Table(name = "cod_postal", schema = "public", catalog = "GinasioDB")
+@Table(name = "cod_postal", schema = "public", catalog = "GinasioDB")
 public class CodPostal {
     @Basic
-    @jakarta.persistence.Column(name = "desc_cod_postal")
+    @Column(name = "desc_cod_postal")
     private String descCodPostal;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "cod_postal")
+    private String codPostal;
 
     public String getDescCodPostal() {
         return descCodPostal;
@@ -16,11 +20,6 @@ public class CodPostal {
     public void setDescCodPostal(String descCodPostal) {
         this.descCodPostal = descCodPostal;
     }
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "cod_postal")
-    private String codPostal;
 
     public String getCodPostal() {
         return codPostal;

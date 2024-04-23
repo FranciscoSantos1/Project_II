@@ -1,18 +1,19 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-@jakarta.persistence.Table(name = "modalidades_plano", schema = "public", catalog = "GinasioDB")
-@jakarta.persistence.IdClass(entity.ModalidadesPlanoPK.class)
+@Table(name = "modalidades_plano", schema = "public", catalog = "GinasioDB")
+@IdClass(ModalidadesPlanoPK.class)
 public class ModalidadesPlano {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @jakarta.persistence.Column(name = "id_plano")
+    @Column(name = "id_plano")
     private int idPlano;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id_modalidade")
+    private int idModalidade;
 
     public int getIdPlano() {
         return idPlano;
@@ -21,11 +22,6 @@ public class ModalidadesPlano {
     public void setIdPlano(int idPlano) {
         this.idPlano = idPlano;
     }
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @jakarta.persistence.Column(name = "id_modalidade")
-    private int idModalidade;
 
     public int getIdModalidade() {
         return idModalidade;
