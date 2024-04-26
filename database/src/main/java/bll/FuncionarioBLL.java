@@ -21,7 +21,7 @@ public class FuncionarioBLL {
             throw e;
         } finally {
             if (entityManager.isOpen()) {
-                entityManager.close();
+                //entityManager.close();
             }
         }
     }
@@ -118,6 +118,46 @@ public class FuncionarioBLL {
             return count > 0;
         } finally {
             entityManager.close();
+        }
+    }
+
+    public static boolean verifyLogin(String email, String password) {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            String queryStr = "SELECT COUNT(f) FROM Funcionario f WHERE f.email = :email AND f.password = :password";
+            Long count = entityManager.createQuery(queryStr, Long.class)
+                    .setParameter("email", email)
+                    .setParameter("password", password)
+                    .getSingleResult();
+            return count > 0;
+        } finally {
+            //entityManager.close();
+        }
+    }
+
+    public static Funcionario getFuncionarioByEmail(String email) {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            return entityManager.createQuery("SELECT f FROM Funcionario f WHERE f.email = :email", Funcionario.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            //entityManager.close();
+        }
+    }
+
+    public static Funcionario getTipoFuncionarioByIdTipoFuncionario(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            return entityManager.createQuery("SELECT f FROM Funcionario f WHERE f.id = :id", Funcionario.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            //entityManager.close();
         }
     }
 }

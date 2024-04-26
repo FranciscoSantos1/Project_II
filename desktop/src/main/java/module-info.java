@@ -6,10 +6,15 @@ module ipvc.estg.desktop {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
 
+    requires jakarta.persistence;
+
     opens ipvc.estg.desktop.Login to javafx.fxml;
+    opens ipvc.estg.desktop.rececionista to javafx.fxml;
+
 
     exports ipvc.estg.desktop;
     exports ipvc.estg.desktop.Login;
+    exports ipvc.estg.desktop.rececionista;
 
     requires Ginasio;
 }

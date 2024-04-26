@@ -44,7 +44,7 @@
          <children>
             <TextField fx:id="usernameField" layoutX="67.0" layoutY="220.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" />
             <PasswordField fx:id="passwordField" layoutX="67.0" layoutY="266.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" />
-            <Button fx:id="loginButton" layoutX="67.0" layoutY="338.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="220.0" text="Login">
+            <Button fx:id="loginButton" layoutX="67.0" layoutY="338.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="60.0" prefWidth="220.0" text="Login">
                <font>
                   <Font size="14.0" />
                </font>

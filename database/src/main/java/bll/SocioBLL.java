@@ -5,6 +5,9 @@ import entity.Plano;
 import entity.Socio;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
+
+import java.util.List;
 
 public class SocioBLL {
 
@@ -72,4 +75,14 @@ public class SocioBLL {
         EntityManager entityManager = Database.getEntityManager();
         return entityManager.find(Socio.class, id);
     }
+
+    public static List<Object[]> listSocio() {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT s.idSocio, s.nome, s.contacto, CONCAT(s.codPostal, ' - ', s.rua, ' - ', s.nPorta) AS morada FROM Socio s ORDER BY s.nome");
+        List<Object[]> results = query.getResultList();
+        //entityManager.close();
+        return results;
+    }
+
+
 }

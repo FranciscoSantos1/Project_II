@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigInteger;
 import java.util.Collection;
 
 @Entity
@@ -11,7 +12,7 @@ public class Socio {
     private String nome;
     @Basic
     @Column(name = "contacto")
-    private Integer contacto;
+    private BigInteger contacto;
     @Basic
     @Column(name = "rua")
     private String rua;
@@ -42,11 +43,11 @@ public class Socio {
         this.nome = nome;
     }
 
-    public Integer getContacto() {
+    public BigInteger getContacto() {
         return contacto;
     }
 
-    public void setContacto(Integer contacto) {
+    public void setContacto(BigInteger contacto) {
         this.contacto = contacto;
     }
 
@@ -135,4 +136,19 @@ public class Socio {
     public void setPlanoByIdPlano(Plano planoByIdPlano) {
         this.planoByIdPlano = planoByIdPlano;
     }
+
+    public String getMorada() {
+        return codPostal + " - " + rua + " - " + nPorta;
+    }
+
+    public void setMorada(String morada) {
+        String[] partes = morada.split(" - ");
+        if (partes.length == 3) {
+            this.codPostal = partes[0];
+            this.rua = partes[1];
+            this.nPorta = partes[2];
+        }
+        return;
+    }
+
 }

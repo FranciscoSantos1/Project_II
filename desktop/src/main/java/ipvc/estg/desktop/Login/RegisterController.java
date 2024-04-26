@@ -76,12 +76,13 @@ public class RegisterController{
         Funcionario funcionario = new Funcionario();
 
         funcionario.setNome(fullName);
-        if(FuncionarioBLL.emailExists(email)){
+        /*if(FuncionarioBLL.emailExists(email)){
             showAlert("Erro", "Este email já está a ser utilizado. Por favor, insira outro email.", Alert.AlertType.ERROR);
             return;
         } else {
             funcionario.setEmail(email);
-        }
+        }*/
+        funcionario.setEmail(email);
         funcionario.setPassword(password);
         funcionario.setIdTipofuncionario(UserTypeChoiceBox.getSelectionModel().getSelectedIndex() + 1);
         funcionario.setRua(address);

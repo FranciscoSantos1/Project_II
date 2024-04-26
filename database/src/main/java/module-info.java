@@ -6,6 +6,7 @@ module Ginasio {
 
     opens entity to org.hibernate.orm.core;
 
+
     exports entity;
     exports bll;
     exports database;
