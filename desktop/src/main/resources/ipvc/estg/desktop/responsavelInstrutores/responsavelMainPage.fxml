@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="775.0" style="-fx-background-color: #6AB27E;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipvc.estg.desktop.rececionista.rececionistaMainPageController">
+   <children>
+      <Button fx:id="addSocioButton" layoutX="659.0" layoutY="17.0" mnemonicParsing="false" text="Adicionar Instrutor">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+      <Button fx:id="changeButton" layoutX="43.0" layoutY="564.0" mnemonicParsing="false" text="Renovar/Alterar">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+      <Button fx:id="deactivateButton" layoutX="695.0" layoutY="564.0" mnemonicParsing="false" style="-fx-background-color: #eead2d;" text="Desativar">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+      <Button fx:id="paymentButton" layoutX="151.0" layoutY="564.0" mnemonicParsing="false" text="Registar Pagamento">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+      <Button fx:id="reserveButton" layoutX="284.0" layoutY="564.0" mnemonicParsing="false" text="Reservar vaga">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+      <Button fx:id="ptSessionButton" layoutX="381.0" layoutY="564.0" mnemonicParsing="false" text="Agendar sessão PT">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+      <Text layoutX="208.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Button fx:id="backButton" layoutX="7.0" layoutY="17.0" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: #f00;" text="Sair" textFill="WHITE" />
+      <GridPane gridLinesVisible="true" layoutX="25.0" layoutY="67.0" prefHeight="322.0" prefWidth="711.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.60000610351562" minWidth="10.0" prefWidth="69.20001220703125" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.39998779296874" minWidth="10.0" prefWidth="133.59998779296876" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.79997558593752" minWidth="10.0" prefWidth="105.60003662109375" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.99996337890622" minWidth="10.0" prefWidth="109.5999755859375" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.00002441406252" minWidth="10.0" prefWidth="115.1999633789062" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.8000366210938" minWidth="10.0" prefWidth="100.80007324218752" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.20001220703125" minWidth="10.0" prefWidth="78.39992675781252" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="27.0" prefWidth="126.0" text="Segunda-feira" GridPane.columnIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label text="Terça-feira" GridPane.columnIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label text="Quarta-feira" GridPane.columnIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label text="Quinta-feira" GridPane.columnIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label text="Sexta-feira" GridPane.columnIndex="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label prefHeight="27.0" prefWidth="73.0" text="Sábado" GridPane.columnIndex="6">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="3.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+            <Label text="09:00H" textAlignment="JUSTIFY" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="11:00H" textAlignment="JUSTIFY" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="13:00H" textAlignment="JUSTIFY" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="15:00H" textAlignment="JUSTIFY" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="17:00H" textAlignment="JUSTIFY" GridPane.rowIndex="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="19:00H" textAlignment="JUSTIFY" GridPane.rowIndex="6">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="81.0" prefWidth="144.0" text="21:00H" GridPane.rowIndex="7">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label text="Label" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Label" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+            <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Label text="Label" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+            <Label text="Label" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <Label text="Label" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Label text="Label" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Label text="Label" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="Label" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Label text="Label" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+            <Label text="Label" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+            <Label text="Label" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+            <Label text="Label" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <Label text="Label" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Label text="Label" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Label text="Label" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Label text="Label" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+            <Label text="Label" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+            <Label text="Label" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Label text="Label" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <Label text="Label" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+            <Label text="Label" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
