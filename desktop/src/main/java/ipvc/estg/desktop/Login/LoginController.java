@@ -56,7 +56,7 @@ public class LoginController {
             Funcionario funcionario = FuncionarioBLL.getFuncionarioByEmail(mail);
             if(funcionario.getIdTipofuncionario() == 3){
                 try {
-                    URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/rececionista/mainPage.fxml");
+                    URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/rececionista/rececionistaMainPage.fxml");
                     if (resourceUrl == null) {
                         System.err.println("Arquivo FXML não encontrado.");
                         return;
@@ -71,6 +71,46 @@ public class LoginController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+            else if(funcionario.getIdTipofuncionario() == 2){
+                try {
+                    URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/responsavelInstrutores/responsavelMainPage.fxml");
+                    if (resourceUrl == null) {
+                        System.err.println("Arquivo FXML não encontrado.");
+                        return;
+                    }
+
+                    Parent root = FXMLLoader.load(resourceUrl);
+                    Scene mainPage = new Scene(root);
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(mainPage);
+                    stage.setTitle("GymMaster - Página Principal - Responsavel Instrutores");
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if(funcionario.getIdTipofuncionario() == 1){
+                try {
+                    URL resourceUrl = getClass().getResource("");
+                    if (resourceUrl == null) {
+                        System.err.println("Arquivo FXML não encontrado.");
+                        return;
+                    }
+
+                    Parent root = FXMLLoader.load(resourceUrl);
+                    Scene mainPage = new Scene(root);
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(mainPage);
+                    stage.setTitle("GymMaster - Página Principal - Responsável de Instrutores");
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                showAlert("Erro", "Tipo de funcionário não reconhecido", Alert.AlertType.ERROR);
+                return;
             }
         } else {
             showAlert("Erro", "Credenciais inválidas", Alert.AlertType.ERROR);

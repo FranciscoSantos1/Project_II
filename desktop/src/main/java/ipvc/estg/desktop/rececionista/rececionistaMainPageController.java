@@ -1,10 +1,7 @@
 package ipvc.estg.desktop.rececionista;
 
 import bll.SocioBLL;
-import database.Database;
 import entity.Socio;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -22,9 +19,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.List;
-import java.util.Objects;
 
-public class MainPageController {
+public class rececionistaMainPageController {
     @FXML
     private Button addSocioButton;
 
