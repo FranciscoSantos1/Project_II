@@ -10,11 +10,14 @@ module ipvc.estg.desktop {
 
     opens ipvc.estg.desktop.Login to javafx.fxml;
     opens ipvc.estg.desktop.rececionista to javafx.fxml;
+    opens ipvc.estg.desktop.responsavelInstrutores to javafx.fxml;
 
 
     exports ipvc.estg.desktop;
     exports ipvc.estg.desktop.Login;
     exports ipvc.estg.desktop.rececionista;
+    exports ipvc.estg.desktop.responsavelInstrutores;
+
 
     requires Ginasio;
 }

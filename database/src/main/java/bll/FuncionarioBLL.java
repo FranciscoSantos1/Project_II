@@ -131,7 +131,7 @@ public class FuncionarioBLL {
                     .getSingleResult();
             return count > 0;
         } finally {
-            //entityManager.close();
+            entityManager.close();
         }
     }
 
@@ -144,7 +144,7 @@ public class FuncionarioBLL {
         } catch (NoResultException e) {
             return null;
         } finally {
-            //entityManager.close();
+            entityManager.close();
         }
     }
 
@@ -157,7 +157,18 @@ public class FuncionarioBLL {
         } catch (NoResultException e) {
             return null;
         } finally {
-            //entityManager.close();
+            entityManager.close();
         }
     }
+
+    public static List<Funcionario> getAllFuncionarios() {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            TypedQuery<Funcionario> query = entityManager.createQuery("SELECT f FROM Funcionario f", Funcionario.class);
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
+    }
+
 }

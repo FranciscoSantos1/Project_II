@@ -2,6 +2,7 @@ package bll;
 
 import database.Database;
 import entity.Aula;
+import entity.Modalidade;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
@@ -37,7 +38,7 @@ public class AulaBLL {
         Query query = entityManager.createQuery("SELECT a FROM Aula a");
         List<Aula> aulas = query.getResultList();
         for (Aula aula : aulas) {
-            System.out.println("ID: " + aula.getIdAula() + " Nome: " + aula.getNome());
+            System.out.println("ID: " + aula.getId() + " Nome: " + aula.getNome() + " Modalidade: " + aula.getIdModalidade() + " Professor: " + aula.getIdFuncionario());
         }
     }
 
@@ -49,4 +50,6 @@ public class AulaBLL {
         entityManager.merge(aula);
         entityManager.getTransaction().commit();
     }
+
+
 }
