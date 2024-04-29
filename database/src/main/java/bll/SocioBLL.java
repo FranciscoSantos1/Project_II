@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SocioBLL {
 
-    public static void createSocio(Socio socio) {
+    /*public static void createSocio(Socio socio) {
         EntityManager entityManager = Database.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -39,37 +39,37 @@ public class SocioBLL {
         } finally {
             entityManager.close();
         }
-    }
+    }*/
 
-    public static void deleteSocio(Socio socio) {
+    /*public static void deleteSocio(Socio socio) {
         EntityManager entityManager = Database.getEntityManager();
         if (!entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().begin();
         }
         entityManager.remove(socio);
         entityManager.getTransaction().commit();
-    }
+    }*/
 
-    public static Socio getSocioById(int id) {
+    /*public static Socio getSocioById(int id) {
         EntityManager entityManager = Database.getEntityManager();
         return entityManager.find(Socio.class, id);
-    }
+    }*/
 
-    public static void updateSocio(Socio socio) {
+    /*public static void updateSocio(Socio socio) {
         EntityManager entityManager = Database.getEntityManager();
         if (!entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().begin();
         }
         entityManager.merge(socio);
         entityManager.getTransaction().commit();
-    }
+    }*/
 
-    public static void readSocio() {
+    /*public static void readSocio() {
         EntityManager entityManager = Database.getEntityManager();
         entityManager.createQuery("SELECT s FROM Socio s").getResultList().forEach(socio -> {
             System.out.println("ID: " + ((Socio) socio).getIdSocio() + " Nome: " + ((Socio) socio).getNome());
         });
-    }
+    }*/
 
     public static Socio findSocioById(int id) {
         EntityManager entityManager = Database.getEntityManager();
@@ -84,5 +84,10 @@ public class SocioBLL {
         return results;
     }
 
+    //get plano by id
+    public static Plano findPlanoById(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        return entityManager.find(Plano.class, id);
+    }
 
 }

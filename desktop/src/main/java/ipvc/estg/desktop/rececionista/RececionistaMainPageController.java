@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,12 +21,12 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.util.List;
 
-public class rececionistaMainPageController {
+public class RececionistaMainPageController {
     @FXML
     private Button addSocioButton;
 
     @FXML
-    private Button changeButton;
+    private Button detailsButton;
 
     @FXML
     private Button deactivateButton;
@@ -40,7 +41,7 @@ public class rececionistaMainPageController {
     private Button ptSessionButton;
 
     @FXML
-    private Button backButton;
+    private Button logoutButton;
 
     @FXML
     private TableView<Socio> socioTableView;
@@ -77,6 +78,17 @@ public class rececionistaMainPageController {
             socio.setMorada((String) result[3]);
             socioTableView.getItems().add(socio);
         }
+
+        socioTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                int idSocio = newSelection.getIdSocio();
+                String nome = newSelection.getNome();
+                BigInteger contacto = newSelection.getContacto();
+                String morada = newSelection.getMorada();
+
+                System.out.println("Sócio selecionado: ID=" + idSocio + ", Nome=" + nome + ", Contacto=" + contacto + ", Morada=" + morada);
+            }
+        });
     }
 
     @FXML
@@ -84,7 +96,7 @@ public class rececionistaMainPageController {
         try {
             URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/Login/login.fxml");
             if (resourceUrl == null) {
-                System.err.println("Arquivo FXML não encontrado.");
+                System.err.println("Ficheiro FXML não encontrado.");
                 return;
             }
             Parent root = FXMLLoader.load(resourceUrl);
@@ -98,4 +110,26 @@ public class rececionistaMainPageController {
         }
     }
 
+    @FXML
+    void socioDetails(ActionEvent event) {
+        Socio selectedSocio = socioTableView.getSelectionModel().getSelectedItem();
+        if (selectedSocio == null) {
+            System.out.println("Nenhum sócio selecionado.");
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/rececionista/socioDetails.fxml"));
+            Parent root = loader.load();
+            SocioDetailsController detailsController = loader.getController();
+            detailsController.initSocioDetails(selectedSocio.getIdSocio(), selectedSocio.getNome(), selectedSocio.getContacto(), selectedSocio.getMorada(), selectedSocio.getIdPlano());
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Detalhes do Sócio");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
