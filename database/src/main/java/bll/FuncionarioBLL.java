@@ -172,4 +172,14 @@ public class FuncionarioBLL {
         }
     }
 
+    public static String getFuncionarioNameById(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            return entityManager.createQuery("SELECT f.nome FROM Funcionario f WHERE f.id = :id", String.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

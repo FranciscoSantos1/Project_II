@@ -67,4 +67,11 @@ public class ModalidadeBLL {
         entityManager.merge(modalidade);
         entityManager.getTransaction().commit();
     }
+
+    public static String getModalidadeNameById(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT m.modalidade FROM Modalidade m WHERE m.idModalidade = :id");
+        query.setParameter("id", id);
+        return (String) query.getSingleResult();
+    }
 }

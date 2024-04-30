@@ -7,11 +7,17 @@ import entity.Modalidade;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AulaBLL {
+    private static final ZoneId ZONE_ID = ZoneId.of("Europe/Lisbon"); // Adjust this to your intended timezone
+
 
     public static void createAula(Aula aula) {
         EntityManager entityManager = Database.getEntityManager();
@@ -79,24 +85,41 @@ public class AulaBLL {
         EntityManager entityManager = Database.getEntityManager();
         List<Funcionario> availableInstructors = new ArrayList<>();
         try {
+            // Start transaction for read operation
             entityManager.getTransaction().begin();
-            // Query to find instructors not engaged in another class at the same time
-            Query query = entityManager.createQuery(
-                    "SELECT f FROM Funcionario f WHERE f.idTipofuncionario = 2 AND NOT EXISTS (" +
-                            "SELECT 1 FROM Aula a WHERE a.idFuncionario = f.idFuncionario AND NOT (" +
-                            "a.dataHoraFim <= :start OR a.dataHoraComeco >= :end))", Funcionario.class);
+
+            // Query to find instructors who do not have a class overlapping the new class time
+            String jpql = "SELECT f FROM Funcionario f WHERE f.idTipofuncionario = 1 AND NOT EXISTS (" +
+                    "SELECT a FROM Aula a WHERE a.idFuncionario = f.idFuncionario AND (" +
+                    "a.dataHoraComeco < :end AND a.dataHoraFim > :start))";
+
+            Query query = entityManager.createQuery(jpql, Funcionario.class);
             query.setParameter("start", start);
             query.setParameter("end", end);
+
             availableInstructors = query.getResultList();
+
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
-            throw new RuntimeException("Failed to fetch available instructors", e);
-        } finally {
-            entityManager.close();
         }
         return availableInstructors;
     }
+
+    public static Instant getDateByIdAula(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT a.dataHoraComeco FROM Aula a WHERE a.id = :id");
+        query.setParameter("id", id);
+        return (Instant) query.getSingleResult();
+    }
+
+    public void InstantFormatter(Instant instant) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = Date.from(instant);
+    }
+
+
 }

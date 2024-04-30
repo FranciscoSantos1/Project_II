@@ -21,22 +21,12 @@
             <TableColumn fx:id="vagasColumn" prefWidth="109.0" text="Vagas" />
         </columns>
       </TableView>
-      <Button fx:id="detailsButton" layoutX="209.0" layoutY="426.0" mnemonicParsing="false" text="Ver Detalhes">
+      <Button fx:id="detailsButton" layoutX="209.0" layoutY="426.0" mnemonicParsing="false" onAction="#goToDetails" text="Ver Detalhes">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="deactivateButton" layoutX="697.0" layoutY="426.0" mnemonicParsing="false" style="-fx-background-color: #eead2d;" text="Desativar Sócio">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Button>
-      <Button fx:id="reserveButton" layoutX="371.0" layoutY="426.0" mnemonicParsing="false" text="Mudar instrutor">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Button>
-      <Button fx:id="ptSessionButton" layoutX="493.0" layoutY="426.0" mnemonicParsing="false" text="Agendar sessão PT">
+      <Button fx:id="deactivateButton" layoutX="697.0" layoutY="426.0" mnemonicParsing="false" onAction="#eliminateAula" style="-fx-background-color: #eead2d;" text="Eliminar aula">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>

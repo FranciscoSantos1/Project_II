@@ -5,6 +5,7 @@ import bll.AulaBLL;
 import bll.FuncionarioBLL;
 import entity.*;
 import bll.ModalidadeBLL;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,35 +58,52 @@ public class adicionarAulaController {
 
     @FXML
     public void initialize() {
+        setupListeners();
+        loadInitialData();
+    }
+
+    private void setupListeners() {
+        ChangeListener<Object> scheduleChangeListener = (obs, oldVal, newVal) -> updateAvailableInstructors();
+        dataDatePicker.valueProperty().addListener(scheduleChangeListener);
+        HoraComboBox.valueProperty().addListener(scheduleChangeListener);
+        DuracaoComboBox.valueProperty().addListener(scheduleChangeListener);
+    }
+
+    private void loadInitialData() {
+        // Initialize hours and duration choices
         for (int hour = 7; hour <= 20; hour++) {
             HoraComboBox.getItems().add(String.format("%02d:00h", hour));
         }
+        DuracaoComboBox.getItems().addAll("30m", "1h", "1h30m", "2h");
 
-        DuracaoComboBox.getItems().add("30m");
-        DuracaoComboBox.getItems().add("1h");
-        DuracaoComboBox.getItems().add("1h30m");
-        DuracaoComboBox.getItems().add("2h");
+        // Load modalities and all instructors initially
+        loadModalities();
+        loadInstructors();
+    }
 
-        try{
-            for(Funcionario instrutor : FuncionarioBLL.getAllFuncionarios()){
-                if(instrutor.getIdTipofuncionario() == 1){
-                    InstrutorComboBox1.getItems().add(instrutor.getNome());
-                }
-            }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        try{
-            for(Modalidade modalidade : ModalidadeBLL.getAllModalidades()){
+    private void loadModalities() {
+        try {
+            for (Modalidade modalidade : ModalidadeBLL.getAllModalidades()) {
                 modalidadeComboBox.getItems().add(modalidade.getModalidade());
             }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error loading modalities: " + e.getMessage());
         }
     }
 
-/*
+    private void loadInstructors() {
+        try {
+            for (Funcionario instrutor : FuncionarioBLL.getAllFuncionarios()) {
+                if (instrutor.getIdTipofuncionario() == 1) {
+                    InstrutorComboBox1.getItems().add(instrutor.getNome());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading instructors: " + e.getMessage());
+        }
+    }
+
+
     private void updateAvailableInstructors() {
         if (dataDatePicker.getValue() != null && HoraComboBox.getValue() != null && DuracaoComboBox.getValue() != null) {
             try {
@@ -98,14 +116,13 @@ public class adicionarAulaController {
                 List<Funcionario> availableInstructors = AulaBLL.getAvailableInstructors(startInstant, endInstant);
                 InstrutorComboBox1.getItems().clear();
                 for (Funcionario instructor : availableInstructors) {
-                    InstrutorComboBox1.getItems().add(instructor.getNome()); // Assuming Funcionario has a getNome() method.
+                    InstrutorComboBox1.getItems().add(instructor.getNome());
                 }
             } catch (Exception e) {
                 showAlert("Error", "Failed to update instructors: " + e.getMessage(), Alert.AlertType.ERROR);
             }
         }
     }
-*/
 
     public void createAula() {
 
