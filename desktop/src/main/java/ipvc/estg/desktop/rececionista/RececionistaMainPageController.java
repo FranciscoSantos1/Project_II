@@ -1,6 +1,7 @@
 package ipvc.estg.desktop.rececionista;
 
 import bll.SocioBLL;
+import entity.Plano;
 import entity.Socio;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -66,7 +67,6 @@ public class RececionistaMainPageController {
             BigInteger contacto = cellData.getValue().getContacto();
             return new SimpleStringProperty(contacto != null ? contacto.toString() : "");
         });
-
         moradaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMorada()));
 
         List<Object[]> results = SocioBLL.listSocio();
@@ -86,7 +86,13 @@ public class RececionistaMainPageController {
                 BigInteger contacto = newSelection.getContacto();
                 String morada = newSelection.getMorada();
 
-                System.out.println("Sócio selecionado: ID=" + idSocio + ", Nome=" + nome + ", Contacto=" + contacto + ", Morada=" + morada);
+                //get plano by id
+                Socio socio = SocioBLL.findSocioById(idSocio);
+                int plano = socio.getIdPlano();
+                Plano planoObj = SocioBLL.findPlanoById(plano);
+
+                //System.out.println("Plano: " + planoObj.getTipo() + " - " + planoObj.getDescricao() + " - " + planoObj.getValor() + "€");
+                //System.out.println("Sócio selecionado: ID=" + idSocio + ", Nome=" + nome + ", Contacto=" + contacto + ", Morada=" + morada);
             }
         });
     }
@@ -122,7 +128,7 @@ public class RececionistaMainPageController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/rececionista/socioDetails.fxml"));
             Parent root = loader.load();
             SocioDetailsController detailsController = loader.getController();
-            detailsController.initSocioDetails(selectedSocio.getIdSocio(), selectedSocio.getNome(), selectedSocio.getContacto(), selectedSocio.getMorada(), selectedSocio.getIdPlano());
+            detailsController.initSocioDetails(selectedSocio.getIdSocio(), selectedSocio.getNome(), selectedSocio.getContacto(), selectedSocio.getMorada());
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);

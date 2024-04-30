@@ -4,6 +4,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
+import org.hibernate.Session;
+
+import java.sql.Connection;
 
 public class Database {
 
@@ -31,5 +34,11 @@ public class Database {
         entityManager.close();
         entityManager = null;
     }
+
+    public static Connection getConnection() {
+        connect(); // Certifique-se de que a conexão com o EntityManager está estabelecida
+        return entityManager.unwrap(Session.class).doReturningWork(connection -> (Connection) connection);
+    }
+
 
 }

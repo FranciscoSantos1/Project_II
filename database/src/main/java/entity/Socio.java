@@ -1,6 +1,7 @@
 package entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.math.BigInteger;
 import java.util.Collection;
@@ -129,9 +130,9 @@ public class Socio {
         this.recibosByIdSocio = recibosByIdSocio;
     }
 
-    public Plano getPlanoByIdPlano() {
+    /*public Plano getPlanoByIdPlano() {
         return planoByIdPlano;
-    }
+    }*/
 
     public void setPlanoByIdPlano(Plano planoByIdPlano) {
         this.planoByIdPlano = planoByIdPlano;
@@ -150,5 +151,4 @@ public class Socio {
         }
         return;
     }
-
 }

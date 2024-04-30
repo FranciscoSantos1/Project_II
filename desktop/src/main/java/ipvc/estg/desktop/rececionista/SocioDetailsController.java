@@ -1,15 +1,19 @@
 package ipvc.estg.desktop.rececionista;
 
+import bll.SocioBLL;
+import entity.Plano;
+import entity.Socio;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import ipvc.estg.desktop.rececionista.RececionistaMainPageController;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,21 +27,6 @@ public class SocioDetailsController {
     private Label nameLabel;
 
     @FXML
-    private Label name1Label;
-
-    @FXML
-    private Label contactLabel;
-
-    @FXML
-    private Label addressLabel;
-
-    @FXML
-    private Label idLabel;
-
-    @FXML
-    private Label planLabel;
-
-    @FXML
     private Button editButton;
 
     @FXML
@@ -49,23 +38,53 @@ public class SocioDetailsController {
     @FXML
     private Button backButton;
 
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private TextField nameTextField;
+
+    @FXML
+    private TextField contactTextField;
+
+    @FXML
+    private TextField addressTextField;
+
+    @FXML
+    private TextField planTextField;
+
+    @FXML
+    private TextField idTextField;
+
+    private boolean editing = false;
+
     private RececionistaMainPageController mainPageController;
 
-    public void initSocioDetails(int idSocio, String nome, BigInteger contacto, String morada, Integer plano) {
-        nameLabel.setText("" + nome);
-        name1Label.setText("" + nome);
-        contactLabel.setText("" + contacto);
-        //todo
-        //addressLabel.setText("" + morada);
-        idLabel.setText("" + idSocio);
-        planLabel.setText("" + plano);
+    public void initialize(){
+        nameTextField.setEditable(false);
+        contactTextField.setEditable(false);
+        addressTextField.setEditable(false);
+        planTextField.setEditable(false);
+        saveButton.setVisible(false);
 
     }
 
-    // Setter para o controlador da página principal
-    public void setMainPageController(RececionistaMainPageController mainPageController) {
-        this.mainPageController = mainPageController;
+    public void initSocioDetails(int idSocio, String nome, BigInteger contacto, String morada) {
+        nameLabel.setText(nome);
+        nameTextField.setText(nome);
+        contactTextField.setText(contacto.toString());
+        addressTextField.setText(morada);
+        idTextField.setText(String.valueOf(idSocio));
+
+        //get plano do socio
+        Socio socio = SocioBLL.findSocioById(idSocio);
+        int plano = socio.getIdPlano();
+        Plano planoObj = SocioBLL.findPlanoById(plano);
+        //System.out.println("Plano: " + planoObj.getTipo() + " - " + planoObj.getDescricao() + " - " + planoObj.getValor() + "€");
+
+        planTextField.setText(planoObj.getTipo() + " - " + planoObj.getDescricao() + " - " + planoObj.getValor() + "€/mês");
     }
+
 
     @FXML
     void logout(ActionEvent event) {
@@ -106,5 +125,43 @@ public class SocioDetailsController {
         }
     }
 
+    @FXML
+    public void editDetails() {
+        editButton.setVisible(false);
+        saveButton.setVisible(true);
+        if (!editing) {
+            nameTextField.setEditable(true);
+            contactTextField.setEditable(true);
 
+            editing = true;
+        } else {
+            // Save changes
+            Socio socio = new Socio();
+            socio.setIdSocio(Integer.parseInt(idTextField.getText()));
+            socio.setNome(nameTextField.getText());
+            socio.setContacto(new BigInteger(contactTextField.getText()));
+
+            //todo: update morada e plano
+
+            SocioBLL.updateSocio(socio);
+
+            nameTextField.setEditable(false);
+            contactTextField.setEditable(false);
+
+            alertBox("Sócio atualizado com sucesso!", "Sucesso");
+
+            editing = false;
+
+            editButton.setVisible(true);
+            saveButton.setVisible(false);
+        }
+    }
+
+    private void alertBox(String s, String sucesso) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(sucesso);
+        alert.setHeaderText(null);
+        alert.setContentText(s);
+        alert.showAndWait();
+    }
 }
