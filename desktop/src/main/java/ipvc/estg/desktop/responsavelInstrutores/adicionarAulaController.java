@@ -96,7 +96,7 @@ public class adicionarAulaController {
 
         String nome = nomeAulaField.getText();
         LocalDate data = dataDatePicker.getValue();
-        LocalTime hora = LocalTime.parse(HoraComboBox.getValue().substring(0, 5)); // Parses the hour, removing the 'h'
+        LocalTime hora = LocalTime.parse(HoraComboBox.getValue().substring(0, 5));
         String local = localAulaField.getText();
         int numeroMinimoAtletas = Integer.parseInt(numeroMinimoAtletasField.getText());
         String selectedDuration = DuracaoComboBox.getValue();

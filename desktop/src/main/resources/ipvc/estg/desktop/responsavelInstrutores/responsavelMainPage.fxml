@@ -15,10 +15,10 @@
    <children>
       <TableView fx:id="aulasTableView" layoutX="209.0" layoutY="75.0" prefHeight="330.0" prefWidth="586.0">
         <columns>
-            <TableColumn fx:id="dateColumn" prefWidth="214.40000915527344" text="Data" />
-            <TableColumn fx:id="modalidadeColumn" prefWidth="171.20001220703125" text="Modalidade" />
-          <TableColumn fx:id="nomeInstrutorColumn" prefWidth="139.199951171875" text="Nome Instrutor" />
-            <TableColumn fx:id="vagasColumn" prefWidth="55.199951171875" text="Vagas" />
+            <TableColumn fx:id="dateColumn" prefWidth="190.0" text="Data" />
+            <TableColumn fx:id="modalidadeColumn" prefWidth="159.0" text="Modalidade" />
+          <TableColumn fx:id="nomeInstrutorColumn" prefWidth="125.0" text="Nome Instrutor" />
+            <TableColumn fx:id="vagasColumn" prefWidth="109.0" text="Vagas" />
         </columns>
       </TableView>
       <Button fx:id="detailsButton" layoutX="209.0" layoutY="426.0" mnemonicParsing="false" text="Ver Detalhes">
@@ -31,7 +31,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="reserveButton" layoutX="371.0" layoutY="426.0" mnemonicParsing="false" text="Atribuir instrutor">
+      <Button fx:id="reserveButton" layoutX="371.0" layoutY="426.0" mnemonicParsing="false" text="Mudar instrutor">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
