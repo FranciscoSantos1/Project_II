@@ -1,6 +1,14 @@
 package ipvc.estg.desktop.responsavelInstrutores;
 
+import bll.AulaBLL;
+import bll.ModalidadeBLL;
 import entity.Aula;
+import entity.Modalidade;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +22,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 public class responsavelMainPageController {
 
@@ -53,8 +63,23 @@ public class responsavelMainPageController {
 
     @FXML
     void initialize() {
+        // Setup the columns to display the data
+        dateColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(convertInstantToDate(cellData.getValue().getDataHoraComeco())));
+        modalidadeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getModalidadeNameByIdAula(cellData.getValue().getId())));
+        nomeInstrutorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getInstrutorNameByIdAula(cellData.getValue().getId())));
+        vagasColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getVagas()).asObject());
 
+        // Fetch all Aula objects from the database
+        List<Aula> aulas = AulaBLL.getAllAulas();
+        ObservableList<Aula> aulasObservableList = FXCollections.observableArrayList(aulas);
+        aulasTableView.setItems(aulasObservableList);
     }
+
+    private Date convertInstantToDate(Instant instant) {
+        return Date.from(instant);
+    }
+
+
 
     @FXML
     void logout(ActionEvent event){

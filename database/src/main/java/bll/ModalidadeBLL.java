@@ -47,10 +47,6 @@ public class ModalidadeBLL {
                 entityManager.getTransaction().rollback();
             }
             throw e;
-        } finally {
-            if (entityManager.isOpen()) {
-                entityManager.close();
-            }
         }
     }
 

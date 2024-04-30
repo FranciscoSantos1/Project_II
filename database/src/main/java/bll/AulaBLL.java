@@ -51,5 +51,25 @@ public class AulaBLL {
         entityManager.getTransaction().commit();
     }
 
+    public static List<Aula> getAllAulas() {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT a FROM Aula a");
+        return query.getResultList();
+    }
+
+    public static String getInstrutorNameByIdAula(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT f.nome FROM Funcionario f, Aula a WHERE a.idFuncionario = f.idFuncionario AND a.id = :id");
+        query.setParameter("id", id);
+        return (String) query.getSingleResult();
+    }
+
+    public static String getModalidadeNameByIdAula(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT m.modalidade FROM Modalidade m, Aula a WHERE a.idModalidade = m.idModalidade AND a.id = :id");
+        query.setParameter("id", id);
+        return (String) query.getSingleResult();
+    }
+
 
 }

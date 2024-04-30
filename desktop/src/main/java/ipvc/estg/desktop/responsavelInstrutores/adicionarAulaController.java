@@ -5,13 +5,19 @@ import bll.AulaBLL;
 import bll.FuncionarioBLL;
 import entity.*;
 import bll.ModalidadeBLL;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
 import java.time.*;
+import java.util.Objects;
 
 public class adicionarAulaController {
 
@@ -25,7 +31,7 @@ public class adicionarAulaController {
     private ComboBox<String> HoraComboBox;
 
     @FXML
-    private Button addSocioButton;
+    private Button addAulaButton;
 
     @FXML
     private Button detailsButton;
@@ -59,21 +65,35 @@ public class adicionarAulaController {
         DuracaoComboBox.getItems().add("1h30m");
         DuracaoComboBox.getItems().add("2h");
 
-        for(Modalidade modalidade : ModalidadeBLL.getAllModalidades()){
-            modalidadeComboBox.getItems().add(modalidade.getModalidade());
+        try{
+            for(Funcionario instrutor : FuncionarioBLL.getAllFuncionarios()){
+                if(instrutor.getIdTipofuncionario() == 1){
+                    InstrutorComboBox1.getItems().add(instrutor.getNome());
+                }
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
 
-        for(Funcionario instrutor : FuncionarioBLL.getAllFuncionarios()){
-            if(instrutor.getIdTipofuncionario() == 2){
-                InstrutorComboBox1.getItems().add(instrutor.getNome());
+        try{
+            for(Modalidade modalidade : ModalidadeBLL.getAllModalidades()){
+                modalidadeComboBox.getItems().add(modalidade.getModalidade());
             }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
+
+
+
+
     }
 
     public void createAula() {
+
         Aula newAula = new Aula();
 
-        // Assuming you have methods to get these values from input fields or other parts of the UI
+
+
         String nome = nomeAulaField.getText();
         LocalDate data = dataDatePicker.getValue();
         LocalTime hora = LocalTime.parse(HoraComboBox.getValue().substring(0, 5)); // Parses the hour, removing the 'h'
@@ -84,6 +104,30 @@ public class adicionarAulaController {
         Instant dataHoraComeco = data.atTime(hora).atZone(ZoneId.systemDefault()).toInstant();
         LocalTime duration = parseDurationToTime(selectedDuration);
 
+        if(!verifyDate(dataHoraComeco)){
+            showAlert("Erro", "Data inválida", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try{
+            if (checkEmptyFields(nome, local, numeroMinimoAtletasField.getText(), selectedDuration, vagasField.getText())) {
+                showAlert("Erro", "Preencha todos os campos", Alert.AlertType.ERROR);
+                return;
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+        if(Integer.parseInt(numeroMinimoAtletasField.getText()) < 0 || Integer.parseInt(vagasField.getText()) < 0){
+            showAlert("Erro", "Número de vagas ou número mínimo de atletas não pode ser negativo", Alert.AlertType.ERROR);
+            return;
+        }
+
+        if(numeroMinimoAtletas > vagas){
+            showAlert("Erro", "Número mínimo de atletas não pode ser maior que o número de vagas", Alert.AlertType.ERROR);
+            return;
+        }
 
 
 
@@ -105,8 +149,33 @@ public class adicionarAulaController {
                 newAula.setIdFuncionario(instrutor.getIdFuncionario());
             }
         }
-        AulaBLL.createAula(newAula);
-        AulaBLL.readAula();
+
+
+
+        try {
+
+            AulaBLL.createAula(newAula);
+
+            showAlert("Sucesso", "Registado com sucesso", Alert.AlertType.INFORMATION);
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/responsavelInstrutores/responsavelMainPage.fxml")));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) addAulaButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("GymMaster - Login");
+            stage.show();
+
+        } catch (Exception e) {
+            showAlert("Erro", "Erro ao registar", Alert.AlertType.ERROR);
+        }
+    }
+
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     private LocalTime parseDurationToTime(String durationStr) {
@@ -121,5 +190,50 @@ public class adicionarAulaController {
         }
         throw new IllegalArgumentException("Invalid duration format");
     }
+
+    private boolean verifyDate(Instant date){
+        LocalDate today = LocalDate.now();
+        if(date.isBefore(today.atStartOfDay(ZoneId.systemDefault()).toInstant())){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkEmptyFields(String... fields) {
+        for (String field : fields) {
+            if (field == null || field.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean comboBoxEmpty(ComboBox<String>... comboBoxes){
+        for(ComboBox<String> comboBox : comboBoxes){
+            if(comboBox.getValue() == null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean dataEmpty(DatePicker... datePickers){
+        for(DatePicker datePicker : datePickers){
+            if(datePicker.getValue() == null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void goBack(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/responsavelInstrutores/responsavelMainPage.fxml")));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("GymMaster - Responsável de Instrutores");
+        stage.show();
+    }
+
 
 }

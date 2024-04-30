@@ -116,8 +116,8 @@ public class FuncionarioBLL {
                     .setParameter("email", email)
                     .getSingleResult();
             return count > 0;
-        } finally {
-            entityManager.close();
+        } catch (NoResultException e) {
+            return false;
         }
     }
 
@@ -130,8 +130,8 @@ public class FuncionarioBLL {
                     .setParameter("password", password)
                     .getSingleResult();
             return count > 0;
-        } finally {
-            entityManager.close();
+        } catch (NoResultException e) {
+            return false;
         }
     }
 
@@ -143,8 +143,6 @@ public class FuncionarioBLL {
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
-        } finally {
-            entityManager.close();
         }
     }
 
@@ -166,9 +164,12 @@ public class FuncionarioBLL {
         try {
             TypedQuery<Funcionario> query = entityManager.createQuery("SELECT f FROM Funcionario f", Funcionario.class);
             return query.getResultList();
-        } finally {
-            entityManager.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
+
 
 }

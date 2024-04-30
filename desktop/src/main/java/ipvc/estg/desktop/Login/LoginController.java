@@ -2,6 +2,7 @@ package ipvc.estg.desktop.Login;
 
 import bll.FuncionarioBLL;
 import entity.Funcionario;
+import jakarta.persistence.EntityManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
+
 
 public class LoginController {
 

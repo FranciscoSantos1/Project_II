@@ -1,6 +1,7 @@
 package entity;
 
 import jakarta.persistence.*;
+
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -46,8 +47,9 @@ import jakarta.persistence.Convert;
         @Column(name = "data_hora_comeco", nullable = false)
         private Instant dataHoraComeco;
 
-    @Column(name = "duracao", nullable = false)
-    private LocalTime duracao;
+        @Column(name = "duracao", nullable = false)
+        private LocalTime duracao;
+
 
         public Instant getDataHoraComeco() {
             return dataHoraComeco;

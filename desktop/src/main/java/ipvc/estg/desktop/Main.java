@@ -16,8 +16,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/rececionista/rececionistaMainPage.fxml")));
-        //Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/responsavelInstrutores/adicionarAula.fxml")));
+        //Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/rececionista/rececionistaMainPage.fxml")));
+//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/responsavelInstrutores/adicionarAula.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/Login/login.fxml")));
         Scene scene = new Scene(root);
         stage.setTitle("GymMaster");
         stage.setScene(scene);
