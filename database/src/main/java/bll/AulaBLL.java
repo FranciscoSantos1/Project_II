@@ -2,10 +2,13 @@ package bll;
 
 import database.Database;
 import entity.Aula;
+import entity.Funcionario;
 import entity.Modalidade;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AulaBLL {
@@ -72,4 +75,28 @@ public class AulaBLL {
     }
 
 
+    public static List<Funcionario> getAvailableInstructors(Instant start, Instant end) {
+        EntityManager entityManager = Database.getEntityManager();
+        List<Funcionario> availableInstructors = new ArrayList<>();
+        try {
+            entityManager.getTransaction().begin();
+            // Query to find instructors not engaged in another class at the same time
+            Query query = entityManager.createQuery(
+                    "SELECT f FROM Funcionario f WHERE f.idTipofuncionario = 2 AND NOT EXISTS (" +
+                            "SELECT 1 FROM Aula a WHERE a.idFuncionario = f.idFuncionario AND NOT (" +
+                            "a.dataHoraFim <= :start OR a.dataHoraComeco >= :end))", Funcionario.class);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
+            availableInstructors = query.getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to fetch available instructors", e);
+        } finally {
+            entityManager.close();
+        }
+        return availableInstructors;
+    }
 }

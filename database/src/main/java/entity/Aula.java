@@ -47,8 +47,21 @@ import jakarta.persistence.Convert;
         @Column(name = "data_hora_comeco", nullable = false)
         private Instant dataHoraComeco;
 
+        @Column(name = "data_hora_fim", nullable = false)
+        private Instant dataHoraFim;
+
         @Column(name = "duracao", nullable = false)
         private LocalTime duracao;
+
+
+
+        public Instant getDataHoraFim() {
+            return dataHoraFim;
+        }
+
+        public void setDataHoraFim(Instant dataHoraFim) {
+            this.dataHoraFim = dataHoraFim;
+        }
 
 
         public Instant getDataHoraComeco() {

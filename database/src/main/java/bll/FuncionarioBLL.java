@@ -1,5 +1,6 @@
 package bll;
 
+import java.time.Instant;
 import java.util.List;
 import jakarta.persistence.*;
 import database.Database;
@@ -170,6 +171,5 @@ public class FuncionarioBLL {
             return null;
         }
     }
-
 
 }

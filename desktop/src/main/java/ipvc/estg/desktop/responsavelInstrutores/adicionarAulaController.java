@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.*;
+import java.util.List;
 import java.util.Objects;
 
 public class adicionarAulaController {
@@ -82,17 +83,33 @@ public class adicionarAulaController {
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
-
-
-
-
     }
+
+/*
+    private void updateAvailableInstructors() {
+        if (dataDatePicker.getValue() != null && HoraComboBox.getValue() != null && DuracaoComboBox.getValue() != null) {
+            try {
+                LocalTime startTime = LocalTime.parse(HoraComboBox.getValue().substring(0, 5));
+                LocalDate date = dataDatePicker.getValue();
+                LocalTime durationTime = parseDurationToTime(DuracaoComboBox.getValue());
+                Instant startInstant = date.atTime(startTime).atZone(ZoneId.systemDefault()).toInstant();
+                Instant endInstant = startInstant.plusSeconds(durationTime.toSecondOfDay());
+
+                List<Funcionario> availableInstructors = AulaBLL.getAvailableInstructors(startInstant, endInstant);
+                InstrutorComboBox1.getItems().clear();
+                for (Funcionario instructor : availableInstructors) {
+                    InstrutorComboBox1.getItems().add(instructor.getNome()); // Assuming Funcionario has a getNome() method.
+                }
+            } catch (Exception e) {
+                showAlert("Error", "Failed to update instructors: " + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
+    }
+*/
 
     public void createAula() {
 
         Aula newAula = new Aula();
-
-
 
         String nome = nomeAulaField.getText();
         LocalDate data = dataDatePicker.getValue();
@@ -103,21 +120,12 @@ public class adicionarAulaController {
         int vagas = Integer.parseInt(vagasField.getText());
         Instant dataHoraComeco = data.atTime(hora).atZone(ZoneId.systemDefault()).toInstant();
         LocalTime duration = parseDurationToTime(selectedDuration);
+        Instant dataHoraFim = dataHoraComeco.plusSeconds(duration.toSecondOfDay());
 
         if(!verifyDate(dataHoraComeco)){
             showAlert("Erro", "Data inválida", Alert.AlertType.ERROR);
             return;
         }
-
-        try{
-            if (checkEmptyFields(nome, local, numeroMinimoAtletasField.getText(), selectedDuration, vagasField.getText())) {
-                showAlert("Erro", "Preencha todos os campos", Alert.AlertType.ERROR);
-                return;
-            }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
 
         if(Integer.parseInt(numeroMinimoAtletasField.getText()) < 0 || Integer.parseInt(vagasField.getText()) < 0){
             showAlert("Erro", "Número de vagas ou número mínimo de atletas não pode ser negativo", Alert.AlertType.ERROR);
@@ -138,6 +146,7 @@ public class adicionarAulaController {
         newAula.setIdEstadoaula(1);
         newAula.setVagas(vagas);
         newAula.setDataHoraComeco(dataHoraComeco);
+        newAula.setDataHoraFim(dataHoraFim);
         for(Modalidade modalidade : ModalidadeBLL.getAllModalidades()){
             if(modalidade.getModalidade().equals(modalidadeComboBox.getValue())){
                 newAula.setIdModalidade(modalidade.getIdModalidade());
@@ -166,6 +175,7 @@ public class adicionarAulaController {
             stage.show();
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             showAlert("Erro", "Erro ao registar", Alert.AlertType.ERROR);
         }
     }
@@ -234,6 +244,4 @@ public class adicionarAulaController {
         stage.setTitle("GymMaster - Responsável de Instrutores");
         stage.show();
     }
-
-
 }
