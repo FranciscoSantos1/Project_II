@@ -13,37 +13,55 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+
 public class SocioBLL {
 
     public static void createSocio(Socio socio) {
         EntityManager entityManager = Database.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
+            entityManager.getTransaction().begin();
 
-            transaction.begin();
-            Plano plano = PlanoBLL.findPlanoById(socio.getIdPlano());
-
-            if (plano == null) {
-                System.out.println("Plano não encontrado para o ID fornecido. Criação de sócio cancelada.");
-                return;
+            // Verifica se a entidade está no contexto de persistência
+            if (!entityManager.contains(socio)) {
+                // Se não estiver, associa a entidade com o contexto de persistência usando merge
+                socio = entityManager.merge(socio);
             }
 
-            socio.setPlanoByIdPlano(plano);
             entityManager.persist(socio);
-
-            transaction.commit();
-            System.out.println("Sócio criado com sucesso!");
-
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
             }
             e.printStackTrace();
             System.out.println("Erro ao criar sócio.");
         } finally {
-            return;
+            // Não é necessário retornar nada em um método void
         }
     }
+
+    public static Socio findSocioByName(String name) {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.nome = :name");
+            query.setParameter("name", name);
+            return (Socio) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // Retorna null se nenhum resultado for encontrado
+        }
+    }
+
+    public static int getNextSocioId() {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT MAX(s.idSocio) FROM Socio s");
+        Integer maxId = (Integer) query.getSingleResult();
+        if (maxId != null) {
+            return maxId + 1;
+        } else {
+            return 1;
+        }
+    }
+
 
     /*public static void deleteSocio(Socio socio) {
         EntityManager entityManager = Database.getEntityManager();
@@ -66,12 +84,16 @@ public class SocioBLL {
         try {
             connection = Database.getConnection();
             if (connection != null) {
-                String sql = "UPDATE socio SET nome = ?, contacto = ?, id_plano = ?,  WHERE id_socio = ?";
+                String sql = "UPDATE socio SET nome = ?, contacto = ?, id_plano = ?, cod_postal = ?, rua = ?, n_porta = ? WHERE id_socio = ?";
+
                 statement = connection.prepareStatement(sql);
                 statement.setString(1, socio.getNome());
                 statement.setObject(2, socio.getContacto());
                 statement.setInt(3, socio.getIdPlano());
-                statement.setInt(4, socio.getIdSocio());
+                statement.setString(4, socio.getCodPostal());
+                statement.setString(5, socio.getRua());
+                statement.setString(6, socio.getnPorta());
+                statement.setInt(7, socio.getIdSocio());
                 statement.executeUpdate();
             } else {
                 System.out.println("Não foi possível obter a conexão com o banco de dados.");

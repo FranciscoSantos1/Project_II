@@ -48,7 +48,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Text layoutX="248.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Morada:">
+      <Text layoutX="248.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Morada:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -58,7 +58,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Text layoutX="249.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plano:">
+      <Text layoutX="249.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plano:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -68,9 +68,12 @@
       <TextField fx:id="idTextField" layoutX="344.0" layoutY="87.0" prefHeight="26.0" prefWidth="394.0" />
       <TextField fx:id="nameTextField" layoutX="344.0" layoutY="119.0" prefHeight="26.0" prefWidth="394.0" />
       <TextField fx:id="contactTextField" layoutX="344.0" layoutY="150.0" prefHeight="26.0" prefWidth="394.0" />
-      <TextField fx:id="addressTextField" layoutX="344.0" layoutY="183.0" prefHeight="26.0" prefWidth="394.0" />
-      <TextField fx:id="planTextField" layoutX="344.0" layoutY="214.0" prefHeight="26.0" prefWidth="394.0" />
+      <TextField fx:id="planTextField" layoutX="344.0" layoutY="284.0" prefHeight="26.0" prefWidth="394.0" />
       <Button fx:id="saveButton" layoutX="378.0" layoutY="426.0" mnemonicParsing="false" onAction="#editDetails" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #00A300;" text="Guardar" />
-      <ComboBox fx:id="planoComboBox" layoutX="344.0" layoutY="213.0" prefHeight="30.0" prefWidth="394.0" />
+      <ComboBox fx:id="planoComboBox" layoutX="344.0" layoutY="283.0" prefHeight="30.0" prefWidth="394.0" />
+      <TextField fx:id="codPostalTextField" layoutX="247.0" layoutY="233.0" prefHeight="26.0" prefWidth="154.0" promptText="Código Postal" />
+      <TextField fx:id="streetTextField" layoutX="416.0" layoutY="233.0" prefHeight="26.0" prefWidth="154.0" promptText="Rua" />
+      <TextField fx:id="doorNumberTextField" layoutX="583.0" layoutY="233.0" prefHeight="26.0" prefWidth="154.0" promptText="Nº da Porta" />
+      <Button fx:id="paymentButton" layoutX="669.0" layoutY="426.0" mnemonicParsing="false" onAction="#payment" text="Registar pagamento" />
    </children>
 </AnchorPane>

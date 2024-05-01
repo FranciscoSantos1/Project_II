@@ -2,6 +2,7 @@ package ipvc.estg.desktop.Login;
 
 import bll.FuncionarioBLL;
 import entity.Funcionario;
+import ipvc.estg.desktop.rececionista.PaymentController;
 import jakarta.persistence.EntityManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,6 +64,8 @@ public class LoginController {
                         System.err.println("Arquivo FXML não encontrado.");
                         return;
                     }
+
+                    PaymentController.getLoggedFuncionario(funcionario);
 
                     Parent root = FXMLLoader.load(resourceUrl);
                     Scene mainPage = new Scene(root);

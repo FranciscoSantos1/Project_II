@@ -38,6 +38,9 @@ public class SocioDetailsController {
     private Button backButton;
 
     @FXML
+    private Button paymentButton;
+
+    @FXML
     private Button saveButton;
 
     @FXML
@@ -47,7 +50,13 @@ public class SocioDetailsController {
     private TextField contactTextField;
 
     @FXML
-    private TextField addressTextField;
+    private TextField codPostalTextField;
+
+    @FXML
+    private TextField streetTextField;
+
+    @FXML
+    private TextField doorNumberTextField;
 
     @FXML
     private TextField planTextField;
@@ -65,26 +74,32 @@ public class SocioDetailsController {
     public void initialize(){
         nameTextField.setEditable(false);
         contactTextField.setEditable(false);
-        addressTextField.setEditable(false);
+        codPostalTextField.setEditable(false);
+        streetTextField.setEditable(false);
+        doorNumberTextField.setEditable(false);
         planTextField.setEditable(false);
         saveButton.setVisible(false);
         planoComboBox.setVisible(false);
     }
 
-    public void initSocioDetails(int idSocio, String morada) {
-        // Fetch the updated Socio from the database
-        Socio updatedSocio = SocioBLL.findSocioById(idSocio);
+    public void initSocioDetails(Socio socio) {
+        //TODO: arranjar forma de mostar os dados do socio atualizados
 
-        nameLabel.setText(updatedSocio.getNome());
-        nameTextField.setText(updatedSocio.getNome());
-        contactTextField.setText(updatedSocio.getContacto().toString());
-        addressTextField.setText(morada);
-        idTextField.setText(String.valueOf(updatedSocio.getIdSocio()));
-        Plano updatedPlano = PlanoBLL.findPlanoById(updatedSocio.getIdPlano());
+        // Fetch the updated Socio from the database
+        socio = SocioBLL.findSocioById(socio.getIdSocio());
+
+        nameLabel.setText(socio.getNome());
+        nameTextField.setText(socio.getNome());
+        contactTextField.setText(socio.getContacto().toString());
+        codPostalTextField.setText(socio.getCodPostal());
+        streetTextField.setText(socio.getRua());
+        doorNumberTextField.setText(socio.getnPorta());
+        idTextField.setText(String.valueOf(socio.getIdSocio()));
+        Plano updatedPlano = PlanoBLL.findPlanoById(socio.getIdPlano());
         planTextField.setText("Plano " + updatedPlano.getIdPlano() + " - " + updatedPlano.getTipo() + " - " + updatedPlano.getDescricao() + " - " + updatedPlano.getValor() + "€/mês");
 
         // Clear the planoComboBox items
-        planoComboBox.getItems().clear();
+        //planoComboBox.getItems().clear();
 
         List<Plano> planos = PlanoBLL.getAllPlanos();
         for (Plano plano : planos) {
@@ -141,6 +156,9 @@ public class SocioDetailsController {
             contactTextField.setEditable(true);
             planoComboBox.setVisible(true);
             planoComboBox.setDisable(false);
+            codPostalTextField.setEditable(true);
+            streetTextField.setEditable(true);
+            doorNumberTextField.setEditable(true);
 
             editing = true;
         } else {
@@ -157,23 +175,39 @@ public class SocioDetailsController {
             socio.setNome(nameTextField.getText());
             socio.setContacto(new BigInteger(contactTextField.getText()));
             socio.setIdPlano(plano.getIdPlano());
+            socio.setCodPostal(codPostalTextField.getText());
+            socio.setRua(streetTextField.getText());
+            socio.setnPorta(doorNumberTextField.getText());
 
             if (planoComboBox.getSelectionModel().isEmpty()) {
                 alertBox("Selecione um plano antes de salvar!", "Erro");
                 return;
             }
 
-            SocioBLL.updateSocio(socio);
+            try {
+                SocioBLL.updateSocio(socio);
+                nameTextField.setEditable(false);
+                contactTextField.setEditable(false);
+                planoComboBox.setDisable(true);
+                planoComboBox.setVisible(false);
+                codPostalTextField.setEditable(false);
+                streetTextField.setEditable(false);
+                doorNumberTextField.setEditable(false);
+                editing = false;
 
-            nameTextField.setEditable(false);
-            contactTextField.setEditable(false);
-            planoComboBox.setDisable(true);
-            planoComboBox.setVisible(false);
+                alertBox("Sócio atualizado com sucesso!", "Sucesso");
+                saveButton.setVisible(false);
 
-            editing = false;
-
-            alertBox("Sócio atualizado com sucesso!", "Sucesso");
-            saveButton.setVisible(false);
+                Parent root = FXMLLoader.load(getClass().getResource("/ipvc/estg/desktop/rececionista/rececionistaMainPage.fxml"));
+                Scene mainPage = new Scene(root);
+                Stage stage = (Stage) saveButton.getScene().getWindow();
+                stage.setScene(mainPage);
+                stage.setTitle("GymMaster - Rececionista");
+                stage.show();
+            } catch (Exception e) {
+                alertBox("Erro ao atualizar sócio!", "Erro");
+                return;
+            }
         }
     }
 
@@ -188,5 +222,26 @@ public class SocioDetailsController {
         alert.setHeaderText(null);
         alert.setContentText(s);
         alert.showAndWait();
+    }
+
+    @FXML
+    void payment(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/rececionista/payment.fxml"));
+            Parent root = loader.load();
+
+            Socio socio = SocioBLL.findSocioById(Integer.parseInt(idTextField.getText()));
+            PaymentController paymentController = loader.getController();
+            paymentController.initSocioDetails(socio);
+            System.out.println("ID Sócio: " + socio.getIdSocio());
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Pagamento");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

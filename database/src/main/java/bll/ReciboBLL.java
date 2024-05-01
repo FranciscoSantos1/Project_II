@@ -7,6 +7,7 @@ import entity.Socio;
 import entity.TipoPagamento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 
 public class ReciboBLL {
     public static void createRecibo(Recibo recibo) {
@@ -42,4 +43,14 @@ public class ReciboBLL {
         }
     }
 
+    public static int getNextIdRecibo() {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT MAX(r.idRecibo) FROM Recibo r");
+        Integer maxId = (Integer) query.getSingleResult();
+        if (maxId != null) {
+            return maxId + 1;
+        } else {
+            return 1;
+        }
+    }
 }

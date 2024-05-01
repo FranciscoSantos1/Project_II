@@ -60,7 +60,7 @@
          </font>
       </Text>
       <TextField fx:id="nameTextField" layoutX="354.0" layoutY="129.0" prefHeight="26.0" prefWidth="394.0" />
-      <TextField fx:id="contactTextField" layoutX="354.0" layoutY="160.0" prefHeight="26.0" prefWidth="394.0" />
+      <TextField fx:id="phoneNumberTextField" layoutX="354.0" layoutY="160.0" prefHeight="26.0" prefWidth="394.0" />
       <TextField fx:id="codPostalTextField" layoutX="258.0" layoutY="237.0" prefHeight="26.0" prefWidth="154.0" promptText="Código Postal" />
       <TextField fx:id="streetTextField" layoutX="427.0" layoutY="237.0" prefHeight="26.0" prefWidth="154.0" promptText="Rua" />
       <TextField fx:id="doorNumberTextField" layoutX="594.0" layoutY="237.0" prefHeight="26.0" prefWidth="154.0" promptText="Nº da Porta" />

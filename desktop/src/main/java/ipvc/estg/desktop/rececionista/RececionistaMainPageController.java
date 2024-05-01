@@ -90,6 +90,7 @@ public class RececionistaMainPageController {
                 Socio socio = SocioBLL.findSocioById(idSocio);
                 int plano = socio.getIdPlano();
                 Plano planoObj = SocioBLL.findPlanoById(plano);
+                System.out.println("Sócio " + idSocio + " - " + nome + " - " + contacto + " - " + morada + " - " + planoObj.getIdPlano() + " - " + planoObj.getTipo() + " - " + planoObj.getDescricao() + " - " + planoObj.getValor() + "€/mês");
             }
         });
     }
@@ -131,11 +132,13 @@ public class RececionistaMainPageController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/rececionista/socioDetails.fxml"));
             Parent root = loader.load();
             SocioDetailsController detailsController = loader.getController();
-            detailsController.initSocioDetails(selectedSocio.getIdSocio(), selectedSocio.getMorada());
+            detailsController.initSocioDetails(selectedSocio);
+            System.out.println(selectedSocio.getIdSocio() + " " + selectedSocio.getNome() + " " + selectedSocio.getContacto() + " " + selectedSocio.getMorada() + " " + selectedSocio.getIdPlano());
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Detalhes do Sócio");
+            stage.setOnHidden(e -> refreshSocioTable());
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -176,6 +179,19 @@ public class RececionistaMainPageController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void refreshSocioTable() {
+        socioTableView.getItems().clear();
+        List<Object[]> results = SocioBLL.listSocio();
+        for (Object[] result : results) {
+            Socio socio = new Socio();
+            socio.setIdSocio((int) result[0]);
+            socio.setNome((String) result[1]);
+            socio.setContacto((BigInteger) result[2]);
+            socio.setMorada((String) result[3]);
+            socioTableView.getItems().add(socio);
         }
     }
 
