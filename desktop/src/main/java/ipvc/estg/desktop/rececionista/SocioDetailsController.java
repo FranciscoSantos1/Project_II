@@ -1,5 +1,6 @@
 package ipvc.estg.desktop.rececionista;
 
+import bll.PlanoBLL;
 import bll.SocioBLL;
 import entity.Plano;
 import entity.Socio;
@@ -9,16 +10,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
+import java.util.List;
 
 
 public class SocioDetailsController {
@@ -56,6 +55,9 @@ public class SocioDetailsController {
     @FXML
     private TextField idTextField;
 
+    @FXML
+    private ComboBox<String> planoComboBox;
+
     private boolean editing = false;
 
     private RececionistaMainPageController mainPageController;
@@ -66,23 +68,29 @@ public class SocioDetailsController {
         addressTextField.setEditable(false);
         planTextField.setEditable(false);
         saveButton.setVisible(false);
-
+        planoComboBox.setVisible(false);
     }
 
-    public void initSocioDetails(int idSocio, String nome, BigInteger contacto, String morada) {
-        nameLabel.setText(nome);
-        nameTextField.setText(nome);
-        contactTextField.setText(contacto.toString());
+    public void initSocioDetails(int idSocio, String morada) {
+        // Fetch the updated Socio from the database
+        Socio updatedSocio = SocioBLL.findSocioById(idSocio);
+
+        nameLabel.setText(updatedSocio.getNome());
+        nameTextField.setText(updatedSocio.getNome());
+        contactTextField.setText(updatedSocio.getContacto().toString());
         addressTextField.setText(morada);
-        idTextField.setText(String.valueOf(idSocio));
+        idTextField.setText(String.valueOf(updatedSocio.getIdSocio()));
+        Plano updatedPlano = PlanoBLL.findPlanoById(updatedSocio.getIdPlano());
+        planTextField.setText("Plano " + updatedPlano.getIdPlano() + " - " + updatedPlano.getTipo() + " - " + updatedPlano.getDescricao() + " - " + updatedPlano.getValor() + "€/mês");
 
-        //get plano do socio
-        Socio socio = SocioBLL.findSocioById(idSocio);
-        int plano = socio.getIdPlano();
-        Plano planoObj = SocioBLL.findPlanoById(plano);
-        //System.out.println("Plano: " + planoObj.getTipo() + " - " + planoObj.getDescricao() + " - " + planoObj.getValor() + "€");
+        // Clear the planoComboBox items
+        planoComboBox.getItems().clear();
 
-        planTextField.setText(planoObj.getTipo() + " - " + planoObj.getDescricao() + " - " + planoObj.getValor() + "€/mês");
+        List<Plano> planos = PlanoBLL.getAllPlanos();
+        for (Plano plano : planos) {
+            String descricaoPlano = "Plano " + plano.getIdPlano() + " - " + plano.getTipo() + " - " + plano.getDescricao() + " - " + plano.getValor() + "€/mês";
+            planoComboBox.getItems().add(descricaoPlano);
+        }
     }
 
 
@@ -106,7 +114,7 @@ public class SocioDetailsController {
     }
 
     @FXML
-    void back(ActionEvent event) {
+    public void back(ActionEvent event) {
         try {
             URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/rececionista/rececionistaMainPage.fxml");
             if (resourceUrl == null) {
@@ -127,34 +135,51 @@ public class SocioDetailsController {
 
     @FXML
     public void editDetails() {
-        editButton.setVisible(false);
         saveButton.setVisible(true);
         if (!editing) {
             nameTextField.setEditable(true);
             contactTextField.setEditable(true);
+            planoComboBox.setVisible(true);
+            planoComboBox.setDisable(false);
 
             editing = true;
         } else {
-            // Save changes
             Socio socio = new Socio();
+            String selectedPlano = planoComboBox.getSelectionModel().getSelectedItem();
+            Plano plano = PlanoBLL.findPlanoById(extractIdPlano(selectedPlano));
+
+            if (plano == null) {
+                alertBox("Selecione um plano válido antes de salvar!", "Erro");
+                return;
+            }
+
             socio.setIdSocio(Integer.parseInt(idTextField.getText()));
             socio.setNome(nameTextField.getText());
             socio.setContacto(new BigInteger(contactTextField.getText()));
+            socio.setIdPlano(plano.getIdPlano());
 
-            //todo: update morada e plano
+            if (planoComboBox.getSelectionModel().isEmpty()) {
+                alertBox("Selecione um plano antes de salvar!", "Erro");
+                return;
+            }
 
             SocioBLL.updateSocio(socio);
 
             nameTextField.setEditable(false);
             contactTextField.setEditable(false);
-
-            alertBox("Sócio atualizado com sucesso!", "Sucesso");
+            planoComboBox.setDisable(true);
+            planoComboBox.setVisible(false);
 
             editing = false;
 
-            editButton.setVisible(true);
+            alertBox("Sócio atualizado com sucesso!", "Sucesso");
             saveButton.setVisible(false);
         }
+    }
+
+    private int extractIdPlano(String descricaoPlano) {
+        String[] partes = descricaoPlano.split(" - ");
+        return Integer.parseInt(partes[0].split(" ")[1]);
     }
 
     private void alertBox(String s, String sucesso) {

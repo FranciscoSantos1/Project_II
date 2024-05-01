@@ -90,12 +90,10 @@ public class RececionistaMainPageController {
                 Socio socio = SocioBLL.findSocioById(idSocio);
                 int plano = socio.getIdPlano();
                 Plano planoObj = SocioBLL.findPlanoById(plano);
-
-                //System.out.println("Plano: " + planoObj.getTipo() + " - " + planoObj.getDescricao() + " - " + planoObj.getValor() + "€");
-                //System.out.println("Sócio selecionado: ID=" + idSocio + ", Nome=" + nome + ", Contacto=" + contacto + ", Morada=" + morada);
             }
         });
     }
+
 
     @FXML
     void logout(ActionEvent event) {
@@ -120,7 +118,12 @@ public class RececionistaMainPageController {
     void socioDetails(ActionEvent event) {
         Socio selectedSocio = socioTableView.getSelectionModel().getSelectedItem();
         if (selectedSocio == null) {
-            System.out.println("Nenhum sócio selecionado.");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Aviso");
+            alert.setHeaderText("Nenhum sócio selecionado.");
+            alert.setContentText("Por favor, selecione um sócio.");
+            alert.showAndWait();
+
             return;
         }
 
@@ -128,7 +131,7 @@ public class RececionistaMainPageController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/rececionista/socioDetails.fxml"));
             Parent root = loader.load();
             SocioDetailsController detailsController = loader.getController();
-            detailsController.initSocioDetails(selectedSocio.getIdSocio(), selectedSocio.getNome(), selectedSocio.getContacto(), selectedSocio.getMorada());
+            detailsController.initSocioDetails(selectedSocio.getIdSocio(), selectedSocio.getMorada());
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -138,4 +141,42 @@ public class RececionistaMainPageController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void deactivateSocio(ActionEvent event) {
+        Socio selectedSocio = socioTableView.getSelectionModel().getSelectedItem();
+        if (selectedSocio == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Aviso");
+            alert.setHeaderText("Nenhum sócio selecionado.");
+            alert.setContentText("Por favor, selecione um sócio.");
+            alert.showAndWait();
+
+            return;
+        }
+
+        SocioBLL.deactivateSocio(selectedSocio.getIdSocio());
+        socioTableView.getItems().remove(selectedSocio);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sucesso");
+        alert.setHeaderText("Sócio desativado com sucesso.");
+        alert.showAndWait();
+    }
+
+    @FXML
+    void loadAddSocio(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/rececionista/addSocio.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Adicionar Sócio");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

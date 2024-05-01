@@ -26,7 +26,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="deactivateButton" layoutX="697.0" layoutY="426.0" mnemonicParsing="false" style="-fx-background-color: #eead2d;" text="Desativar Sócio">
+      <Button fx:id="deactivateButton" layoutX="697.0" layoutY="426.0" mnemonicParsing="false" onAction="#deactivateSocio" style="-fx-background-color: #eead2d;" text="Desativar Sócio">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -61,7 +61,7 @@
             </Text>
          </children>
       </Pane>
-      <Button fx:id="addSocioButton" layoutX="698.0" layoutY="36.0" mnemonicParsing="false" text="Adicionar Sócio">
+      <Button fx:id="addSocioButton" layoutX="698.0" layoutY="36.0" mnemonicParsing="false" onAction="#loadAddSocio" text="Adicionar Sócio">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
