@@ -31,6 +31,7 @@ public class AulasDetailsController {
     @FXML private TextField nameTextField;
     @FXML private TextField numeroMinimoField;
     @FXML private TextField vagasTextField;
+    @FXML private TextField totalLugaresTextField1;
 
     private boolean editing = false;
 
@@ -46,6 +47,7 @@ public class AulasDetailsController {
         vagasTextField.setEditable(false);
         funcionarioTextField.setEditable(false);
         ModalidadeField.setEditable(false);
+        totalLugaresTextField1.setEditable(false);
     }
 
     public void setMainPageController(responsavelMainPageController mainPageController) {
@@ -64,6 +66,7 @@ public class AulasDetailsController {
             dataFimField.setText(selectedAula.getDataHoraFim().toString());
             numeroMinimoField.setText(String.valueOf(selectedAula.getNumMinAtletas()));
             vagasTextField.setText(String.valueOf(selectedAula.getVagas()));
+            totalLugaresTextField1.setText(String.valueOf(selectedAula.getTotalLugares()));
 
             String modalidadeName = ModalidadeBLL.getModalidadeNameById(selectedAula.getIdModalidade());
             String funcionarioName = FuncionarioBLL.getFuncionarioNameById(selectedAula.getIdFuncionario());

@@ -80,6 +80,29 @@ public class AulaBLL {
         return (String) query.getSingleResult();
     }
 
+    public static String getLocalByIdAula(int id)
+    {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT a.localAula FROM Aula a WHERE a.id = :id");
+        query.setParameter("id", id);
+        return (String) query.getSingleResult();
+    }
+
+    public static String getTipoAulaByIdAula(int id)
+    {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT a.vagas FROM Aula a WHERE a.id = :id");
+        query.setParameter("id", id);
+        if((int) query.getSingleResult() == 1)
+        {
+            return "AULA INDIVIDUAL";
+        }
+        else
+        {
+            return "AULA GRUPO";
+        }
+    }
+
 
     public static List<Funcionario> getAvailableInstructors(Instant start, Instant end) {
         EntityManager entityManager = Database.getEntityManager();
@@ -109,9 +132,16 @@ public class AulaBLL {
         return availableInstructors;
     }
 
-    public static Instant getDateByIdAula(int id) {
+    public static Instant getDateInicioByIdAula(int id) {
         EntityManager entityManager = Database.getEntityManager();
         Query query = entityManager.createQuery("SELECT a.dataHoraComeco FROM Aula a WHERE a.id = :id");
+        query.setParameter("id", id);
+        return (Instant) query.getSingleResult();
+    }
+
+    public static Instant getDateFimByIdAula(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT a.dataHoraFim FROM Aula a WHERE a.id = :id");
         query.setParameter("id", id);
         return (Instant) query.getSingleResult();
     }

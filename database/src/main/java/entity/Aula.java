@@ -53,9 +53,19 @@ import jakarta.persistence.Convert;
         @Column(name = "duracao", nullable = false)
         private LocalTime duracao;
 
+    @Column(name = "total_lugares", nullable = false)
+    private Integer totalLugares;
+
+    public Integer getTotalLugares() {
+        return totalLugares;
+    }
+
+    public void setTotalLugares(Integer totalLugares) {
+        this.totalLugares = totalLugares;
+    }
 
 
-        public Instant getDataHoraFim() {
+    public Instant getDataHoraFim() {
             return dataHoraFim;
         }
 

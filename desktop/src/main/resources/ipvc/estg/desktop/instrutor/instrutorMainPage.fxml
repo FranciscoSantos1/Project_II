@@ -16,10 +16,11 @@
    <children>
       <TableView fx:id="aulasTableView" layoutX="209.0" layoutY="75.0" prefHeight="330.0" prefWidth="586.0">
         <columns>
-            <TableColumn fx:id="dateColumn" prefWidth="190.0" text="Data" />
-            <TableColumn fx:id="modalidadeColumn" prefWidth="159.0" text="Modalidade" />
-          <TableColumn fx:id="nomeInstrutorColumn" prefWidth="125.0" text="Nome Instrutor" />
-            <TableColumn fx:id="vagasColumn" prefWidth="109.0" text="Vagas" />
+            <TableColumn fx:id="dateInicioColumn" prefWidth="107.0" text="Data Hora Inicio" />
+            <TableColumn fx:id="dateFimColumn1" prefWidth="107.0" text="Data Hora Fim" />
+            <TableColumn fx:id="modalidadeColumn" prefWidth="137.0" text="Modalidade" />
+            <TableColumn fx:id="LocalColumn" prefWidth="109.0" text="Local" />
+          <TableColumn fx:id="tipoAulaColumn" prefWidth="125.0" text="Tipo aula" />
         </columns>
       </TableView>
       <Button fx:id="detailsButton" layoutX="209.0" layoutY="426.0" mnemonicParsing="false" text="Ver Detalhes">
@@ -57,12 +58,12 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="addSocioButton" layoutX="698.0" layoutY="36.0" mnemonicParsing="false" onAction="#addAula" text="Adicionar aula">
+      <Button fx:id="addSocioButton" layoutX="650.0" layoutY="36.0" mnemonicParsing="false" onAction="#addAula" text="Adicionar aula individual">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Text layoutX="209.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Aulas Individuais">
+      <Text layoutX="209.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aulas a realizar">
          <font>
             <Font size="36.0" />
          </font>

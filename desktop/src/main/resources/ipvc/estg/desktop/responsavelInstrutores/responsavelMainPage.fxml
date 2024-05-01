@@ -18,7 +18,7 @@
             <TableColumn fx:id="dateColumn" prefWidth="190.0" text="Data" />
             <TableColumn fx:id="modalidadeColumn" prefWidth="159.0" text="Modalidade" />
           <TableColumn fx:id="nomeInstrutorColumn" prefWidth="125.0" text="Nome Instrutor" />
-            <TableColumn fx:id="vagasColumn" prefWidth="109.0" text="Vagas" />
+            <TableColumn fx:id="totalLugaresColumn" prefWidth="109.0" text="Total lugares" />
         </columns>
       </TableView>
       <Button fx:id="detailsButton" layoutX="209.0" layoutY="426.0" mnemonicParsing="false" onAction="#goToDetails" text="Ver Detalhes">

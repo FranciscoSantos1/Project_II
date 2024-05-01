@@ -28,13 +28,19 @@ import java.util.List;
 public class instrutorMainPageController {
 
     @FXML
+    private TableColumn<Aula, String> LocalColumn;
+
+    @FXML
     private Button addSocioButton;
 
     @FXML
     private TableView<Aula> aulasTableView;
 
     @FXML
-    private TableColumn<Aula, Instant> dateColumn;
+    private TableColumn<Aula, Instant> dateFimColumn1;
+
+    @FXML
+    private TableColumn<Aula, Instant> dateInicioColumn;
 
     @FXML
     private Button deactivateButton;
@@ -49,30 +55,24 @@ public class instrutorMainPageController {
     private TableColumn<Aula, String> modalidadeColumn;
 
     @FXML
-    private TableColumn<Aula, String> nomeInstrutorColumn;
-
-    @FXML
-    private Button ptSessionButton;
-
-    @FXML
-    private Button reserveButton;
-
-    @FXML
     private Label nameLabel;
 
     @FXML
-    private TableColumn<Aula, Integer> vagasColumn;
+    private Label nameLabel1;
+
+    @FXML
+    private TableColumn<Aula, String> tipoAulaColumn;
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 
     @FXML
     void initialize() {
-        dateColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(AulaBLL.getDateByIdAula(cellData.getValue().getId())));
+        dateInicioColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(AulaBLL.getDateInicioByIdAula(cellData.getValue().getId())));
+        dateFimColumn1.setCellValueFactory(cellData -> new SimpleObjectProperty<>(AulaBLL.getDateFimByIdAula(cellData.getValue().getId())));
         modalidadeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getModalidadeNameByIdAula(cellData.getValue().getId())));
-        nomeInstrutorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getInstrutorNameByIdAula(cellData.getValue().getId())));
-        vagasColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getVagas()).asObject());
-
+        LocalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getLocalByIdAula(cellData.getValue().getId())));
+        tipoAulaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getTipoAulaByIdAula(cellData.getValue().getId())));
         // Get the logged-in instructor
         Funcionario loggedInInstructor = SessionData.getInstance().getCurrentUser();
 

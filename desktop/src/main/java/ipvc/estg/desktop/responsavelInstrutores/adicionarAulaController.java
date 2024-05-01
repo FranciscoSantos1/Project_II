@@ -51,7 +51,7 @@ public class adicionarAulaController {
     private TextField numeroMinimoAtletasField;
 
     @FXML
-    private TextField vagasField;
+    private TextField totalLugaresField;
 
     @FXML
     private ComboBox<String> InstrutorComboBox1;
@@ -134,7 +134,7 @@ public class adicionarAulaController {
         String local = localAulaField.getText();
         int numeroMinimoAtletas = Integer.parseInt(numeroMinimoAtletasField.getText());
         String selectedDuration = DuracaoComboBox.getValue();
-        int vagas = Integer.parseInt(vagasField.getText());
+        int totalLugares = Integer.parseInt(totalLugaresField.getText());
         Instant dataHoraComeco = data.atTime(hora).atZone(ZoneId.systemDefault()).toInstant();
         LocalTime duration = parseDurationToTime(selectedDuration);
         Instant dataHoraFim = dataHoraComeco.plusSeconds(duration.toSecondOfDay());
@@ -144,12 +144,12 @@ public class adicionarAulaController {
             return;
         }
 
-        if(Integer.parseInt(numeroMinimoAtletasField.getText()) < 0 || Integer.parseInt(vagasField.getText()) < 0){
+        if(Integer.parseInt(numeroMinimoAtletasField.getText()) < 0 || Integer.parseInt(totalLugaresField.getText()) < 0){
             showAlert("Erro", "Número de vagas ou número mínimo de atletas não pode ser negativo", Alert.AlertType.ERROR);
             return;
         }
 
-        if(numeroMinimoAtletas > vagas){
+        if(numeroMinimoAtletas > totalLugares){
             showAlert("Erro", "Número mínimo de atletas não pode ser maior que o número de vagas", Alert.AlertType.ERROR);
             return;
         }
@@ -161,7 +161,8 @@ public class adicionarAulaController {
         newAula.setLocalAula(local);
         newAula.setNumMinAtletas(numeroMinimoAtletas);
         newAula.setIdEstadoaula(1);
-        newAula.setVagas(vagas);
+        newAula.setTotalLugares(totalLugares);
+        newAula.setVagas(totalLugares);
         newAula.setDataHoraComeco(dataHoraComeco);
         newAula.setDataHoraFim(dataHoraFim);
         for(Modalidade modalidade : ModalidadeBLL.getAllModalidades()){

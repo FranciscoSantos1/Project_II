@@ -56,24 +56,19 @@ public class responsavelMainPageController {
     @FXML
     private TableColumn<Aula, String> nomeInstrutorColumn;
 
-    @FXML
-    private Button ptSessionButton;
 
     @FXML
-    private Button reserveButton;
-
-    @FXML
-    private TableColumn<Aula, Integer> vagasColumn;
+    private TableColumn<Aula, Integer> totalLugaresColumn;
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 
     @FXML
     void initialize() {
-        dateColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(AulaBLL.getDateByIdAula(cellData.getValue().getId())));
+        dateColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(AulaBLL.getDateInicioByIdAula(cellData.getValue().getId())));
         modalidadeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getModalidadeNameByIdAula(cellData.getValue().getId())));
         nomeInstrutorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getInstrutorNameByIdAula(cellData.getValue().getId())));
-        vagasColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getVagas()).asObject());
+        totalLugaresColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTotalLugares()).asObject());
 
         // Fetch all Aula objects from the database
         List<Aula> aulas = AulaBLL.getAllAulas();

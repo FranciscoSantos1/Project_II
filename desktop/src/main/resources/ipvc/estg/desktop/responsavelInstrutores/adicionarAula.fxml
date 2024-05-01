@@ -56,7 +56,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="251.0" layoutY="267.0" text="Vagas">
+      <Label layoutX="251.0" layoutY="267.0" text="Total de lugares">
          <font>
             <Font size="15.0" />
          </font>
@@ -71,7 +71,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="vagasField" layoutX="256.0" layoutY="289.0" prefHeight="30.0" prefWidth="220.0" />
+      <TextField fx:id="totalLugaresField" layoutX="256.0" layoutY="289.0" prefHeight="30.0" prefWidth="220.0" />
       <Label layoutX="253.0" layoutY="332.0" text="Número minimo de atletas">
          <font>
             <Font size="15.0" />
