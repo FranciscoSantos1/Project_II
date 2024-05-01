@@ -122,4 +122,10 @@ public class AulaBLL {
     }
 
 
+    public static List<Aula> getAulasByInstructorId(Integer instructorId) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.idFuncionario = :instructorId");
+        query.setParameter("instructorId", instructorId);
+        return query.getResultList();
+    }
 }

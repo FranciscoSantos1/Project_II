@@ -97,7 +97,9 @@ public class LoginController {
             }
             else if(funcionario.getIdTipofuncionario() == 1){
                 try {
-                    URL resourceUrl = getClass().getResource("");
+                    SessionData sessionData = SessionData.getInstance();
+                    sessionData.setCurrentUser(funcionario);
+                    URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/instrutor/instrutorMainPage.fxml");
                     if (resourceUrl == null) {
                         System.err.println("Arquivo FXML não encontrado.");
                         return;
@@ -107,7 +109,7 @@ public class LoginController {
                     Scene mainPage = new Scene(root);
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.setScene(mainPage);
-                    stage.setTitle("GymMaster - Página Principal - Responsável de Instrutores");
+                    stage.setTitle("GymMaster - Página Principal - Instrutor");
                     stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
