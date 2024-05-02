@@ -1,24 +1,27 @@
 package ipvc.estg.desktop.rececionista;
 
-import bll.FuncionarioBLL;
-import bll.PlanoBLL;
-import bll.ReciboBLL;
-import entity.Funcionario;
-import entity.Plano;
-import entity.Recibo;
-import entity.Socio;
+import bll.*;
+import database.Database;
+import entity.*;
+import ipvc.estg.desktop.Login.SessionData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.hibernate.internal.SessionOwnerBehavior;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URL;
+import java.util.Date;
+import java.util.List;
 
 public class PaymentController {
     @FXML
@@ -52,44 +55,45 @@ public class PaymentController {
     private  Label ivaLabel;
 
     @FXML
-    private  Label tipoPagLabel;
+    private  Label idPlanoLabel;
 
     @FXML
-    private  Label estadoPagLabel;
+    private ComboBox<String> tipoPagamentoCB;
+
+    @FXML
+    private ComboBox<String> estadoPagamentoCB;
 
     @FXML
     private  Label mesLabel;
 
 
-    public  void initSocioDetails(Socio socio){
-        Recibo recibo = new Recibo();
-        recibo.setIdSocio(socio.getIdSocio());
-        //TODO: ComboBox para escolher tipo de pagamento e estado de pagamento; adicionar tipos e estados de pagamento à BD
-        recibo.setIdTipopagamento(1);
-        recibo.setIdEstadopagamento(1);
+    //Funcionario funcionario = SessionData.getCurrentUser();
 
-        recibo.setIdRecibo(ReciboBLL.getNextIdRecibo());
-        recibo.setDataEmissao(java.time.LocalDate.now());
-        recibo.setIva(new java.math.BigInteger("23"));
-        recibo.setIdPlano(socio.getIdPlano());
-        recibo.setValor(PlanoBLL.findPlanoById(socio.getIdPlano()).getValor());
-        recibo.setMes(java.sql.Date.valueOf(java.time.LocalDate.now()));
+    //TODO: Verificar o mês de pagamento corretamente
+    //TODO: Verificar o funcionário logado
 
-        //TODO: Mudar para o funcionário que está logado
-        recibo.setIdFuncionario(3);
+    public void initSocioDetails(Socio socio){
 
-        funcionarioLabel.setText(String.valueOf(recibo.getIdFuncionario()));
-        idReciboLabel.setText(String.valueOf(recibo.getIdRecibo()));
-        dataEmissaoLabel.setText(String.valueOf(java.time.LocalDate.now()));
-        valorLabel.setText(recibo.getValor() + "€");
-        idSocioLabel.setText(String.valueOf(recibo.getIdSocio()));
-        ivaLabel.setText(recibo.getIva() + "%");
-        tipoPagLabel.setText(String.valueOf(recibo.getIdTipopagamento()));
-        estadoPagLabel.setText(String.valueOf(recibo.getIdEstadopagamento()));
+        List<TipoPagamento> tipo = TipoPagamentoBLL.readTipoPagamento();
+        for (TipoPagamento t : tipo) {
+            tipoPagamentoCB.getItems().add(t.getIdTipopagamento() + " - " + t.getTipo());
+        }
 
-        //TODO: Verificar o mês de pagamento corretamente
-        mesLabel.setText(String.valueOf(recibo.getMes()));
+        List<EstadoPagamento> estado = EstadoPagamentoBLL.readEstadoPagamento();
+        for (EstadoPagamento e : estado) {
+            estadoPagamentoCB.getItems().add(e.getIdEstadopagamento() + " - " + e.getEstado());
+        }
+
+        funcionarioLabel.setText("3");
+        idSocioLabel.setText(String.valueOf(socio.getIdSocio()));
+        dataEmissaoLabel.setText(String.valueOf(java.sql.Date.valueOf(java.time.LocalDate.now())));
+        ivaLabel.setText("23");
+        valorLabel.setText(String.valueOf(PlanoBLL.findPlanoById(socio.getIdPlano()).getValor()));
+        idReciboLabel.setText(String.valueOf(ReciboBLL.getNextIdRecibo()));
+        mesLabel.setText(String.valueOf(java.sql.Date.valueOf(java.time.LocalDate.now())));
+        idPlanoLabel.setText(String.valueOf(socio.getIdPlano()));
     }
+
     @FXML
     void logout(ActionEvent event) {
         try {
@@ -119,6 +123,8 @@ public class PaymentController {
             }
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Parent root = loader.load();
+            SocioDetailsController detailsController = loader.getController();
+            detailsController.initSocioDetails(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
             Scene mainPage = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(mainPage);
@@ -132,5 +138,73 @@ public class PaymentController {
     @FXML
     public static Funcionario getLoggedFuncionario(Funcionario funcionario){
         return funcionario;
+    }
+
+    @FXML
+    public void saveRecibo(ActionEvent event) {
+        Recibo recibo = new Recibo();
+
+        recibo.setDataHoraEmissao(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        recibo.setIdFuncionario(Integer.parseInt(funcionarioLabel.getText()));
+        recibo.setIdRecibo(Integer.parseInt(idReciboLabel.getText()));
+        recibo.setIdSocio(Integer.parseInt(idSocioLabel.getText()));
+        recibo.setIdPlano(Integer.parseInt(idPlanoLabel.getText()));
+        recibo.setDataEmissao(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        recibo.setIva(BigInteger.valueOf(Integer.parseInt(ivaLabel.getText())));
+        recibo.setValor(BigInteger.valueOf(Integer.parseInt(valorLabel.getText())));
+        recibo.setMes(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        recibo.setIdTipopagamento(Integer.parseInt(tipoPagamentoCB.getValue().split(" - ")[0]));
+        recibo.setIdEstadopagamento(Integer.parseInt(estadoPagamentoCB.getValue().split(" - ")[0]));
+
+        try{
+            ReciboBLL.createRecibo(recibo);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Recibo criado");
+            alert.setHeaderText("Recibo criado com sucesso");
+            alert.setContentText("Recibo criado com sucesso");
+            alert.showAndWait();
+            Parent root = FXMLLoader.load(getClass().getResource("/ipvc/estg/desktop/rececionista/rececionistaMainPage.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) confirmButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("GymMaster - Rececionista");
+            stage.show();
+
+        } catch (Exception e){
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Erro ao criar recibo");
+            alert.setContentText("Erro ao criar recibo");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    public void cancel(ActionEvent event) {
+        try {
+            URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/rececionista/socioDetails.fxml");
+            if (resourceUrl == null) {
+                System.err.println("Ficheiro FXML não encontrado.");
+                return;
+            }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Aviso");
+            alert.setHeaderText("Operação cancelada");
+            alert.setContentText("Operação cancelada");
+            alert.showAndWait();
+            FXMLLoader loader = new FXMLLoader(resourceUrl);
+            Parent root = loader.load();
+            SocioDetailsController detailsController = loader.getController();
+            detailsController.initSocioDetails(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
+            Scene mainPage = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(mainPage);
+            stage.setTitle("GymMaster - Rececionista");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
     }
 }

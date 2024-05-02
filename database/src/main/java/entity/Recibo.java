@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.math.BigInteger;
 import java.sql.Date;
-import java.time.LocalDate;
 
 @Entity
 public class Recibo {
@@ -169,7 +168,11 @@ public class Recibo {
         this.iva = iva;
     }
 
-    public void setDataEmissao(LocalDate now) {
+    public void setDataEmissao(java.util.Date now) {
 
+    }
+
+    public java.util.Date setDataHoraEmissao(java.util.Date date) {
+        return date;
     }
 }
