@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="810.0" style="-fx-background-color: fff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ipvc.estg.desktop.instrutor.adicionarAulaIndividualController">
+   <children>
+      <Pane prefHeight="465.0" prefWidth="193.0" style="-fx-background-color: #6AB27E;">
+         <children>
+            <ImageView fitHeight="141.0" fitWidth="116.0" layoutX="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/gym-logo1.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="67.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="©GymMaster">
+               <font>
+                  <Font size="8.0" />
+               </font>
+            </Text>
+            <Button fx:id="detailsButton" layoutX="67.0" layoutY="420.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="61.0" text="Voltar">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+      <Button fx:id="addAulaButton" layoutX="600.0" layoutY="393.0" mnemonicParsing="false" onAction="#createAulaIndividual" prefHeight="58.0" prefWidth="144.0" text="Adicionar aula">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
+      <Text layoutX="209.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adicionar aula Individual">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nomeAulaField" layoutX="254.0" layoutY="132.0" prefHeight="30.0" prefWidth="220.0" />
+      <Label layoutX="257.0" layoutY="333.0" text="Sócio">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="254.0" layoutY="111.0" text="Nome da aula">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dataDatePicker" layoutX="254.0" layoutY="191.0" prefHeight="30.0" prefWidth="220.0" />
+      <Label layoutX="254.0" layoutY="170.0" text="Data">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="HoraComboBox" layoutX="254.0" layoutY="243.0" prefHeight="30.0" prefWidth="220.0" />
+      <Label layoutX="254.0" layoutY="221.0" text="Hora">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="DuracaoComboBox" layoutX="254.0" layoutY="294.0" prefHeight="30.0" prefWidth="220.0" />
+      <ComboBox fx:id="SociosComboBox1" layoutX="254.0" layoutY="354.0" prefHeight="30.0" prefWidth="220.0" />
+      <Label layoutX="257.0" layoutY="273.0" text="Duração">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
