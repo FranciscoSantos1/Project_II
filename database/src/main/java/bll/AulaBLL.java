@@ -1,9 +1,8 @@
 package bll;
 
 import database.Database;
-import entity.Aula;
-import entity.Funcionario;
-import entity.Modalidade;
+import entity.*;
+import bll.LinhaAulaBLL;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
@@ -60,9 +59,26 @@ public class AulaBLL {
         entityManager.getTransaction().commit();
     }
 
-    public static List<Aula> getAllAulas() {
+    public static String getSocioNameByIdAula(int id) {
+        try {
+            EntityManager entityManager = Database.getEntityManager();
+            Query query = entityManager.createQuery("SELECT s.nome FROM Socio s, LinhaAula l WHERE l.idSocio = s.idSocio AND l.idAula = :id");
+            query.setParameter("id", id);
+            return (String) query.getSingleResult();
+        } catch (Exception e) {
+            return "N/A";
+        }
+    }
+
+    public static List<Aula> getAllAulasGrupo() {
         EntityManager entityManager = Database.getEntityManager();
-        Query query = entityManager.createQuery("SELECT a FROM Aula a");
+        Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.totalLugares > 1");
+        return query.getResultList();
+    }
+
+    public static List<Aula> getAllAulasIndividual() {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.totalLugares = 1");
         return query.getResultList();
     }
 
@@ -91,7 +107,7 @@ public class AulaBLL {
     public static String getTipoAulaByIdAula(int id)
     {
         EntityManager entityManager = Database.getEntityManager();
-        Query query = entityManager.createQuery("SELECT a.vagas FROM Aula a WHERE a.id = :id");
+        Query query = entityManager.createQuery("SELECT a.totalLugares FROM Aula a WHERE a.id = :id");
         query.setParameter("id", id);
         if((int) query.getSingleResult() == 1)
         {
@@ -151,6 +167,18 @@ public class AulaBLL {
         Date date = Date.from(instant);
     }
 
+    public static List<Socio> getAllSociosFromAula() {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT s FROM Socio s JOIN LinhaAula l ON s.idSocio = l.idSocio");
+        return query.getResultList();
+    }
+
+    public static List<Socio> getAllSocios() {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT s FROM Socio s");
+        return query.getResultList();
+    }
+
 
     public static List<Aula> getAulasByInstructorId(Integer instructorId) {
         EntityManager entityManager = Database.getEntityManager();
@@ -158,4 +186,26 @@ public class AulaBLL {
         query.setParameter("instructorId", instructorId);
         return query.getResultList();
     }
+
+    public static List<Socio> getAvailableSocios(Instant start, Instant end) {
+    EntityManager entityManager = Database.getEntityManager();
+    Query query = entityManager.createQuery(
+        "SELECT s FROM Socio s WHERE s.idSocio NOT IN (" +
+        "SELECT l.idSocio FROM LinhaAula l JOIN Aula a ON l.idAula = a.id " +
+        "WHERE (a.dataHoraComeco BETWEEN :start AND :end) OR " +
+        "(a.dataHoraFim BETWEEN :start AND :end) OR " +
+        "(a.dataHoraComeco < :start AND a.dataHoraFim > :end))");
+    query.setParameter("start", start);
+    query.setParameter("end", end);
+    return query.getResultList();
 }
+
+
+public static List<Aula> getAulasBySocioId(Integer socioId) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT a FROM Aula a JOIN LinhaAula l ON a.id = l.idAula WHERE l.idSocio = :socioId");
+        query.setParameter("socioId", socioId);
+        return query.getResultList();
+    }
+}
+

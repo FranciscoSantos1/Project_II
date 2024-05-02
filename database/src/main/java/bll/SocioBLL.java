@@ -1,6 +1,7 @@
 package bll;
 
 import database.Database;
+import entity.Funcionario;
 import entity.Plano;
 import entity.Socio;
 import jakarta.persistence.EntityManager;
@@ -11,6 +12,7 @@ import jakarta.persistence.Query;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.List;
 
 
@@ -159,4 +161,11 @@ public class SocioBLL {
         }
     }
 
+    public static List<Socio> getAllAvailableSocios(Instant startInstant, Instant endInstant) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.idSocio NOT IN (SELECT a.i FROM Aula a WHERE a.dataHoraComeco >= :start AND a.dataHoraFim <= :end)");
+        query.setParameter("start", startInstant);
+        query.setParameter("end", endInstant);
+        return query.getResultList();
+    }
 }

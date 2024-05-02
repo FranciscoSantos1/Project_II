@@ -10,11 +10,10 @@ import java.io.Serializable;
 public class LinhaAulaPK implements Serializable {
     @Column(name = "id_aula")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAula;
     @Column(name = "id_socio")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int idSocio;
 
     public int getIdAula() {

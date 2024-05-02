@@ -63,6 +63,10 @@ public class instrutorMainPageController {
     @FXML
     private TableColumn<Aula, String> tipoAulaColumn;
 
+    @FXML
+    private TableColumn<Aula, String> SocioColumn1;
+
+
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 
@@ -73,6 +77,7 @@ public class instrutorMainPageController {
         modalidadeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getModalidadeNameByIdAula(cellData.getValue().getId())));
         LocalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getLocalByIdAula(cellData.getValue().getId())));
         tipoAulaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getTipoAulaByIdAula(cellData.getValue().getId())));
+        SocioColumn1.setCellValueFactory(cellData -> new SimpleStringProperty(AulaBLL.getSocioNameByIdAula(cellData.getValue().getId())));
         // Get the logged-in instructor
         Funcionario loggedInInstructor = SessionData.getInstance().getCurrentUser();
 
@@ -106,7 +111,7 @@ public class instrutorMainPageController {
     @FXML
     void addAula(ActionEvent event) {
         try {
-            URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/responsavelInstrutores/adicionarAula.fxml");
+            URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/instrutor/adicionarAulaIndividual.fxml");
             if (resourceUrl == null) {
                 System.err.println("Ficheiro FXML não encontrado.");
                 return;
@@ -115,7 +120,7 @@ public class instrutorMainPageController {
             Scene mainPage = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(mainPage);
-            stage.setTitle("GymMaster - Adicionar Aula");
+            stage.setTitle("GymMaster - Adicionar Aula Individual");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

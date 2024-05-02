@@ -6,11 +6,9 @@ import jakarta.persistence.*;
 @Table(name = "linha_aula", schema = "public", catalog = "GinasioDB")
 @IdClass(LinhaAulaPK.class)
 public class LinhaAula {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_aula")
     private int idAula;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id_socio")
     private int idSocio;

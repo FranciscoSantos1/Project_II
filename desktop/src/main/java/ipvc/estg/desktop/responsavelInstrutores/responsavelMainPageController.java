@@ -71,7 +71,7 @@ public class responsavelMainPageController {
         totalLugaresColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getTotalLugares()).asObject());
 
         // Fetch all Aula objects from the database
-        List<Aula> aulas = AulaBLL.getAllAulas();
+        List<Aula> aulas = AulaBLL.getAllAulasGrupo();
         ObservableList<Aula> aulasObservableList = FXCollections.observableArrayList(aulas);
         for(Aula a: aulas) {
             System.out.println(a.getDataHoraComeco());

@@ -17,10 +17,11 @@
       <TableView fx:id="aulasTableView" layoutX="209.0" layoutY="75.0" prefHeight="330.0" prefWidth="586.0">
         <columns>
             <TableColumn fx:id="dateInicioColumn" prefWidth="107.0" text="Data Hora Inicio" />
-            <TableColumn fx:id="dateFimColumn1" prefWidth="107.0" text="Data Hora Fim" />
-            <TableColumn fx:id="modalidadeColumn" prefWidth="137.0" text="Modalidade" />
-            <TableColumn fx:id="LocalColumn" prefWidth="109.0" text="Local" />
-          <TableColumn fx:id="tipoAulaColumn" prefWidth="125.0" text="Tipo aula" />
+            <TableColumn fx:id="dateFimColumn1" prefWidth="121.59991455078125" text="Data Hora Fim" />
+            <TableColumn fx:id="modalidadeColumn" minWidth="0.0" prefWidth="72.800048828125" text="Modalidade" />
+            <TableColumn fx:id="LocalColumn" prefWidth="73.60003662109375" text="Local" />
+          <TableColumn fx:id="tipoAulaColumn" prefWidth="116.7999267578125" text="Tipo aula" />
+            <TableColumn fx:id="SocioColumn1" prefWidth="94.4000244140625" text="Socio" />
         </columns>
       </TableView>
       <Button fx:id="detailsButton" layoutX="209.0" layoutY="426.0" mnemonicParsing="false" text="Ver Detalhes">
