@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static database.Database.getEntityManager;
+
 public class AulaBLL {
     private static final ZoneId ZONE_ID = ZoneId.of("Europe/Lisbon"); // Adjust this to your intended timezone
 
@@ -60,7 +62,7 @@ public class AulaBLL {
     }
 
     public static String getSocioNameByIdAula(int id) {
-        try {
+        try{
             EntityManager entityManager = Database.getEntityManager();
             Query query = entityManager.createQuery("SELECT s.nome FROM Socio s, LinhaAula l WHERE l.idSocio = s.idSocio AND l.idAula = :id");
             query.setParameter("id", id);

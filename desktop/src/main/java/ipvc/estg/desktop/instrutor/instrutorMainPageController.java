@@ -28,6 +28,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import static bll.AulaBLL.deleteAulaWithLinhaAula;
 
@@ -97,20 +98,32 @@ public class instrutorMainPageController {
 
     @FXML
     void logout(ActionEvent event){
-        try {
-            URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/Login/login.fxml");
-            if (resourceUrl == null) {
-                System.err.println("Ficheiro FXML não encontrado.");
-                return;
+        SessionData.getInstance().setCurrentUser(null);
+
+        SessionData.getInstance().setCurrentUser(null);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Tem a certeza que quer fechar a aplicação?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+
+                URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/Login/login.fxml");
+                if (resourceUrl == null) {
+                    System.err.println("Ficheiro FXML não encontrado.");
+                    return;
+                }
+                Parent root = FXMLLoader.load(resourceUrl);
+                Scene mainPage = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(mainPage);
+                stage.setTitle("GymMaster - Login");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            Parent root = FXMLLoader.load(resourceUrl);
-            Scene mainPage = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(mainPage);
-            stage.setTitle("GymMaster - Login");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

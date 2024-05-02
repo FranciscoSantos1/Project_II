@@ -6,6 +6,7 @@ import bll.LinhaAulaBLL;
 import bll.ModalidadeBLL;
 import entity.Aula;
 import entity.Socio;
+import ipvc.estg.desktop.Login.SessionData;
 import ipvc.estg.desktop.responsavelInstrutores.responsavelMainPageController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -135,9 +136,20 @@ public class InstrutorAulasDetailsController {
 
 
     @FXML
-    void logout(ActionEvent event) throws IOException {
-        changeScene(event, "/ipvc/estg/desktop/Login/login.fxml", "GymMaster - Login");
+    void logout(ActionEvent event) throws IOException{
+        SessionData.getInstance().setCurrentUser(null);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Tem a certeza que quer fechar a aplicação?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            changeScene(event, "/ipvc/estg/desktop/Login/login.fxml", "GymMaster - Login");
+
+        }
     }
+
 
     @FXML
     void back(ActionEvent event) throws IOException {
