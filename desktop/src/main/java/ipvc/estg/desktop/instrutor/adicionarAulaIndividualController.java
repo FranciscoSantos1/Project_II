@@ -137,7 +137,7 @@ public class adicionarAulaIndividualController {
         aula.setDuracao(durationTime);
         aula.setIdFuncionario(loggedInInstructor.getIdFuncionario());
         aula.setIdModalidade(11);
-        aula.setLocalAula("Sala de musculação");
+        aula.setLocalAula("SALA MUSCULAÇÃO");
         aula.setNumMinAtletas(1);
         aula.setTotalLugares(1);
         aula.setVagas(0);

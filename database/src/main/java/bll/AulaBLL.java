@@ -167,9 +167,10 @@ public class AulaBLL {
         Date date = Date.from(instant);
     }
 
-    public static List<Socio> getAllSociosFromAula() {
+    public static List<Socio> getAllSociosFromAula(Integer id) {
         EntityManager entityManager = Database.getEntityManager();
-        Query query = entityManager.createQuery("SELECT s FROM Socio s JOIN LinhaAula l ON s.idSocio = l.idSocio");
+        Query query = entityManager.createQuery("SELECT s FROM Socio s JOIN LinhaAula l ON s.idSocio = l.idSocio WHERE l.idAula = :id");
+        query.setParameter("id", id);
         return query.getResultList();
     }
 

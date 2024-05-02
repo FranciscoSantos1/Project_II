@@ -24,7 +24,7 @@
             <TableColumn fx:id="SocioColumn1" prefWidth="94.4000244140625" text="Socio" />
         </columns>
       </TableView>
-      <Button fx:id="detailsButton" layoutX="209.0" layoutY="426.0" mnemonicParsing="false" text="Ver Detalhes">
+      <Button fx:id="detailsButton" layoutX="209.0" layoutY="426.0" mnemonicParsing="false" onAction="#goToDetails" text="Ver Detalhes">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>

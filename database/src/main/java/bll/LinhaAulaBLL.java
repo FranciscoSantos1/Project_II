@@ -81,4 +81,30 @@ public class LinhaAulaBLL {
         query.executeUpdate();
     }
 
+    public static void removeSocioFromAula(int aulaId, int socioId) {
+        EntityManager entityManager = Database.getEntityManager();
+        if (!entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().begin();
+        }
+        Query query = entityManager.createQuery("DELETE FROM LinhaAula l WHERE l.idAula = :aulaId AND l.idSocio = :socioId");
+        query.setParameter("aulaId", aulaId);
+        query.setParameter("socioId", socioId);
+        query.executeUpdate();
+        entityManager.getTransaction().commit();
+    }
+
+    public boolean checkIfAulaIsEmpty(int aulaId) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT COUNT(l) FROM LinhaAula l WHERE l.idAula = :aulaId");
+        query.setParameter("aulaId", aulaId);
+        long count = (long) query.getSingleResult();
+        return count == 0;
+    }
+
+    public List<String> getSocioNamesByAulaId(int aulaId) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT s.nome FROM Socio s, LinhaAula l WHERE l.idSocio = s.idSocio AND l.idAula = :aulaId");
+        query.setParameter("aulaId", aulaId);
+        return query.getResultList();
+    }
 }

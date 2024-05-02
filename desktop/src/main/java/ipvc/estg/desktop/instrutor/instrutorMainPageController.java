@@ -134,17 +134,18 @@ public class instrutorMainPageController {
         }
     }
 
-/*    @FXML
+    @FXML
     void goToDetails(ActionEvent event) {
         Aula selectedAula = aulasTableView.getSelectionModel().getSelectedItem();
+        System.out.println("Selected aula: " + selectedAula);
         if (selectedAula == null) {
-            System.out.println("Nenhuma aula selecionado.");
+            showAlert("Selecionar Aula", "Por favor, selecione uma aula primeiro.", Alert.AlertType.WARNING);
             return;
         }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/responsavelInstrutores/aulasDetails.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/instrutor/instrutorAulasDetails.fxml"));
             Parent root = loader.load();
-            AulasDetailsController detailsController = loader.getController();
+            InstrutorAulasDetailsController detailsController = loader.getController();
             detailsController.setMainPageController(this);
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -154,7 +155,7 @@ public class instrutorMainPageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
 
 
@@ -195,8 +196,8 @@ public class instrutorMainPageController {
             if (response == ButtonType.YES) {
                 try {
                     deleteAulaWithLinhaAula(selectedAula.getId());
-//                    AulaBLL.deleteAula(selectedAula);
-//                    LinhaAulaBLL.deleteAllLinhasAulaByAulaId(selectedAula.getId());
+/*                    AulaBLL.deleteAula(selectedAula);
+                    LinhaAulaBLL.deleteAllLinhasAulaByAulaId(selectedAula.getId());*/
                     aulasTableView.getItems().remove(selectedAula);
                     showAlert("Aula Eliminada", "A aula foi eliminada com sucesso.", Alert.AlertType.INFORMATION);
                 } catch (Exception e) {
