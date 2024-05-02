@@ -1,10 +1,13 @@
 package bll;
 
 import database.Database;
+import entity.Aula;
 import entity.LinhaAula;
 import entity.Socio;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import org.hibernate.Session;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ public class LinhaAulaBLL {
         entityManager.getTransaction().commit();
     }
 
-    public static void deleteLinhaAula(LinhaAula linhaAula) {
+    public void deleteLinhaAula(LinhaAula linhaAula) {
         EntityManager entityManager = Database.getEntityManager();
         if (!entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().begin();
@@ -70,6 +73,12 @@ public class LinhaAulaBLL {
         }
 
         return socios;
+    }
+
+    public static void deleteAllLinhasAulaByAulaId(int aulaId, EntityManager entityManager) {
+        Query query = entityManager.createQuery("DELETE FROM LinhaAula l WHERE l.idAula = :aulaId");
+        query.setParameter("aulaId", aulaId);
+        query.executeUpdate();
     }
 
 }

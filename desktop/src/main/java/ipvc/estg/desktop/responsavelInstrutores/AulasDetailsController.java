@@ -58,7 +58,6 @@ public class AulasDetailsController {
     private void loadData() {
         Aula selectedAula = MainPageController.getSelectedAula();
         if (selectedAula != null) {
-            // Set ID and other straightforward fields
             idTextField.setText(String.valueOf(selectedAula.getId()));
             nameTextField.setText(selectedAula.getNome());
             localField.setText(selectedAula.getLocalAula());

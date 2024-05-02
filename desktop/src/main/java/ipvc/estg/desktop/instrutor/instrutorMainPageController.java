@@ -1,8 +1,10 @@
 package ipvc.estg.desktop.instrutor;
 
 import bll.AulaBLL;
+import bll.LinhaAulaBLL;
 import entity.Funcionario;
 import entity.Aula;
+import entity.LinhaAula;
 import ipvc.estg.desktop.Login.SessionData;
 import ipvc.estg.desktop.responsavelInstrutores.AulasDetailsController;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -18,12 +20,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.List;
+
+import static bll.AulaBLL.deleteAulaWithLinhaAula;
 
 public class instrutorMainPageController {
 
@@ -151,37 +157,7 @@ public class instrutorMainPageController {
     }*/
 
 
-    @FXML
-    void eliminateAula(ActionEvent event) {
-        Aula selectedAula = aulasTableView.getSelectionModel().getSelectedItem();
 
-        if (selectedAula.getDataHoraComeco().isBefore(Instant.now())) {
-            showAlert("Erro", "Não pode eliminar uma aula que já começou.", Alert.AlertType.ERROR);
-            return;
-        }
-        if (selectedAula == null) {
-            showAlert("Selecionar Aula", "Por favor, selecione uma aula primeiro.", Alert.AlertType.WARNING);
-            return;
-        }
-
-        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmationAlert.setTitle("Eliminar Aula");
-        confirmationAlert.setHeaderText("Tem a certeza que deseja eliminar a aula selecionada?");
-        confirmationAlert.setContentText("Esta ação é irreversível!");
-
-        confirmationAlert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-
-
-        confirmationAlert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.YES) {
-                AulaBLL.deleteAula(selectedAula);
-                aulasTableView.getItems().remove(selectedAula);
-                showAlert("Aula Eliminada", "A aula foi eliminada com sucesso.", Alert.AlertType.INFORMATION);
-
-            }
-        });
-
-    }
 
     public Aula getSelectedAula(){
         return aulasTableView.getSelectionModel().getSelectedItem();
@@ -193,6 +169,41 @@ public class instrutorMainPageController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+
+    @FXML
+    void eliminateAula(ActionEvent event) {
+        Aula selectedAula = aulasTableView.getSelectionModel().getSelectedItem();
+        if (selectedAula == null) {
+            showAlert("Selecionar Aula", "Por favor, selecione uma aula primeiro.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        if (selectedAula.getDataHoraComeco().isBefore(Instant.now())) {
+            showAlert("Erro", "Não pode eliminar uma aula que já começou.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Eliminar Aula");
+        confirmationAlert.setHeaderText("Tem a certeza que deseja eliminar a aula selecionada?");
+        confirmationAlert.setContentText("Esta ação é irreversível!");
+        confirmationAlert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    deleteAulaWithLinhaAula(selectedAula.getId());
+//                    AulaBLL.deleteAula(selectedAula);
+//                    LinhaAulaBLL.deleteAllLinhasAulaByAulaId(selectedAula.getId());
+                    aulasTableView.getItems().remove(selectedAula);
+                    showAlert("Aula Eliminada", "A aula foi eliminada com sucesso.", Alert.AlertType.INFORMATION);
+                } catch (Exception e) {
+                    showAlert("Erro", "Falha ao eliminar a aula: " + e.getMessage(), Alert.AlertType.ERROR);
+                }
+            }
+        });
     }
 
 }

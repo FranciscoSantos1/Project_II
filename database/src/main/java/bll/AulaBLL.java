@@ -207,5 +207,28 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
         query.setParameter("socioId", socioId);
         return query.getResultList();
     }
+
+    public static void deleteAulaWithLinhaAula(int aulaId) {
+        EntityManager entityManager = Database.getEntityManager();
+        // Check if a transaction is already active
+        if (!entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().begin();
+        }
+        try {
+            // Delete all dependent 'linha_aula' records first
+            LinhaAulaBLL.deleteAllLinhasAulaByAulaId(aulaId, entityManager);
+            // Now, find and delete the 'aula' record
+            Aula aula = entityManager.find(Aula.class, aulaId);
+            if (aula != null) {
+                entityManager.remove(aula);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;  // Rethrow the exception for the caller to handle
+        }
+    }
 }
 
