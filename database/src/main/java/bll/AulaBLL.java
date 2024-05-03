@@ -233,5 +233,11 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
             throw e;  // Rethrow the exception for the caller to handle
         }
     }
+
+    public static List<Funcionario> getAllInstrutores() {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT f FROM Funcionario f WHERE f.idTipofuncionario = 1");
+        return query.getResultList();
+    }
 }
 

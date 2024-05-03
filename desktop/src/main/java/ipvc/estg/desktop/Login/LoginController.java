@@ -64,9 +64,8 @@ public class LoginController {
                         System.err.println("Arquivo FXML não encontrado.");
                         return;
                     }
-
-                    PaymentController.getLoggedFuncionario(funcionario);
-
+                    SessionData sessionData = SessionData.getInstance();
+                    sessionData.setCurrentUser(funcionario);
                     Parent root = FXMLLoader.load(resourceUrl);
                     Scene mainPage = new Scene(root);
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

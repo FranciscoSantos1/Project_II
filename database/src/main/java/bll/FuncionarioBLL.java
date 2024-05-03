@@ -183,4 +183,13 @@ public class FuncionarioBLL {
         }
     }
 
+    public static List<Funcionario> getAllInstrutores() {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            return entityManager.createQuery("SELECT f FROM Funcionario f WHERE f.idTipofuncionario = 1", Funcionario.class)
+                    .getResultList();
+        } finally {
+            //entityManager.close();
+        }
+    }
 }

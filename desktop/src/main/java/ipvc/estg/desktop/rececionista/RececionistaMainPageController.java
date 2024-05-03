@@ -195,4 +195,31 @@ public class RececionistaMainPageController {
         }
     }
 
+    @FXML
+    void reservePTSession(ActionEvent event) {
+        Socio selectedSocio = socioTableView.getSelectionModel().getSelectedItem();
+        if (selectedSocio == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Aviso");
+            alert.setHeaderText("Nenhum sócio selecionado.");
+            alert.setContentText("Por favor, selecione um sócio.");
+            alert.showAndWait();
+
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ipvc/estg/desktop/rececionista/reservarAulaIndividual.fxml"));
+            Parent root = loader.load();
+            ReservarAulaPTController reservarAulaPTController = loader.getController();
+            reservarAulaPTController.initialize(selectedSocio);
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Reservar Sessão de PT");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

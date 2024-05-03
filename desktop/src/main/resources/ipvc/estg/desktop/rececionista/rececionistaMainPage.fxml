@@ -36,7 +36,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="ptSessionButton" layoutX="493.0" layoutY="426.0" mnemonicParsing="false" text="Agendar sessão PT">
+      <Button fx:id="ptSessionButton" layoutX="493.0" layoutY="426.0" mnemonicParsing="false" onAction="#reservePTSession" text="Agendar sessão PT">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>

@@ -136,11 +136,6 @@ public class PaymentController {
     }
 
     @FXML
-    public static Funcionario getLoggedFuncionario(Funcionario funcionario){
-        return funcionario;
-    }
-
-    @FXML
     public void saveRecibo(ActionEvent event) {
         Recibo recibo = new Recibo();
 
