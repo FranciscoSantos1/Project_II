@@ -64,7 +64,7 @@ public class ReservarAulaPTController {
     public void initialize(Socio socio) {
         setupListeners();
         populateComboBoxes();
-        nomeSocioLabel.setText(socio.getNome());
+        nomeSocioLabel.setText(socio.getIdSocio() + " - " + socio.getNome());
     }
 
     private void setupListeners() {
@@ -128,6 +128,7 @@ public class ReservarAulaPTController {
             stage.setTitle("Página Principal");
             stage.show();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             showAlert("Erro", "Erro ao criar aula individual: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -235,7 +236,7 @@ public class ReservarAulaPTController {
 
     public void goBack(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/instrutor/instrutorMainPage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/rececionista/RececionistaMainPage.fxml")));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);

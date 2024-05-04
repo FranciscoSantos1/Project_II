@@ -120,6 +120,7 @@ public class FuncionarioBLL {
         } catch (NoResultException e) {
             return false;
         }
+
     }
 
     public static boolean verifyLogin(String email, String password) {

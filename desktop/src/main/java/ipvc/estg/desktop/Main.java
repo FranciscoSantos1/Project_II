@@ -20,6 +20,7 @@ public class Main extends Application {
 //        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/responsavelInstrutores/adicionarAula.fxml")));
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/Login/login.fxml")));
         Scene scene = new Scene(root);
+        stage.setResizable(false);
         stage.setTitle("GymMaster");
         stage.setScene(scene);
         stage.show();

@@ -89,43 +89,41 @@ public class InstrutorAulasDetailsController {
 
     @FXML
     void removeSocio(ActionEvent event) {
-    Socio selectedSocio = getSelectedSocio();
-    if (selectedSocio == null) {
-        showAlert("Selecionar Socio", "Por favor, selecione um socio primeiro.", Alert.AlertType.WARNING);
-        return;
-    }
+        Socio selectedSocio = getSelectedSocio();
+        if (selectedSocio == null) {
+            showAlert("Selecionar Socio", "Por favor, selecione um socio primeiro.", Alert.AlertType.WARNING);
+            return;
+        }
 
-    Aula selectedAula = MainPageController.getSelectedAula();
-    if (selectedAula == null) {
-        showAlert("Selecionar Aula", "Por favor, selecione uma aula primeiro.", Alert.AlertType.WARNING);
-        return;
-    }
+        Aula selectedAula = MainPageController.getSelectedAula();
+        if (selectedAula == null) {
+            showAlert("Selecionar Aula", "Por favor, selecione uma aula primeiro.", Alert.AlertType.WARNING);
+            return;
+        }
 
-    List<Socio> socios = AulaBLL.getAllSociosFromAula(selectedAula.getId());
-    if (socios.size() <= 1) {
-        showAlert("Erro", "Não pode remover o último socio de uma aula.", Alert.AlertType.ERROR);
-        return;
-    }
+        List<Socio> socios = AulaBLL.getAllSociosFromAula(selectedAula.getId());
+        if (socios.size() <= 1) {
+            showAlert("Erro", "Não pode remover o último socio de uma aula.", Alert.AlertType.ERROR);
+            return;
+        }
 
-    // Create a confirmation dialog
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle("Remover Socio");
-    alert.setHeaderText("Tem a certeza que deseja remover o socio selecionado?");
-    alert.setContentText("Esta ação é irreversível!");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Remover Socio");
+        alert.setHeaderText("Tem a certeza que deseja remover o socio selecionado?");
+        alert.setContentText("Esta ação é irreversível!");
 
-    // Show the dialog and wait for user response
-    Optional<ButtonType> result = alert.showAndWait();
-    if (result.isPresent() && result.get() == ButtonType.OK) {
-        // If OK button is pressed, remove the socio
-        try {
-            LinhaAulaBLL.removeSocioFromAula(selectedAula.getId(), selectedSocio.getIdSocio());
-            // Refresh the table view
-            loadData();
-        } catch (Exception e) {
-            showAlert("Erro", "Falha ao remover o socio: " + e.getMessage(), Alert.AlertType.ERROR);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                LinhaAulaBLL.removeSocioFromAula(selectedAula.getId(), selectedSocio.getIdSocio());
+                AulaBLL.AdicionarVagaAula(selectedAula.getId());
+                loadData();
+            } catch (Exception e) {
+                showAlert("Erro", "Falha ao remover o socio: " + e.getMessage(), Alert.AlertType.ERROR);
+            }
         }
     }
-}
+
     private void showAlert(String title, String content, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

@@ -126,10 +126,8 @@ public class AulaBLL {
         EntityManager entityManager = Database.getEntityManager();
         List<Funcionario> availableInstructors = new ArrayList<>();
         try {
-            // Start transaction for read operation
             entityManager.getTransaction().begin();
 
-            // Query to find instructors who do not have a class overlapping the new class time
             String jpql = "SELECT f FROM Funcionario f WHERE f.idTipofuncionario = 1 AND NOT EXISTS (" +
                     "SELECT a FROM Aula a WHERE a.idFuncionario = f.idFuncionario AND (" +
                     "a.dataHoraComeco < :end AND a.dataHoraFim > :start))";
@@ -213,14 +211,11 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
 
     public static void deleteAulaWithLinhaAula(int aulaId) {
         EntityManager entityManager = Database.getEntityManager();
-        // Check if a transaction is already active
         if (!entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().begin();
         }
         try {
-            // Delete all dependent 'linha_aula' records first
             LinhaAulaBLL.deleteAllLinhasAulaByAulaId(aulaId, entityManager);
-            // Now, find and delete the 'aula' record
             Aula aula = entityManager.find(Aula.class, aulaId);
             if (aula != null) {
                 entityManager.remove(aula);
@@ -230,7 +225,7 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
-            throw e;  // Rethrow the exception for the caller to handle
+            throw e;
         }
     }
 
@@ -239,5 +234,28 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
         Query query = entityManager.createQuery("SELECT f FROM Funcionario f WHERE f.idTipofuncionario = 1");
         return query.getResultList();
     }
+
+    public static void AdicionarVagaAula(Integer aulaId) {
+          EntityManager entityManager = Database.getEntityManager();
+          if (!entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().begin();
+          }
+          Aula aula = entityManager.find(Aula.class, aulaId);
+          aula.setTotalLugares(aula.getVagas() + 1);
+          entityManager.getTransaction().commit();
+    }
+
+    public static void RemoverVagaAula(Integer aulaId) {
+            EntityManager entityManager = Database.getEntityManager();
+            if (!entityManager.getTransaction().isActive()) {
+                    entityManager.getTransaction().begin();
+            }
+            Aula aula = entityManager.find(Aula.class, aulaId);
+            aula.setTotalLugares(aula.getVagas() - 1);
+            entityManager.getTransaction().commit();
+    }
+
+
+
 }
 
