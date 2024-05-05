@@ -241,7 +241,7 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
                 entityManager.getTransaction().begin();
           }
           Aula aula = entityManager.find(Aula.class, aulaId);
-          aula.setTotalLugares(aula.getVagas() + 1);
+          aula.setVagas(aula.getVagas() + 1);
           entityManager.getTransaction().commit();
     }
 
