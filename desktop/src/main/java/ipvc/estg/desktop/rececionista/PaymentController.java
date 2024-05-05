@@ -68,7 +68,6 @@ public class PaymentController {
 
 
     public void initSocioDetails(Socio socio){
-        System.out.println(socio.getIdPlano());
         List<TipoPagamento> tipo = TipoPagamentoBLL.readTipoPagamento();
         for (TipoPagamento t : tipo) {
             tipoPagamentoCB.getItems().add(t.getIdTipopagamento() + " - " + t.getTipo());
@@ -80,14 +79,12 @@ public class PaymentController {
         }
         mesComboBox.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
                 "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-
-        funcionarioLabel.setText("3");
+        funcionarioLabel.setText(SessionData.getInstance().getCurrentUser().getNome());
         idSocioLabel.setText(String.valueOf(socio.getIdSocio()));
         dataEmissaoLabel.setText(String.valueOf(java.sql.Date.valueOf(java.time.LocalDate.now())));
         ivaLabel.setText("23");
         valorLabel.setText(String.valueOf(PlanoBLL.findPlanoById(socio.getIdPlano()).getValor()));
         idReciboLabel.setText(String.valueOf(ReciboBLL.getNextIdRecibo()));
-        //mesLabel.setText(String.valueOf(java.sql.Date.valueOf(java.time.LocalDate.now())));
         idPlanoLabel.setText(String.valueOf(socio.getIdPlano()));
     }
 
@@ -135,9 +132,9 @@ public class PaymentController {
     @FXML
     public void saveRecibo(ActionEvent event) {
         Recibo recibo = new Recibo();
-
+        Funcionario funcionario = SessionData.getInstance().getCurrentUser();
         recibo.setDataHoraEmissao(java.sql.Date.valueOf(java.time.LocalDate.now()));
-        recibo.setIdFuncionario(Integer.parseInt(funcionarioLabel.getText()));
+        recibo.setIdFuncionario(funcionario.getIdFuncionario());
         recibo.setIdRecibo(Integer.parseInt(idReciboLabel.getText()));
         recibo.setIdSocio(Integer.parseInt(idSocioLabel.getText()));
         recibo.setIdPlano(Integer.parseInt(idPlanoLabel.getText()));
