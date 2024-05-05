@@ -88,6 +88,7 @@ public class AddSocioController {
             socio.setCodPostal(codPostal);
             socio.setnPorta(doorNumber);
             socio.setRua(street);
+            socio.setAtivo(true);
 
             // Get plano id
             String plano = planoComboBox.getSelectionModel().getSelectedItem();
@@ -126,6 +127,7 @@ public class AddSocioController {
             alert.showAndWait();
         }
     }
+
 
 
     private int extractIdPlano(String descricaoPlano) {

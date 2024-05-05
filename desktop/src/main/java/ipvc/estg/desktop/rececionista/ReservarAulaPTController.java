@@ -121,7 +121,7 @@ public class ReservarAulaPTController {
 
             showAlert("Sucesso", "Aula individual e linha aula criadas com sucesso.", Alert.AlertType.INFORMATION);
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/instrutor/instrutorMainPage.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/rececionista/RececionistaMainPage.fxml")));
             Scene scene = new Scene(root);
             Stage stage = (Stage) addAulaButton.getScene().getWindow();
             stage.setScene(scene);
@@ -134,7 +134,6 @@ public class ReservarAulaPTController {
     }
 
     private Aula createAulaFromInput() {
-        //TODO: Verificar o erro que dá ao criar a aula
         Funcionario currentUser = SessionData.getInstance().getCurrentUser();
         String nomeAula = nomeAulaField.getText();
         LocalTime startTime = LocalTime.parse(HoraComboBox.getValue());

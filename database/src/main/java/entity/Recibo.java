@@ -19,7 +19,7 @@ public class Recibo {
     private int idRecibo;
     @Basic
     @Column(name = "mes")
-    private Date mes;
+    private String mes;
     @Basic
     @Column(name = "valor")
     private BigInteger valor;
@@ -69,11 +69,11 @@ public class Recibo {
         this.idRecibo = idRecibo;
     }
 
-    public Date getMes() {
+    public String getMes() {
         return mes;
     }
 
-    public void setMes(Date mes) {
+    public void setMes(String mes) {
         this.mes = mes;
     }
 

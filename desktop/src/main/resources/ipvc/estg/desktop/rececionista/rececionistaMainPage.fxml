@@ -31,7 +31,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Button fx:id="reserveButton" layoutX="396.0" layoutY="426.0" mnemonicParsing="false" text="Reservar vaga">
+      <Button fx:id="reserveButton" layoutX="396.0" layoutY="426.0" mnemonicParsing="false" onAction="#reserveVaga" text="Reservar vaga">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>

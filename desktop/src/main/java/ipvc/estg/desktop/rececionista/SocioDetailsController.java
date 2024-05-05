@@ -69,9 +69,8 @@ public class SocioDetailsController {
 
     private boolean editing = false;
 
-    private RececionistaMainPageController mainPageController;
-
-    public void initialize(){
+    //TODO: Get updated socio details
+    public void initialize(Socio socio) {
         nameTextField.setEditable(false);
         contactTextField.setEditable(false);
         codPostalTextField.setEditable(false);
@@ -80,13 +79,10 @@ public class SocioDetailsController {
         planTextField.setEditable(false);
         saveButton.setVisible(false);
         planoComboBox.setVisible(false);
-    }
 
-    public void initSocioDetails(Socio socio) {
-        //TODO: arranjar forma de mostar os dados do socio atualizados
-
-        // Fetch the updated Socio from the database
-        socio = SocioBLL.findSocioById(socio.getIdSocio());
+        Socio socio1 = SocioBLL.findSocioById(socio.getIdSocio());
+        System.out.println("ID Sócio: " + socio.getIdSocio() + " - " + socio.getIdPlano() + " - " + socio.getNome());
+        System.out.println("ID Sócio1: " + socio1.getIdSocio() + " - " + socio1.getIdPlano() + " - " + socio1.getNome());
 
         nameLabel.setText(socio.getNome());
         nameTextField.setText(socio.getNome());
@@ -165,6 +161,7 @@ public class SocioDetailsController {
             Socio socio = new Socio();
             String selectedPlano = planoComboBox.getSelectionModel().getSelectedItem();
             Plano plano = PlanoBLL.findPlanoById(extractIdPlano(selectedPlano));
+            System.out.println("Plano selecionado: " + plano.getIdPlano() + " - " + plano.getTipo() + " - " + plano.getDescricao() + " - " + plano.getValor() + "€/mês");
 
             if (plano == null) {
                 alertBox("Selecione um plano válido antes de salvar!", "Erro");

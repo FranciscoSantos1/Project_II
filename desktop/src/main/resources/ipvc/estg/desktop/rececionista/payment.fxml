@@ -84,7 +84,6 @@
       <Label fx:id="funcionarioLabel" layoutX="508.0" layoutY="119.0" prefHeight="17.0" prefWidth="250.0" />
       <Label fx:id="idReciboLabel" layoutX="508.0" layoutY="143.0" prefHeight="17.0" prefWidth="250.0" />
       <Label fx:id="dataEmissaoLabel" layoutX="508.0" layoutY="166.0" prefHeight="17.0" prefWidth="250.0" />
-      <Label fx:id="mesLabel" layoutX="508.0" layoutY="189.0" prefWidth="250.0" />
       <Label fx:id="idSocioLabel" layoutX="508.0" layoutY="211.0" prefWidth="250.0" />
       <Label fx:id="valorLabel" layoutX="508.0" layoutY="234.0" prefWidth="250.0" />
       <Label fx:id="ivaLabel" layoutX="508.0" layoutY="257.0" prefWidth="250.0" />
@@ -92,5 +91,6 @@
       <ComboBox fx:id="tipoPagamentoCB" layoutX="508.0" layoutY="276.0" prefHeight="25.0" prefWidth="193.0" />
       <ComboBox fx:id="estadoPagamentoCB" layoutX="508.0" layoutY="311.0" prefHeight="25.0" prefWidth="193.0" />
       <Label fx:id="idPlanoLabel" layoutX="410.0" layoutY="69.0" prefWidth="250.0" textFill="WHITE" />
+      <ComboBox fx:id="mesComboBox" layoutX="508.0" layoutY="185.0" prefHeight="25.0" prefWidth="193.0" />
    </children>
 </AnchorPane>

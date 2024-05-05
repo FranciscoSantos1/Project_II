@@ -64,16 +64,11 @@ public class PaymentController {
     private ComboBox<String> estadoPagamentoCB;
 
     @FXML
-    private  Label mesLabel;
+    private ComboBox<String> mesComboBox;
 
-
-    //Funcionario funcionario = SessionData.getCurrentUser();
-
-    //TODO: Verificar o mês de pagamento corretamente
-    //TODO: Verificar o funcionário logado
 
     public void initSocioDetails(Socio socio){
-
+        System.out.println(socio.getIdPlano());
         List<TipoPagamento> tipo = TipoPagamentoBLL.readTipoPagamento();
         for (TipoPagamento t : tipo) {
             tipoPagamentoCB.getItems().add(t.getIdTipopagamento() + " - " + t.getTipo());
@@ -83,6 +78,8 @@ public class PaymentController {
         for (EstadoPagamento e : estado) {
             estadoPagamentoCB.getItems().add(e.getIdEstadopagamento() + " - " + e.getEstado());
         }
+        mesComboBox.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+                "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
 
         funcionarioLabel.setText("3");
         idSocioLabel.setText(String.valueOf(socio.getIdSocio()));
@@ -90,7 +87,7 @@ public class PaymentController {
         ivaLabel.setText("23");
         valorLabel.setText(String.valueOf(PlanoBLL.findPlanoById(socio.getIdPlano()).getValor()));
         idReciboLabel.setText(String.valueOf(ReciboBLL.getNextIdRecibo()));
-        mesLabel.setText(String.valueOf(java.sql.Date.valueOf(java.time.LocalDate.now())));
+        //mesLabel.setText(String.valueOf(java.sql.Date.valueOf(java.time.LocalDate.now())));
         idPlanoLabel.setText(String.valueOf(socio.getIdPlano()));
     }
 
@@ -124,7 +121,7 @@ public class PaymentController {
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Parent root = loader.load();
             SocioDetailsController detailsController = loader.getController();
-            detailsController.initSocioDetails(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
+            detailsController.initialize(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
             Scene mainPage = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(mainPage);
@@ -147,7 +144,7 @@ public class PaymentController {
         recibo.setDataEmissao(java.sql.Date.valueOf(java.time.LocalDate.now()));
         recibo.setIva(BigInteger.valueOf(Integer.parseInt(ivaLabel.getText())));
         recibo.setValor(BigInteger.valueOf(Integer.parseInt(valorLabel.getText())));
-        recibo.setMes(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        recibo.setMes(mesComboBox.getValue());
         recibo.setIdTipopagamento(Integer.parseInt(tipoPagamentoCB.getValue().split(" - ")[0]));
         recibo.setIdEstadopagamento(Integer.parseInt(estadoPagamentoCB.getValue().split(" - ")[0]));
 
@@ -191,7 +188,7 @@ public class PaymentController {
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Parent root = loader.load();
             SocioDetailsController detailsController = loader.getController();
-            detailsController.initSocioDetails(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
+            detailsController.initialize(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
             Scene mainPage = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(mainPage);

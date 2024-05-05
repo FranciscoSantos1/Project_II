@@ -7,6 +7,7 @@ import jakarta.persistence.Query;
 
 import java.util.List;
 
+
 public class ModalidadeBLL {
 
     public static void createModalidade(Modalidade modalidade) {
@@ -73,5 +74,17 @@ public class ModalidadeBLL {
         Query query = entityManager.createQuery("SELECT m.modalidade FROM Modalidade m WHERE m.idModalidade = :id");
         query.setParameter("id", id);
         return (String) query.getSingleResult();
+    }
+
+    public static List<Modalidade> getModalidadesDoPlano(int idPlano) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT mp.idModalidade FROM ModalidadesPlano mp WHERE mp.idPlano = :idPlano");
+        query.setParameter("idPlano", idPlano);
+        List<Integer> idModalidades = query.getResultList();
+
+        // Agora, vamos buscar as entidades Modalidade correspondentes aos IDs obtidos
+        Query modalidadeQuery = entityManager.createQuery("SELECT m FROM Modalidade m WHERE m.id IN :idModalidades");
+        modalidadeQuery.setParameter("idModalidades", idModalidades);
+        return modalidadeQuery.getResultList();
     }
 }

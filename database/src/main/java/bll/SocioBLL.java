@@ -8,7 +8,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -109,14 +108,19 @@ public class SocioBLL {
 
     public static Socio findSocioById(int id) {
         EntityManager entityManager = Database.getEntityManager();
-        return entityManager.find(Socio.class, id);
+        try {
+            Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.idSocio = :id");
+            query.setParameter("id", id);
+            return (Socio) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // Retorna null se nenhum resultado for encontrado
+        }
     }
 
     public static List<Object[]> listSocio() {
         EntityManager entityManager = Database.getEntityManager();
-        Query query = entityManager.createQuery("SELECT s.idSocio, s.nome, s.contacto, CONCAT(s.codPostal, ' - ', s.rua, ' - ', s.nPorta) AS morada FROM Socio s ORDER BY s.nome");
+        Query query = entityManager.createQuery("SELECT s.idSocio, s.nome, s.contacto, CONCAT(s.codPostal, ' - ', s.rua, ' - ', s.nPorta) AS morada FROM Socio s WHERE s.ativo = true ORDER BY s.nome");
         List<Object[]> results = query.getResultList();
-        //entityManager.close();
         return results;
     }
 
@@ -133,37 +137,23 @@ public class SocioBLL {
         }
     }
 
-    //check if the socio has updated the plano in the database
-    public static boolean checkIfSocioHasUpdatedPlano(int idSocio, int idPlano) {
-        EntityManager entityManager = Database.getEntityManager();
-        Socio socio = entityManager.find(Socio.class, idSocio);
-        return socio.getIdPlano() == idPlano;
-    }
-
     public static void deactivateSocio(int idSocio) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-
+        EntityManager entityManager = Database.getEntityManager();
         try {
-            connection = Database.getConnection();
-            if (connection != null) {
-                String sql = "DELETE FROM socio WHERE id_socio = ?";
-                statement = connection.prepareStatement(sql);
-                statement.setInt(1, idSocio);
-                statement.executeUpdate();
-            } else {
-                System.out.println("Não foi possível obter a conexão com o banco de dados.");
-            }
-        } catch (SQLException e) {
+            Query query = entityManager.createQuery("UPDATE Socio s SET s.ativo = false WHERE s.idSocio = :id");
+            query.setParameter("id", idSocio);
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            query.executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            return;
         }
     }
 
     public static List<Socio> getAllAvailableSocios(Instant startInstant, Instant endInstant) {
         EntityManager entityManager = Database.getEntityManager();
-        Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.idSocio NOT IN (SELECT a.i FROM Aula a WHERE a.dataHoraComeco >= :start AND a.dataHoraFim <= :end)");
+        Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.idSocio NOT IN (SELECT a.id FROM Aula a WHERE a.dataHoraComeco >= :start AND a.dataHoraFim <= :end)");
         query.setParameter("start", startInstant);
         query.setParameter("end", endInstant);
         return query.getResultList();
