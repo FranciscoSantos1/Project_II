@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Iniciar Sessão</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="background"></div>
+<div class="login-container">
+  <div class="left">
+    <img th:src="@{/images/gym-logo1.png}" alt="GymMaster Logo" />
+    <h1>GymMaster</h1>
+    <p>Francisco Santos Nº 29375</p>
+    <p>João Araújo Nº 24682</p>
+  </div>
+  <div class="right">
+    <h2>Iniciar Sessão</h2>
+    <form th:action="@{/login}" method="post">
+      <input type="text" name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <button type="submit">Login</button>
+      <button type="button" class="create-account" onclick="window.location.href='/register'">Criar Conta</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
