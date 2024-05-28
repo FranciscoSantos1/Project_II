@@ -104,7 +104,7 @@ public class instrutorMainPageController {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
-        alert.setHeaderText("Tem a certeza que quer fechar a aplicação?");
+        alert.setHeaderText("Tem a certeza que quer sair a aplicação?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {

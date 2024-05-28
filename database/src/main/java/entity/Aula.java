@@ -153,5 +153,4 @@ import jakarta.persistence.Convert;
         public void setDuracao(LocalTime duracao) {
             this.duracao = duracao;
         }
-
     }

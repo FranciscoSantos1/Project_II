@@ -20,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -121,7 +122,7 @@ public class ReservarAulaPTController {
 
             showAlert("Sucesso", "Aula individual e linha aula criadas com sucesso.", Alert.AlertType.INFORMATION);
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/instrutor/instrutorMainPage.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/rececionista/RececionistaMainPage.fxml")));
             Scene scene = new Scene(root);
             Stage stage = (Stage) addAulaButton.getScene().getWindow();
             stage.setScene(scene);
@@ -134,7 +135,6 @@ public class ReservarAulaPTController {
     }
 
     private Aula createAulaFromInput() {
-        //TODO: Verificar o erro que dá ao criar a aula
         Funcionario currentUser = SessionData.getInstance().getCurrentUser();
         String nomeAula = nomeAulaField.getText();
         LocalTime startTime = LocalTime.parse(HoraComboBox.getValue());
@@ -244,26 +244,34 @@ public class ReservarAulaPTController {
         stage.show();
     }
 
-    public void logout(ActionEvent event) throws IOException {
+    @FXML
+    void logout(ActionEvent event){
+        SessionData.getInstance().setCurrentUser(null);
+
         SessionData.getInstance().setCurrentUser(null);
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
-        alert.setHeaderText("Tem a certeza que quer fechar a aplicação?");
+        alert.setHeaderText("Tem a certeza que quer sair a aplicação?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            try{
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ipvc/estg/desktop/Login/login.fxml")));
-                Scene scene = new Scene(root);
+            try {
+
+                URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/Login/login.fxml");
+                if (resourceUrl == null) {
+                    System.err.println("Ficheiro FXML não encontrado.");
+                    return;
+                }
+                Parent root = FXMLLoader.load(resourceUrl);
+                Scene mainPage = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(scene);
-                stage.setTitle("Login");
+                stage.setScene(mainPage);
+                stage.setTitle("GymMaster - Login");
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 }

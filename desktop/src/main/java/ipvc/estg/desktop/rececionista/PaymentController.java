@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.hibernate.internal.SessionOwnerBehavior;
 
@@ -22,6 +19,7 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class PaymentController {
     @FXML
@@ -64,16 +62,10 @@ public class PaymentController {
     private ComboBox<String> estadoPagamentoCB;
 
     @FXML
-    private  Label mesLabel;
+    private ComboBox<String> mesComboBox;
 
-
-    //Funcionario funcionario = SessionData.getCurrentUser();
-
-    //TODO: Verificar o mês de pagamento corretamente
-    //TODO: Verificar o funcionário logado
 
     public void initSocioDetails(Socio socio){
-
         List<TipoPagamento> tipo = TipoPagamentoBLL.readTipoPagamento();
         for (TipoPagamento t : tipo) {
             tipoPagamentoCB.getItems().add(t.getIdTipopagamento() + " - " + t.getTipo());
@@ -83,33 +75,45 @@ public class PaymentController {
         for (EstadoPagamento e : estado) {
             estadoPagamentoCB.getItems().add(e.getIdEstadopagamento() + " - " + e.getEstado());
         }
-
-        funcionarioLabel.setText("3");
+        mesComboBox.getItems().addAll("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+                "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+        funcionarioLabel.setText(SessionData.getInstance().getCurrentUser().getNome());
         idSocioLabel.setText(String.valueOf(socio.getIdSocio()));
         dataEmissaoLabel.setText(String.valueOf(java.sql.Date.valueOf(java.time.LocalDate.now())));
         ivaLabel.setText("23");
         valorLabel.setText(String.valueOf(PlanoBLL.findPlanoById(socio.getIdPlano()).getValor()));
         idReciboLabel.setText(String.valueOf(ReciboBLL.getNextIdRecibo()));
-        mesLabel.setText(String.valueOf(java.sql.Date.valueOf(java.time.LocalDate.now())));
         idPlanoLabel.setText(String.valueOf(socio.getIdPlano()));
     }
 
     @FXML
-    void logout(ActionEvent event) {
-        try {
-            URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/Login/login.fxml");
-            if (resourceUrl == null) {
-                System.err.println("Ficheiro FXML não encontrado.");
-                return;
+    void logout(ActionEvent event){
+        SessionData.getInstance().setCurrentUser(null);
+
+        SessionData.getInstance().setCurrentUser(null);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Tem a certeza que quer sair a aplicação?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+
+                URL resourceUrl = getClass().getResource("/ipvc/estg/desktop/Login/login.fxml");
+                if (resourceUrl == null) {
+                    System.err.println("Ficheiro FXML não encontrado.");
+                    return;
+                }
+                Parent root = FXMLLoader.load(resourceUrl);
+                Scene mainPage = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(mainPage);
+                stage.setTitle("GymMaster - Login");
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            Parent root = FXMLLoader.load(resourceUrl);
-            Scene mainPage = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(mainPage);
-            stage.setTitle("GymMaster - Login");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -124,7 +128,7 @@ public class PaymentController {
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Parent root = loader.load();
             SocioDetailsController detailsController = loader.getController();
-            detailsController.initSocioDetails(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
+            detailsController.initialize(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
             Scene mainPage = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(mainPage);
@@ -138,16 +142,16 @@ public class PaymentController {
     @FXML
     public void saveRecibo(ActionEvent event) {
         Recibo recibo = new Recibo();
-
+        Funcionario funcionario = SessionData.getInstance().getCurrentUser();
         recibo.setDataHoraEmissao(java.sql.Date.valueOf(java.time.LocalDate.now()));
-        recibo.setIdFuncionario(Integer.parseInt(funcionarioLabel.getText()));
+        recibo.setIdFuncionario(funcionario.getIdFuncionario());
         recibo.setIdRecibo(Integer.parseInt(idReciboLabel.getText()));
         recibo.setIdSocio(Integer.parseInt(idSocioLabel.getText()));
         recibo.setIdPlano(Integer.parseInt(idPlanoLabel.getText()));
         recibo.setDataEmissao(java.sql.Date.valueOf(java.time.LocalDate.now()));
         recibo.setIva(BigInteger.valueOf(Integer.parseInt(ivaLabel.getText())));
         recibo.setValor(BigInteger.valueOf(Integer.parseInt(valorLabel.getText())));
-        recibo.setMes(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        recibo.setMes(mesComboBox.getValue());
         recibo.setIdTipopagamento(Integer.parseInt(tipoPagamentoCB.getValue().split(" - ")[0]));
         recibo.setIdEstadopagamento(Integer.parseInt(estadoPagamentoCB.getValue().split(" - ")[0]));
 
@@ -191,7 +195,7 @@ public class PaymentController {
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Parent root = loader.load();
             SocioDetailsController detailsController = loader.getController();
-            detailsController.initSocioDetails(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
+            detailsController.initialize(SocioBLL.findSocioById(Integer.parseInt(idSocioLabel.getText())));
             Scene mainPage = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(mainPage);

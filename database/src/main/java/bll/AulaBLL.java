@@ -241,7 +241,7 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
                 entityManager.getTransaction().begin();
           }
           Aula aula = entityManager.find(Aula.class, aulaId);
-          aula.setTotalLugares(aula.getVagas() + 1);
+          aula.setVagas(aula.getVagas() + 1);
           entityManager.getTransaction().commit();
     }
 
@@ -251,11 +251,42 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
                     entityManager.getTransaction().begin();
             }
             Aula aula = entityManager.find(Aula.class, aulaId);
-            aula.setTotalLugares(aula.getVagas() - 1);
+            aula.setVagas(aula.getVagas() - 1);
             entityManager.getTransaction().commit();
     }
 
+    public static void getModalidadeById(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT m.modalidade FROM Modalidade m, Aula a WHERE a.idModalidade = m.idModalidade AND a.id = :id");
+        query.setParameter("id", id);
+        System.out.println(query.getSingleResult());
+    }
 
+    public static List<Aula> getAllAulasGrupoSocio(int idsocio) {
+        EntityManager entityManager = Database.getEntityManager();
+
+        Socio socio = SocioBLL.findSocioById(idsocio);
+        List<Modalidade> modalidades = ModalidadeBLL.getModalidadesDoPlano(socio.getIdPlano());
+
+        List<Aula> aulasDeGrupo = new ArrayList<>();
+
+        for (Modalidade modalidade : modalidades) {
+            Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.idModalidade = :idModalidade AND a.totalLugares > 1");
+            query.setParameter("idModalidade", modalidade.getIdModalidade());
+            List<Aula> aulas = query.getResultList();
+            aulasDeGrupo.addAll(aulas);
+        }
+
+        return aulasDeGrupo;
+    }
+
+    public static boolean checkIfSocioIsInAula(int idSocio, int idAula) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT l FROM LinhaAula l WHERE l.idSocio = :idSocio AND l.idAula = :idAula");
+        query.setParameter("idSocio", idSocio);
+        query.setParameter("idAula", idAula);
+        return query.getResultList().size() > 0;
+    }
 
 }
 

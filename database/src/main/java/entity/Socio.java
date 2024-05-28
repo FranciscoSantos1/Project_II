@@ -35,6 +35,9 @@ public class Socio {
     @ManyToOne
     @JoinColumn(name = "id_plano", referencedColumnName = "id_plano", insertable = false, updatable = false)
     private Plano planoByIdPlano;
+    @Basic
+    @Column(name = "ativo")
+    private boolean ativo;
 
     public String getNome() {
         return nome;
@@ -90,6 +93,14 @@ public class Socio {
 
     public void setIdSocio(int idSocio) {
         this.idSocio = idSocio;
+    }
+
+    public boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     @Override
