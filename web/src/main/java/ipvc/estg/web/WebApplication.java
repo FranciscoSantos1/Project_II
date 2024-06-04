@@ -3,7 +3,7 @@ package ipvc.estg.web;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"ipvc.estg.web", "bll"})
 public class WebApplication {
 
 	public static void main(String[] args) {

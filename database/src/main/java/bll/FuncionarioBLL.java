@@ -6,7 +6,10 @@ import jakarta.persistence.*;
 import database.Database;
 import entity.Funcionario;
 import entity.TipoFuncionario;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class FuncionarioBLL {
 
     public static void createFuncionario(Funcionario funcionario) {
@@ -123,7 +126,7 @@ public class FuncionarioBLL {
 
     }
 
-    public static boolean verifyLogin(String email, String password) {
+    public boolean verifyLogin(String email, String password) {
         EntityManager entityManager = Database.getEntityManager();
         try {
             String queryStr = "SELECT COUNT(f) FROM Funcionario f WHERE f.email = :email AND f.password = :password";
