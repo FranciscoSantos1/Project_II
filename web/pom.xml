@@ -1,108 +1,57 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://www.apache.org/xsd/maven-4.0.0.xsd">
- <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.3.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>ipvc.estg</groupId>
+	<artifactId>web</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>web</name>
+	<description>Demo project for Spring Boot</description>
+	<properties>
+		<java.version>21</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>database</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 
- <groupId>ipvc.estg</groupId>
- <artifactId>web</artifactId>
- <version>1.0.0</version>
- <packaging>jar</packaging>
-
- <name>Web Application</name>
- <description>Aplicação web usando Spring Boot e Thymeleaf</description>
-
- <parent>
-  <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-starter-parent</artifactId>
-  <version>2.7.3</version>
-  <relativePath/> <!-- lookup parent from repository -->
- </parent>
-
- <properties>
-  <java.version>11</java.version>
-  <maven.compiler.source>11</maven.compiler.source>
-  <maven.compiler.target>11</maven.compiler.target>
- </properties>
-
- <dependencies>
-  <!-- Spring Web -->
-  <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-web</artifactId>
-  </dependency>
-
-
-  <!-- Thymeleaf -->
-  <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-thymeleaf</artifactId>
-  </dependency>
-
-  <!-- Spring Data JPA -->
-  <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-data-jpa</artifactId>
-  </dependency>
-
-
-  <!-- PostgreSQL Driver -->
-  <dependency>
-   <groupId>org.postgresql</groupId>
-   <artifactId>postgresql</artifactId>
-   <scope>runtime</scope>
-  </dependency>
-
-  <!-- JUnit 5 (Jupiter) -->
-  <dependency>
-   <groupId>org.junit.jupiter</groupId>
-   <artifactId>junit-jupiter-api</artifactId>
-   <version>5.8.1</version>
-   <scope>test</scope>
-  </dependency>
-  <dependency>
-   <groupId>org.junit.jupiter</groupId>
-   <artifactId>junit-jupiter-engine</artifactId>
-   <version>5.8.1</version>
-   <scope>test</scope>
-  </dependency>
-
-  <!-- Spring Boot Test -->
-  <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-test</artifactId>
-   <scope>test</scope>
-  </dependency>
-  <dependency>
-   <groupId>org.example</groupId>
-   <artifactId>Ginasio</artifactId>
-   <version>1.0-SNAPSHOT</version>
-   <scope>compile</scope>
-  </dependency>
-  <dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-devtools</artifactId>
-   <scope>runtime</scope>
-  </dependency>
-  <dependency>
-   <groupId>jakarta.persistence</groupId>
-   <artifactId>jakarta.persistence-api</artifactId>
-   <version>3.0.0</version>
-  </dependency>
- </dependencies>
-
- <repositories>
-  <repository>
-   <id>central</id>
-   <url>https://repo.maven.apache.org/maven2</url>
-  </repository>
- </repositories>
-
- <build>
-  <plugins>
-   <plugin>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-maven-plugin</artifactId>
-   </plugin>
-  </plugins>
- </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

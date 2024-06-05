@@ -8,7 +8,6 @@ import entity.Funcionario;
 import entity.TipoFuncionario;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class FuncionarioBLL {
 
@@ -126,7 +125,7 @@ public class FuncionarioBLL {
 
     }
 
-    public boolean verifyLogin(String email, String password) {
+    public static boolean verifyLogin(String email, String password) {
         EntityManager entityManager = Database.getEntityManager();
         try {
             String queryStr = "SELECT COUNT(f) FROM Funcionario f WHERE f.email = :email AND f.password = :password";

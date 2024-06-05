@@ -21,6 +21,7 @@ module ipvc.estg.desktop {
     exports ipvc.estg.desktop.instrutor;
 
 
+
     requires Ginasio;
     requires org.hibernate.orm.core;
 }
