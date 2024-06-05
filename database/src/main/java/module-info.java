@@ -3,6 +3,8 @@ module Ginasio {
     requires jakarta.xml.bind;
     requires org.hibernate.orm.core;
     requires spring.context;
+    requires java.sql;
+    requires java.persistence;
 
 
     opens entity to org.hibernate.orm.core;

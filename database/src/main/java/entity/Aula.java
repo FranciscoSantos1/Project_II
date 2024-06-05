@@ -11,6 +11,8 @@ import java.time.LocalTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 
+import javax.persistence.Entity;
+
 @Entity
     @Table(name = "aula")
     public class Aula {
