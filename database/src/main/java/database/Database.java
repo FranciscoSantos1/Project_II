@@ -10,7 +10,7 @@ import java.sql.Connection;
 
 public class Database {
 
-    private static final String PERSISTENCE_UNIT_NAME = "module2PU";
+    private static final String PERSISTENCE_UNIT_NAME = "default2";
     private static final EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     private static EntityManager entityManager = factory.createEntityManager();
 
