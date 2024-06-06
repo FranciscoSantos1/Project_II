@@ -19,14 +19,14 @@
             <input type="password" name="password" placeholder="Password" required>
             <input type="password" name="confirmPassword" placeholder="Confirmar Password" required>
             <input type="text" name="rua" placeholder="Rua" required>
-            <input type="text" name="numeroPorta" placeholder="Nº Porta" required>
-            <input type="text" name="codigoPostal" placeholder="Código Postal" required>
+            <input type="text" name="nPorta" placeholder="Nº Porta" required>
+            <input type="text" name="codPostal" placeholder="Código Postal" required>
             <input type="text" name="contacto" placeholder="Contacto" required>
-            <select name="tipoUtilizador" required>
+            <select name="idTipofuncionario" required>
                 <option value="" disabled selected>Tipo de Utilizador</option>
-                <option value="Instrutor">Instrutor</option>
-                <option value="ResponsavelInstrutores">Responsável Instrutores</option>
-                <option value="Rececionista">Rececionista</option>
+                <option value="1">Instrutor</option>
+                <option value="2">Responsável Instrutores</option>
+                <option value="3">Rececionista</option>
             </select>
             <button type="button" onclick="location.href='/login'">Voltar ao Login</button>
             <button type="submit">Registrar</button>

@@ -24,10 +24,10 @@ public class LoginController {
                               @RequestParam("password") String password,
                               RedirectAttributes redirectAttributes) {
         if (funcionarioBLL.verifyLogin(email, password)) {
-            System.out.println("Login successful.");
+            System.out.println("Login efetuado com sucesso.");
             return "redirect:/home";
         } else {
-            redirectAttributes.addFlashAttribute("loginError", "Invalid email or password.");
+            redirectAttributes.addFlashAttribute("loginError", "Email ou password incorretos. Tente novamente.");
             return "redirect:/login";
         }
     }
