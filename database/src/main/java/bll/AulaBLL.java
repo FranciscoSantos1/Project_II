@@ -17,7 +17,7 @@ import java.util.List;
 import static database.Database.getEntityManager;
 
 public class AulaBLL {
-    private static final ZoneId ZONE_ID = ZoneId.of("Europe/Lisbon"); // Adjust this to your intended timezone
+    private static final ZoneId ZONE_ID = ZoneId.of("Europe/Lisbon");
 
 
     public static void createAula(Aula aula) {
