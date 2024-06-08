@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Responsável</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<div th:fragment="responsavelContent">
+    <h2>Lista de Aulas de Grupo</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Data</th>
+            <th>Modalidade</th>
+            <th>Nome Instrutor</th>
+            <th>Total Lugares</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="aula : ${aulas}">
+            <td th:text="${aula.data}"></td>
+            <td th:text="${aula.modalidade}"></td>
+            <td th:text="${aula.nomeInstrutor}"></td>
+            <td th:text="${aula.totalLugares}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button onclick="window.location.href='/addAula'">Adicionar Aula</button>
+</div>
+</body>
+</html>

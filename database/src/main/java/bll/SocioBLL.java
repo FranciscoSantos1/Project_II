@@ -13,8 +13,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 
+@Service
 public class SocioBLL {
 
     public static void createSocio(Socio socio) {
@@ -148,6 +150,16 @@ public class SocioBLL {
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static List<Socio> getAllSociosWeb() {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.ativo = true", Socio.class);
+            return query.getResultList();
+        } finally {
+            entityManager.close();
         }
     }
 

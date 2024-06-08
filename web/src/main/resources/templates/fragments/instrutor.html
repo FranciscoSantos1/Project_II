@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Instrutor</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<div th:fragment="instrutorContent">
+    <h2>Aulas a Realizar</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Data Hora Início</th>
+            <th>Data Hora Fim</th>
+            <th>Modalidade</th>
+            <th>Local</th>
+            <th>Tipo Aula</th>
+            <th>Socio</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="aula : ${aulas}">
+            <td th:text="${aula.dataHoraInicio}"></td>
+            <td th:text="${aula.dataHoraFim}"></td>
+            <td th:text="${aula.modalidade}"></td>
+            <td th:text="${aula.local}"></td>
+            <td th:text="${aula.tipoAula}"></td>
+            <td th:text="${aula.socio}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button onclick="window.location.href='/addAulaIndividual'">Adicionar Aula Individual</button>
+</div>
+</body>
+</html>

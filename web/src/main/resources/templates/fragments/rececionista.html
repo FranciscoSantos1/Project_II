@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recepcionista</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<div th:fragment="recepcionistaContent">
+    <h2>Lista de Sócios</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Contacto</th>
+            <th>Morada</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="socio : ${socios}">
+            <td th:text="${socio.id}"></td>
+            <td th:text="${socio.nome}"></td>
+            <td th:text="${socio.contacto}"></td>
+            <td th:text="${socio.morada}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button onclick="window.location.href='/addSocio'">Adicionar Sócio</button>
+</div>
+</body>
+</html>

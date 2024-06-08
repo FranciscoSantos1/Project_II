@@ -41,7 +41,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <Text layoutX="208.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Soćios">
+      <Text layoutX="208.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lista de Sócios">
          <font>
             <Font size="36.0" />
          </font>

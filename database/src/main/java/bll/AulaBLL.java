@@ -13,9 +13,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Service;
+
 
 import static database.Database.getEntityManager;
 
+@Service
 public class AulaBLL {
     private static final ZoneId ZONE_ID = ZoneId.of("Europe/Lisbon");
 
@@ -179,6 +182,7 @@ public class AulaBLL {
         Query query = entityManager.createQuery("SELECT s FROM Socio s");
         return query.getResultList();
     }
+
 
 
     public static List<Aula> getAulasByInstructorId(Integer instructorId) {

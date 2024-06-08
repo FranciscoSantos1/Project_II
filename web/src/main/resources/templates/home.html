@@ -1,121 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aulas a Realizar</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-        }
-        .sidebar {
-            width: 200px;
-            background-color: #88B04B;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        .sidebar img {
-            width: 100px;
-            margin-bottom: 20px;
-        }
-        .sidebar p {
-            margin: 5px 0;
-        }
-        .sidebar button {
-            background-color: #ff4c4c;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-top: auto;
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-        }
-        .main-content h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .main-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        .main-content table, th, td {
-            border: 1px solid #ddd;
-        }
-        .main-content th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        .main-content th {
-            background-color: #f2f2f2;
-        }
-        .main-content button {
-            background-color: #ff4c4c;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-        .main-content .details-button {
-            background-color: #4CAF50;
-            margin-right: 10px;
-        }
-    </style>
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
-<div class="sidebar">
-    <img src="gym_icon.png" alt="GymMaster Logo">
-    <p>@GymMaster</p>
-    <p>Bem-vindo</p>
-    <p>Pedro</p>
-    <button>Sair</button>
+<div class="header" th:include="fragments/header :: header"></div>
+<div class="content">
+    <div th:switch="${idTipoFuncionario}">
+        <div th:case="'1'" th:include="fragments/recepcionista :: recepcionistaContent"></div>
+        <div th:case="'2'" th:include="fragments/responsavel :: responsavelContent"></div>
+        <div th:case="'3'" th:include="fragments/instrutor :: instrutorContent"></div>
+        <div th:case="*">
+            <p>Role desconhecido. Por favor, contate o administrador.</p>
+        </div>
+    </div>
 </div>
-<div class="main-content">
-    <h1>Aulas a realizar</h1>
-    <button class="details-button">Adicionar aula individual</button>
-    <table>
-        <tr>
-            <th>Data Hora Início</th>
-            <th>Data Hora Fim</th>
-            <th>Modalidade</th>
-            <th>Local</th>
-            <th>Tipo aula</th>
-            <th>Socio</th>
-        </tr>
-        <tr>
-            <td>2024-05-24T11:00</td>
-            <td>2024-05-24T12:00</td>
-            <td>GYM</td>
-            <td>Sala de musculação</td>
-            <td>AULA INDIVIDUAL</td>
-            <td>Gay Bohling</td>
-        </tr>
-        <tr>
-            <td>2024-05-23T10:00</td>
-            <td>2024-05-23T11:00</td>
-            <td>HIIT</td>
-            <td>SALA4</td>
-            <td>AULA GRUPO</td>
-            <td>N/A</td>
-        </tr>
-        <tr>
-            <td>2024-05-31T11:00</td>
-            <td>2024-05-31T13:00</td>
-            <td>BODYPUMP</td>
-            <td>SALA1</td>
-            <td>AULA GRUPO</td>
-            <td>Drugi Gossage</td>
-        </tr>
-    </table>
-    <button class="details-button">Ver Detalhes</button>
-    <button>Eliminar aula</button>
-</div>
+<div class="footer" th:include="fragments/footer :: footer"></div>
 </body>
 </html>
