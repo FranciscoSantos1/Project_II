@@ -14,18 +14,16 @@
             <th>Data Hora Fim</th>
             <th>Modalidade</th>
             <th>Local</th>
-            <th>Tipo Aula</th>
-            <th>Socio</th>
+            <th>Vagas</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="aula : ${aulas}">
-            <td th:text="${aula.dataHoraInicio}"></td>
+            <td th:text="${aula.dataHoraComeco}"></td>
             <td th:text="${aula.dataHoraFim}"></td>
-            <td th:text="${aula.modalidade}"></td>
-            <td th:text="${aula.local}"></td>
-            <td th:text="${aula.tipoAula}"></td>
-            <td th:text="${aula.socio}"></td>
+            <td th:text="${aula.idModalidade}"></td>
+            <td th:text="${aula.localAula}"></td>
+            <td th:text="${aula.vagas}"></td>
         </tr>
         </tbody>
     </table>

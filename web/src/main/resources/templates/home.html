@@ -9,9 +9,9 @@
 <div class="header" th:include="fragments/header :: header"></div>
 <div class="content">
     <div th:switch="${idTipoFuncionario}">
-        <div th:case="'1'" th:include="fragments/recepcionista :: recepcionistaContent"></div>
+        <div th:case="'1'" th:include="fragments/instrutor :: instrutorContent"></div>
         <div th:case="'2'" th:include="fragments/responsavel :: responsavelContent"></div>
-        <div th:case="'3'" th:include="fragments/instrutor :: instrutorContent"></div>
+        <div th:case="'3'" th:include="fragments/rececionista :: rececionistaContent"></div>
         <div th:case="*">
             <p>Role desconhecido. Por favor, contate o administrador.</p>
         </div>
