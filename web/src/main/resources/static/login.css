@@ -1,0 +1,30 @@
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/login_background.png');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0.5;
+}
+
+html, body {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 800px;
+    margin: auto;
+}
