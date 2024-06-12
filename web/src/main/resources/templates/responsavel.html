@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Lista de Aulas de Grupo</title>
-    <link rel="stylesheet" type="text/css" href="page.css">
+    <title>Responsavel Instrutores - Pagina inicial</title>
+    <link rel="stylesheet" type="text/css" href="responsavel.css">
 </head>
 <body>
 <div class="background"></div>
@@ -19,15 +19,15 @@
                 <th>Data</th>
                 <th>Modalidade</th>
                 <th>Nome Instrutor</th>
-                <th>Total lugares</th>
+                <th>Vagas disponíveis</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="aula : ${aulas}">
+            <tr th:each="aula, stat : ${aulas}">
                 <td th:text="${#dates.format(aula.dataHoraComeco, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${aula.idModalidade}"></td>
-                <td th:text="${aula.idFuncionario}"></td>
-                <td th:text="${aula.totalLugares}"></td>
+                <td th:text="${modalidadeNames[stat.index]}"></td>
+                <td th:text="${instrutorNames[stat.index]}"></td>
+                <td th:text="${aula.totalLugares - aula.vagas}"></td>
             </tr>
             </tbody>
         </table>

@@ -4,10 +4,11 @@ import database.Database;
 import entity.Modalidade;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public class ModalidadeBLL {
 
     public static void createModalidade(Modalidade modalidade) {
@@ -86,5 +87,13 @@ public class ModalidadeBLL {
         Query modalidadeQuery = entityManager.createQuery("SELECT m FROM Modalidade m WHERE m.id IN :idModalidades");
         modalidadeQuery.setParameter("idModalidades", idModalidades);
         return modalidadeQuery.getResultList();
+    }
+
+
+    public static Modalidade getModalidadeByName(String name) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT m FROM Modalidade m WHERE m.modalidade = :name");
+        query.setParameter("name", name);
+        return (Modalidade) query.getSingleResult();
     }
 }

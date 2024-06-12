@@ -163,6 +163,13 @@ public class FuncionarioBLL {
         }
     }
 
+    public static Funcionario getFuncionarioByName(String name) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT f FROM Funcionario f WHERE f.nome = :name");
+        query.setParameter("name", name);
+        return (Funcionario) query.getSingleResult();
+    }
+
     public static List<Funcionario> getAllFuncionarios() {
         EntityManager entityManager = Database.getEntityManager();
         try {

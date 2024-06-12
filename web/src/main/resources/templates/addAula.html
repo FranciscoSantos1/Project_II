@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Adicionar Aula</title>
+    <link rel="stylesheet" type="text/css" href="addAulas.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="background"></div>
+<div class="container">
+    <div class="header">
+        <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+    </div>
+    <div class="content">
+        <h1>Adicionar aula de grupo</h1>
+        <form id="addAulaForm">
+            <div class="form-group">
+                <label for="nome">Nome da aula</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="data">Data</label>
+                <input type="date" id="data" name="data" required>
+            </div>
+            <div class="form-group">
+                <label for="hora">Hora</label>
+                <input type="time" id="hora" name="hora" required>
+            </div>
+            <div class="form-group">
+                <label for="modalidade">Modalidade</label>
+                <select id="modalidade" name="modalidade" required>
+                    <option value="">Escolha a modalidade</option>
+                    <tr th:each="modalidade : ${modalidades}">
+                        <option th:value="${modalidade.modalidade}" th:text="${modalidade.modalidade}"></option>
+                    </tr>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="local">Local da aula</label>
+                <input type="text" id="local" name="local" required>
+            </div>
+            <div class="form-group">
+                <label for="duracao">Duração</label>
+                <select id="duracao" name="duracao" required>
+                    <option value="30m">30 minutos</option>
+                    <option value="1h">1 hora</option>
+                    <option value="1h30m">1 hora e 30 minutos</option>
+                    <option value="2h">2 horas</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="lugares">Total de lugares</label>
+                <input type="number" id="lugares" name="lugares" required>
+            </div>
+            <div class="form-group">
+                <label for="minimo">Número mínimo de atletas</label>
+                <input type="number" id="minimo" name="minimo" required>
+            </div>
+            <div class="form-group">
+                <label for="instrutor">Instrutor</label>
+                <select id="instrutor" name="instrutor" required>
+                    <option value="">Escolha o instrutor</option>
+                </select>
+            </div>
+            <div class="button-container">
+                <button class="btn btn-add" type="submit">Adicionar aula</button>
+                <button class="btn btn-back" type="button" onclick="window.location.href='/home'">Voltar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function updateAvailableInstructors() {
+        const date = $('#data').val();
+        const time = $('#hora').val();
+        const duration = $('#duracao').val();
+
+        if (date && time && duration) {
+            $.ajax({
+                url: '/getAvailableInstructors',
+                method: 'GET',
+                data: {
+                    date: date,
+                    time: time,
+                    duration: duration
+                },
+                success: function (data) {
+                    const instrutorSelect = $('#instrutor');
+                    instrutorSelect.empty();
+                    instrutorSelect.append('<option value="">Escolha o instrutor</option>');
+                    data.forEach(instrutor => {
+                        instrutorSelect.append(`<option value="${instrutor.id}">${instrutor.nome}</option>`);
+                    });
+                }
+            });
+        }
+    }
+
+    $('#data, #hora, #duracao').change(updateAvailableInstructors);
+</script>
+
+</body>
+</html>
