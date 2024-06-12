@@ -15,6 +15,11 @@ public class LoginController {
     @Autowired
     private FuncionarioBLL funcionarioBLL;
 
+    @ModelAttribute("funcionario")
+    public Funcionario setUpFuncionario() {
+        return new Funcionario();
+    }
+
     @GetMapping("/login")
     public String loginForm() {
         return "login";
@@ -23,18 +28,14 @@ public class LoginController {
     @PostMapping("/login")
     public String verifyLogin(@RequestParam("email") String email,
                               @RequestParam("password") String password,
-                              @ModelAttribute("funcionario") Funcionario funcionario,
                               Model model,
                               RedirectAttributes redirectAttributes) {
-
-
 
         if (funcionarioBLL.verifyLogin(email, password)) {
             System.out.println("Login efetuado com sucesso.");
 
             Funcionario loggedFuncionario = funcionarioBLL.getFuncionarioByEmail(email);
             if (loggedFuncionario != null) {
-                // Armazene o Funcionario no modelo para a sessão
                 model.addAttribute("funcionario", loggedFuncionario);
                 return "redirect:/home";
             } else {

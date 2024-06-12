@@ -33,7 +33,7 @@ public class HomeController {
 
     @ModelAttribute("funcionario")
     public Funcionario setUpFuncionario() {
-        return new Funcionario(); // Inicializa um novo objeto Funcionario
+        return new Funcionario();
     }
 
     @GetMapping("/home")
@@ -48,12 +48,15 @@ public class HomeController {
         if (idTipoFuncionario == 1) {
             List<Socio> socios = socioBLL.getAllSociosWeb();
             model.addAttribute("socios", socios);
+            return "rececionista";
         } else if (idTipoFuncionario == 2) {
             List<Aula> aulas = aulaBLL.getAllAulasGrupo();
             model.addAttribute("aulas", aulas);
+            return "responsavel";
         } else if (idTipoFuncionario == 3) {
             List<Aula> aulas = aulaBLL.getAulasByInstructorId(funcionario.getIdFuncionario());
             model.addAttribute("aulas", aulas);
+            return "instrutor";
         }
 
         return "home";

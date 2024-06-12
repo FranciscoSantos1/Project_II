@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Aulas de Grupo</title>
+    <link rel="stylesheet" type="text/css" href="page.css">
+</head>
+<body>
+<div class="background"></div>
+<div class="container">
+    <div class="header">
+        <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+    </div>
+    <div class="content">
+        <h1>Responsável Instrutor</h1>
+        <h2>Lista de Aulas de Grupo</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Modalidade</th>
+                <th>Nome Instrutor</th>
+                <th>Total lugares</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="aula : ${aulas}">
+                <td th:text="${#dates.format(aula.dataHoraComeco, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${aula.idModalidade}"></td>
+                <td th:text="${aula.idFuncionario}"></td>
+                <td th:text="${aula.totalLugares}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <button class="btn btn-details">Ver Detalhes</button>
+            <button class="btn btn-delete">Eliminar aula</button>
+            <button class="btn btn-add" onclick="window.location.href='/addAula'">Adicionar aula</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
