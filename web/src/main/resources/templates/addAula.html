@@ -13,7 +13,7 @@
     </div>
     <div class="content">
         <h1>Adicionar aula de grupo</h1>
-        <form id="addAulaForm">
+        <form id="addAulaForm" method="post" action="/submitAula">
             <div class="form-group">
                 <label for="nome">Nome da aula</label>
                 <input type="text" id="nome" name="nome" required>
@@ -77,21 +77,26 @@
         const duration = $('#duracao').val();
 
         if (date && time && duration) {
+            const datetime = new Date(date + 'T' + time).toISOString();
+
             $.ajax({
                 url: '/getAvailableInstructors',
                 method: 'GET',
                 data: {
-                    date: date,
-                    time: time,
+                    date: datetime,
+                    hour: time,
                     duration: duration
                 },
-                success: function (data) {
+                success: function(data) {
                     const instrutorSelect = $('#instrutor');
                     instrutorSelect.empty();
                     instrutorSelect.append('<option value="">Escolha o instrutor</option>');
                     data.forEach(instrutor => {
-                        instrutorSelect.append(`<option value="${instrutor.id}">${instrutor.nome}</option>`);
+                        instrutorSelect.append(`<option value="${instrutor.idFuncionario}">${instrutor.nome}</option>`);
                     });
+                },
+                error: function(err) {
+                    console.log('Error:', err);
                 }
             });
         }
@@ -99,6 +104,5 @@
 
     $('#data, #hora, #duracao').change(updateAvailableInstructors);
 </script>
-
 </body>
 </html>

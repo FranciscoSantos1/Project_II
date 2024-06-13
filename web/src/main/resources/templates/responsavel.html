@@ -27,7 +27,7 @@
                 <td th:text="${#dates.format(aula.dataHoraComeco, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${modalidadeNames[stat.index]}"></td>
                 <td th:text="${instrutorNames[stat.index]}"></td>
-                <td th:text="${aula.totalLugares - aula.vagas}"></td>
+                <td th:text="${aula.vagas}"></td>
             </tr>
             </tbody>
         </table>
