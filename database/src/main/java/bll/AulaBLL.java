@@ -79,6 +79,7 @@ public class AulaBLL {
         EntityManager entityManager = Database.getEntityManager();
         Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.totalLugares > 1");
         return query.getResultList();
+
     }
 
     public static List<Aula> getAllAulasIndividual() {

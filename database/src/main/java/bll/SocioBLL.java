@@ -131,7 +131,7 @@ public class SocioBLL {
             query.setParameter("id", id);
             return (Plano) query.getSingleResult();
         } catch (NoResultException e) {
-            return null; // Retorna null se nenhum resultado for encontrado
+            return null;
         }
     }
 
@@ -155,7 +155,7 @@ public class SocioBLL {
             Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.ativo = true", Socio.class);
             return query.getResultList();
         } catch (NoResultException e) {
-            return null; // Retorna null se nenhum resultado for encontrado
+            return null;
         }
     }
 
@@ -167,7 +167,7 @@ public class SocioBLL {
             query.setParameter("id", id);
             return (Socio) query.getSingleResult();
         } catch (NoResultException e) {
-            return null; // Retorna null se nenhum resultado for encontrado
+            return null;
         }
     }
 

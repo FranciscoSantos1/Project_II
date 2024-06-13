@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Responsavel Instrutores - Pagina inicial</title>
+    <title>Responsável Instrutores - Página Inicial</title>
     <link rel="stylesheet" type="text/css" href="responsavel.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="background"></div>
@@ -13,7 +14,7 @@
     <div class="content">
         <h1>Responsável Instrutor</h1>
         <h2>Lista de Aulas de Grupo</h2>
-        <table>
+        <table id="aulaTable">
             <thead>
             <tr>
                 <th>Data</th>
@@ -23,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="aula, stat : ${aulas}">
+            <tr th:each="aula, stat : ${aulas}" th:data-id="${aula.id}" th:onclick="'selectAula(this)'">
                 <td th:text="${#dates.format(aula.dataHoraComeco, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${modalidadeNames[stat.index]}"></td>
                 <td th:text="${instrutorNames[stat.index]}"></td>
@@ -31,12 +32,57 @@
             </tr>
             </tbody>
         </table>
+        <input type="hidden" id="selectedAulaId">
         <div class="button-container">
-            <button class="btn btn-details">Ver Detalhes</button>
-            <button class="btn btn-delete">Eliminar aula</button>
+            <button class="btn btn-details" onclick="viewDetails()">Ver Detalhes</button>
+            <button class="btn btn-delete" onclick="deleteAula()">Eliminar aula</button>
             <button class="btn btn-add" onclick="window.location.href='/addAula'">Adicionar aula</button>
         </div>
     </div>
 </div>
+
+<script>
+    function selectAula(row) {
+        var id = row.getAttribute('data-id');
+        console.log('Selected Aula ID:', id);
+        document.getElementById('selectedAulaId').value = id;
+        var rows = document.querySelectorAll('#aulaTable tbody tr');
+        rows.forEach(r => r.classList.remove('selected'));
+        row.classList.add('selected');
+    }
+
+    function viewDetails() {
+        var id = document.getElementById('selectedAulaId').value;
+        if (id) {
+            window.location.href = '/detalhesAula?id=' + encodeURIComponent(id);
+        } else {
+            alert('Por favor, selecione uma aula primeiro.');
+        }
+    }
+
+    function deleteAula() {
+        var id = document.getElementById('selectedAulaId').value;
+        if (!id) {
+            alert('Por favor, selecione uma aula primeiro.');
+            return;
+        }
+
+        console.log('Deleting Aula ID:', id); // Adicionado para verificar o ID
+
+        if (confirm('Tem a certeza que deseja eliminar a aula selecionada? Esta ação é irreversível!')) {
+            $.ajax({
+                url: '/deleteAula/' + encodeURIComponent(id),
+                type: 'DELETE',
+                success: function(result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('Erro ao eliminar aula: ' + xhr.responseText);
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>

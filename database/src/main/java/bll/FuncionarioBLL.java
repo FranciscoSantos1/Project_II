@@ -49,11 +49,8 @@ public class FuncionarioBLL {
 
     public static Funcionario getFuncionarioById(int id) {
         EntityManager entityManager = Database.getEntityManager();
-        try {
-            return entityManager.find(Funcionario.class, id);
-        } finally {
-            entityManager.close();
-        }
+         return entityManager.find(Funcionario.class, id);
+
     }
 
     public static List<Funcionario> readFuncionario() {

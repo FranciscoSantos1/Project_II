@@ -161,8 +161,6 @@ body, html {
     border-bottom: none;
 }
 
-/* Adicione isso ao final do arquivo rececionista.css */
-
 .form-row {
     display: flex;
     flex-direction: column;

@@ -171,7 +171,6 @@ public class responsavelMainPageController {
 
             }
         });
-
     }
 
     public Aula getSelectedAula(){

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalhes da Aula de Grupo</title>
+    <link rel="stylesheet" type="text/css" href="responsavel.css">
+</head>
+<body>
+<div class="background"></div>
+<div class="container">
+    <div class="header">
+        <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+    </div>
+    <div class="content">
+        <h1>Detalhes da Aula</h1>
+        <table class="details-table">
+            <tr>
+                <th>ID:</th>
+                <td th:text="${aula.id}"></td>
+            </tr>
+            <tr>
+                <th>Nome:</th>
+                <td th:text="${aula.nome}"></td>
+            </tr>
+            <tr>
+                <th>Local:</th>
+                <td th:text="${aula.localAula}"></td>
+            </tr>
+            <tr>
+                <th>Data Início:</th>
+                <td th:text="${#dates.format(aula.dataHoraComeco, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            <tr>
+                <th>Data Fim:</th>
+                <td th:text="${#dates.format(aula.dataHoraFim, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            <tr>
+                <th>Número Mínimo de Atletas:</th>
+                <td th:text="${aula.numMinAtletas}"></td>
+            </tr>
+            <tr>
+                <th>Vagas:</th>
+                <td th:text="${aula.vagas}"></td>
+            </tr>
+            <tr>
+                <th>Total de Lugares:</th>
+                <td th:text="${aula.totalLugares}"></td>
+            </tr>
+            <tr>
+                <th>Modalidade:</th>
+                <td th:text="${modalidadeName}"></td>
+            </tr>
+            <tr>
+                <th>Instrutor:</th>
+                <td th:text="${instrutorName}"></td>
+            </tr>
+        </table>
+        <div class="button-container">
+            <button onclick="window.history.back()" class="btn btn-back">Voltar</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

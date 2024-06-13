@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,4 +65,23 @@ public class HomeController {
 
         return "home";
     }
+
+
+    @DeleteMapping("/deleteAula/{id}")
+    @ResponseBody
+    public String deleteAula(@PathVariable int id) {
+        Aula aula = aulaBLL.getAulaById(id);
+
+        if (aula == null) {
+            return "Aula não encontrada.";
+        }
+
+        if (aula.getDataHoraComeco().isBefore(Instant.now())) {
+            return "Não pode eliminar uma aula que já começou.";
+        }
+
+        aulaBLL.deleteAula(aula);
+        return "Aula eliminada com sucesso.";
+    }
+
 }
