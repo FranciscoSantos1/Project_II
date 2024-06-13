@@ -6,6 +6,8 @@ import bll.SocioBLL;
 import entity.Funcionario;
 import entity.Aula;
 import entity.Socio;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,4 +86,12 @@ public class HomeController {
         return "Aula eliminada com sucesso.";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/login";
+    }
 }

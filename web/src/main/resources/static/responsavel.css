@@ -17,7 +17,8 @@ body, html {
     min-height: 100vh;
     padding: 20px;
     width: 90%;
-    max-width: 1200px;
+    height: 70%;'
+max-width: 1200px;
     margin: auto;
 }
 
@@ -105,13 +106,26 @@ table th {
 
 .button-container {
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    justify-content: space-between;
+    width: 99%;
     position: absolute;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
+    padding: 0 20px;
 }
+
+.left-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.right-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
 
 .btn {
     padding: 10px 20px;
@@ -138,6 +152,17 @@ table th {
 
 .btn-delete:hover {
     background-color: #ec971f;
+}
+
+.btn-exit {
+    background-color: #d9534f;
+    color: white;
+
+}
+
+.btn-exit:hover {
+    background-color: #c9302c;
+
 }
 
 .btn-add {
