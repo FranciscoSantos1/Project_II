@@ -50,7 +50,7 @@ public class SocioBLL {
             query.setParameter("name", name);
             return (Socio) query.getSingleResult();
         } catch (NoResultException e) {
-            return null; // Retorna null se nenhum resultado for encontrado
+            return null;
         }
     }
 
@@ -75,10 +75,6 @@ public class SocioBLL {
         entityManager.getTransaction().commit();
     }*/
 
-    /*public static Socio getSocioById(int id) {
-        EntityManager entityManager = Database.getEntityManager();
-        return entityManager.find(Socio.class, id);
-    }*/
 
     public static void updateSocio(Socio socio) {
         Connection connection = null;
@@ -158,10 +154,23 @@ public class SocioBLL {
         try {
             Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.ativo = true", Socio.class);
             return query.getResultList();
-        } finally {
-            entityManager.close();
+        } catch (NoResultException e) {
+            return null; // Retorna null se nenhum resultado for encontrado
         }
     }
+
+    //get socio by id for web
+    public static Socio getSocioById(int id) {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            Query query = entityManager.createQuery("SELECT s FROM Socio s WHERE s.idSocio = :id", Socio.class);
+            query.setParameter("id", id);
+            return (Socio) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // Retorna null se nenhum resultado for encontrado
+        }
+    }
+
 
     public static List<Socio> getAllAvailableSocios(Instant startInstant, Instant endInstant) {
         EntityManager entityManager = Database.getEntityManager();

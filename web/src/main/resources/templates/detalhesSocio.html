@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalhes do Sócio</title>
+    <link rel="stylesheet" type="text/css" href="rececionista.css">
+</head>
+<body>
+<div class="content">
+    <div class="background"></div>
+    <div class="header">
+        <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+        <h1>Detalhes do Sócio</h1>
+    </div>
+    <p><strong>ID:</strong> <span th:text="${socio.idSocio}"></span></p>
+    <p><strong>Nome:</strong> <span th:text="${socio.nome}"></span></p>
+    <p><strong>Contacto:</strong> <span th:text="${socio.contacto}"></span></p>
+    <p><strong>Morada:</strong> <span th:text="${socio.morada}"></span></p>
+    <p><strong>Ativo:</strong> <span th:text="${socio.ativo ? 'Sim' : 'Não'}"></span></p>
+    <p><strong>Plano:</strong> <span th:text="${socio.idPlano}"></span></p>
+    <button onclick="window.history.back()" class="btn btn-back">Voltar</button>
+    <button class="btn btn-edit">Editar</button>
+    <button class="btn btn-payment">Desativar</button>
+</div>
+</body>
+</html>

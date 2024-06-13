@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.logo {
+    width: 100px;
+}
+
+.content {
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 50px auto;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('images/login_background.png');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0.5;
+}
+
+.socio-table {
+    border-collapse: collapse;
+    margin: 20px auto;
+    width: 90%;
+}
+
+.socio-table th, .socio-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.socio-table th {
+    background-color: #f2f2f2;
+}
+
+.socio-table tr.selected {
+    background-color: #007bff;
+    color: white;
+}
+
+.socio-table tr.selected td {
+    color: white;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-details {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-details:hover {
+    background-color: #45a049;
+}
+
+.btn-delete {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #ec971f;
+}
+
+.btn-add {
+    background-color: #5bc0de;
+    color: white;
+}
+
+.btn-add:hover {
+    background-color: #31b0d5;
+}
+
+.btn-back {
+    background-color: #d9534f;
+    color: white;
+}
+
+.btn-payment {
+    background-color: #5bc0de;
+    color: white;
+}
+
+.btn-edit {
+    background-color: #f0ad4e;
+    color: white;
+}
+

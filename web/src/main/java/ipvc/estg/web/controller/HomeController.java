@@ -149,4 +149,16 @@ public class HomeController {
                 throw new IllegalArgumentException("Invalid duration format");
         }
     }
+
+
+    //RECECIONISTA CONTROLLER
+    @GetMapping("/detalhesSocio")
+    public String detalhesSocio(@RequestParam("id") int id, Model model) {
+        Socio socio = socioBLL.getSocioById(id);
+        if (socio != null) {
+            model.addAttribute("socio", socio);
+            return "detalhesSocio"; // Certifique-se de que este nome corresponde ao nome da visualização (detalhesSocio.html)
+        }
+        return "redirect:/home";
+    }
 }

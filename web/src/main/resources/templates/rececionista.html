@@ -2,30 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Recepcionista</title>
-    <link rel="stylesheet" th:href="@{/styles.css}">
+    <link rel="stylesheet" type="text/css" href="rececionista.css">
 </head>
 <body>
 <div th:fragment="rececionistaContent">
-    <h2>Lista de Sócios</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Contacto</th>
-            <th>Morada</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="socio : ${socios}">
-            <td th:text="${socio.idSocio}"></td>
-            <td th:text="${socio.nome}"></td>
-            <td th:text="${socio.contacto}"></td>
-            <td th:text="${socio.morada}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <button onclick="window.location.href='/addSocio'">Adicionar Sócio</button>
+    <div class="background"></div>
+    <div class="header">
+        <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+    </div>
+    <div class="content">
+        <h2>Lista de Sócios</h2>
+        <table class="socio-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Contacto</th>
+                <th>Morada</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="socio : ${socios}" th:data-id="${socio.idSocio}" onclick="selectSocio(this)">
+                <td th:text="${socio.idSocio}"></td>
+                <td th:text="${socio.nome}"></td>
+                <td th:text="${socio.contacto}"></td>
+                <td th:text="${socio.morada}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <input type="hidden" id="selectedSocioId" value="">
+        <div class="button-container">
+            <button class="btn btn-add" onclick="window.location.href='/addSocio'">Adicionar Sócio</button>
+            <button class="btn btn-details" onclick="viewDetails()">Ver Detalhes</button>
+            <button class="btn btn-details" onclick="window.location.href='/reservarVaga'">Reservar vaga</button>
+            <button class="btn btn-details" onclick="window.location.href='/agendarSessaoPT'">Agendar sessão PT</button>
+            <button class="btn btn-delete" onclick="window.location.href='/desativarSocio'">Desativar Sócio</button>
+        </div>
+    </div>
 </div>
+<script>
+    function selectSocio(row) {
+        var id = row.getAttribute('data-id');
+        document.getElementById('selectedSocioId').value = id;
+        var rows = document.querySelectorAll('.socio-table tr');
+        rows.forEach(r => r.classList.remove('selected'));
+        row.classList.add('selected');
+    }
+
+    function viewDetails() {
+        var id = document.getElementById('selectedSocioId').value;
+        if (id) {
+            window.location.href = '/detalhesSocio?id=' + encodeURIComponent(id);
+        } else {
+            alert('Por favor, selecione um sócio primeiro.');
+        }
+    }
+</script>
 </body>
 </html>
