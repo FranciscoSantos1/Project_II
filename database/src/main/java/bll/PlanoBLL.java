@@ -3,9 +3,12 @@ package bll;
 import entity.Plano;
 import jakarta.persistence.EntityManager;
 import database.Database;
+import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
+@Service
 public class PlanoBLL {
 
     public static Plano findPlanoById(int id) {

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Sócio</title>
+    <link rel="stylesheet" type="text/css" href="rececionista.css">
+</head>
+<body>
+<div class="content">
+    <div class="background"></div>
+    <div class="header">
+        <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+        <h1>Editar Sócio</h1>
+    </div>
+    <form th:action="@{/atualizarSocio}" method="post" class="edit-form">
+        <input type="hidden" name="idSocio" th:value="${socio.idSocio}">
+        <div class="form-row">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" th:value="${socio.nome}" required>
+        </div>
+        <div class="form-row">
+            <label for="contacto">Contacto:</label>
+            <input type="text" id="contacto" name="contacto" th:value="${socio.contacto}" required>
+        </div>
+        <div class="form-row">
+            <label for="rua">Rua:</label>
+            <input type="text" id="rua" name="rua" th:value="${socio.rua}" required>
+        </div>
+        <div class="form-row">
+            <label for="nPorta">Nº da Porta:</label>
+            <input type="text" id="nPorta" name="nPorta" th:value="${socio.nPorta}" required>
+        </div>
+        <div class="form-row">
+            <label for="codPostal">Código Postal:</label>
+            <input type="text" id="codPostal" name="codPostal" th:value="${socio.codPostal}" required>
+        </div>
+        <div class="form-row">
+            <label for="plano">Plano:</label>
+            <select id="plano" name="idPlano" required>
+                <option th:each="plano : ${planos}" th:value="${plano.idPlano}" th:text="${plano.tipo + ' - ' + plano.descricao + ' - ' + plano.valor} + '€'"></option>
+            </select>
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn btn-save">Guardar</button>
+            <button type="button" onclick="" class="btn btn-cancel">Cancelar</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

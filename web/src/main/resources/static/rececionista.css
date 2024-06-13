@@ -141,3 +141,65 @@ body, html {
     color: white;
 }
 
+.details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.details-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    width: 600px;
+}
+
+.details-row:last-child {
+    border-bottom: none;
+}
+
+/* Adicione isso ao final do arquivo rececionista.css */
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    margin-bottom: 5px;
+}
+
+.form-row input, .form-row select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}
+
+.btn-save {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #d9534f;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}

@@ -11,15 +11,21 @@
         <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
         <h1>Detalhes do Sócio</h1>
     </div>
-    <p><strong>ID:</strong> <span th:text="${socio.idSocio}"></span></p>
-    <p><strong>Nome:</strong> <span th:text="${socio.nome}"></span></p>
-    <p><strong>Contacto:</strong> <span th:text="${socio.contacto}"></span></p>
-    <p><strong>Morada:</strong> <span th:text="${socio.morada}"></span></p>
-    <p><strong>Ativo:</strong> <span th:text="${socio.ativo ? 'Sim' : 'Não'}"></span></p>
-    <p><strong>Plano:</strong> <span th:text="${socio.idPlano}"></span></p>
-    <button onclick="window.history.back()" class="btn btn-back">Voltar</button>
-    <button class="btn btn-edit">Editar</button>
-    <button class="btn btn-payment">Desativar</button>
+    <div class="details-container">
+        <div class="details-row"><strong>ID:</strong> <span th:text="${socio.idSocio}"></span></div>
+        <div class="details-row"><strong>Nome:</strong> <span th:text="${socio.nome}"></span></div>
+        <div class="details-row"><strong>Contacto:</strong> <span th:text="${socio.contacto}"></span></div>
+        <div class="details-row"><strong>Morada:</strong> <span th:text="${socio.rua} + ', ' + ${socio.nPorta} + ', ' + ${socio.codPostal}"></span></div>
+        <div class="details-row"><strong>Ativo:</strong> <span th:text="${socio.ativo ? 'Sim' : 'Não'}"></span></div>
+        <div class="details-row"><strong>Plano:</strong> <span th:text="${plano.tipo + ' - ' + plano.descricao + ' - ' + plano.valor} + '€'"></span></div>
+    </div>
+    <div class="button-container">
+        <button onclick="window.history.back()" class="btn btn-back">Voltar</button>
+        <a th:href="@{/editarSocio(id=${socio.idSocio})}">
+            <button class="btn btn-edit">Editar</button>
+        </a>
+        <button class="btn btn-payment">Registar pagamento</button>
+    </div>
 </div>
 </body>
 </html>
