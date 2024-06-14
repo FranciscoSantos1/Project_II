@@ -1,33 +1,104 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Instrutor</title>
-    <link rel="stylesheet" th:href="@{/styles.css}">
+    <title>Responsável Instrutores - Página Inicial</title>
+    <link rel="stylesheet" type="text/css" href="instrutor.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../static/instrutor.css">
 </head>
 <body>
 <div th:fragment="instrutorContent">
-    <h2>Aulas a Realizar</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Data Hora Início</th>
-            <th>Data Hora Fim</th>
-            <th>Modalidade</th>
-            <th>Local</th>
-            <th>Vagas</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="aula : ${aulas}">
-            <td th:text="${aula.dataHoraComeco}"></td>
-            <td th:text="${aula.dataHoraFim}"></td>
-            <td th:text="${aula.idModalidade}"></td>
-            <td th:text="${aula.localAula}"></td>
-            <td th:text="${aula.vagas}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <button onclick="window.location.href='/addAulaIndividual'">Adicionar Aula Individual</button>
+    <div class="background"></div>
+    <div class="container">
+        <div class="header">
+        </div>
+        <div class="content">
+            <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+
+            <h1>Instrutor</h1>
+            <h2>Lista de Aulas</h2>
+            <table id="aulaTable">
+                <thead>
+                <tr>
+                    <th>Data Hora Início</th>
+                    <th>Data Hora Fim</th>
+                    <th>Modalidade</th>
+                    <th>Local</th>
+                    <th>Tipo Aula</th>
+                    <th>Socio</th>
+                    <th>Estado</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="aula, stat : ${aulas}" th:data-id="${aula.id}" onclick="selectAula(this)">
+                    <td th:text="${#dates.format(aula.dataHoraComeco, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${#dates.format(aula.dataHoraFim, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${modalidadeNames[stat.index]}"></td>
+                    <td th:text="${localNames[stat.index]}"></td>
+                    <td th:text="${tipoAulas[stat.index]}"></td>
+                    <td th:text="${alunoNames[stat.index]}"></td>
+                    <td th:text="${estadoAulas[stat.index]}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="hidden" id="selectedAulaId">
+            <div class="button-container">
+                <div class="left-buttons">
+                    <button class="btn btn-exit" onclick="window.location.href='/logout'">Sair</button>
+                </div>
+                <div class="right-buttons">
+                    <button class="btn btn-details" onclick="viewDetails()">Ver Detalhes</button>
+                    <button class="btn btn-delete" onclick="deleteAula()">Eliminar aula</button>
+                    <button class="btn btn-add" onclick="window.location.href='/addAulaIndividual'">Adicionar aula Individual</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    function selectAula(row) {
+        var id = row.getAttribute('data-id');
+        console.log('Selected Aula ID:', id);
+        document.getElementById('selectedAulaId').value = id;
+        var rows = document.querySelectorAll('#aulaTable tbody tr');
+        rows.forEach(r => r.classList.remove('selected'));
+        row.classList.add('selected');
+    }
+
+    function viewDetails() {
+        var id = document.getElementById('selectedAulaId').value;
+        if (id) {
+            window.location.href = '/detalhesAula?id=' + encodeURIComponent(id);
+        } else {
+            alert('Por favor, selecione uma aula primeiro.');
+        }
+    }
+
+    function deleteAula() {
+        var id = document.getElementById('selectedAulaId').value;
+        if (!id) {
+            alert('Por favor, selecione uma aula primeiro.');
+            return;
+        }
+
+        console.log('Deleting Aula ID:', id);
+
+        if (confirm('Tem a certeza que deseja eliminar a aula selecionada? Esta ação é irreversível!')) {
+            $.ajax({
+                url: '/deleteAula/' + encodeURIComponent(id),
+                type: 'DELETE',
+                success: function(result) {
+                    alert(result);
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('Erro ao eliminar aula: ' + xhr.responseText);
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>
+``

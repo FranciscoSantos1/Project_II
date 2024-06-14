@@ -65,15 +65,20 @@ public class AulaBLL {
     }
 
     public static String getSocioNameByIdAula(int id) {
-        try{
-            EntityManager entityManager = Database.getEntityManager();
-            Query query = entityManager.createQuery("SELECT s.nome FROM Socio s, LinhaAula l WHERE l.idSocio = s.idSocio AND l.idAula = :id");
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            Query query = entityManager.createQuery("SELECT s.nome FROM Socio s JOIN LinhaAula l ON s.idSocio = l.idSocio WHERE l.idAula = :id");
             query.setParameter("id", id);
-            return (String) query.getSingleResult();
+            String socioNome = (String) query.getSingleResult();
+            System.out.println("Sócio Nome para a Aula ID " + id + ": " + socioNome); // Adicione este log
+            return socioNome;
         } catch (Exception e) {
+            e.printStackTrace(); // Adicione isto para ver detalhes do erro no log
             return "N/A";
         }
     }
+
+
 
     public static List<Aula> getAllAulasGrupo() {
         EntityManager entityManager = Database.getEntityManager();
@@ -102,25 +107,20 @@ public class AulaBLL {
         return (String) query.getSingleResult();
     }
 
-    public static String getLocalByIdAula(int id)
-    {
+    public static String getLocalByIdAula(int id) {
         EntityManager entityManager = Database.getEntityManager();
         Query query = entityManager.createQuery("SELECT a.localAula FROM Aula a WHERE a.id = :id");
         query.setParameter("id", id);
         return (String) query.getSingleResult();
     }
 
-    public static String getTipoAulaByIdAula(int id)
-    {
+    public static String getTipoAulaByIdAula(int id) {
         EntityManager entityManager = Database.getEntityManager();
         Query query = entityManager.createQuery("SELECT a.totalLugares FROM Aula a WHERE a.id = :id");
         query.setParameter("id", id);
-        if((int) query.getSingleResult() == 1)
-        {
+        if ((int) query.getSingleResult() == 1) {
             return "AULA INDIVIDUAL";
-        }
-        else
-        {
+        } else {
             return "AULA GRUPO";
         }
     }
@@ -185,7 +185,6 @@ public class AulaBLL {
     }
 
 
-
     public static List<Aula> getAulasByInstructorId(Integer instructorId) {
         EntityManager entityManager = Database.getEntityManager();
         Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.idFuncionario = :instructorId");
@@ -194,20 +193,20 @@ public class AulaBLL {
     }
 
     public static List<Socio> getAvailableSocios(Instant start, Instant end) {
-    EntityManager entityManager = Database.getEntityManager();
-    Query query = entityManager.createQuery(
-        "SELECT s FROM Socio s WHERE s.idSocio NOT IN (" +
-        "SELECT l.idSocio FROM LinhaAula l JOIN Aula a ON l.idAula = a.id " +
-        "WHERE (a.dataHoraComeco BETWEEN :start AND :end) OR " +
-        "(a.dataHoraFim BETWEEN :start AND :end) OR " +
-        "(a.dataHoraComeco < :start AND a.dataHoraFim > :end))");
-    query.setParameter("start", start);
-    query.setParameter("end", end);
-    return query.getResultList();
-}
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery(
+                "SELECT s FROM Socio s WHERE s.idSocio NOT IN (" +
+                        "SELECT l.idSocio FROM LinhaAula l JOIN Aula a ON l.idAula = a.id " +
+                        "WHERE (a.dataHoraComeco BETWEEN :start AND :end) OR " +
+                        "(a.dataHoraFim BETWEEN :start AND :end) OR " +
+                        "(a.dataHoraComeco < :start AND a.dataHoraFim > :end))");
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+        return query.getResultList();
+    }
 
 
-public static List<Aula> getAulasBySocioId(Integer socioId) {
+    public static List<Aula> getAulasBySocioId(Integer socioId) {
         EntityManager entityManager = Database.getEntityManager();
         Query query = entityManager.createQuery("SELECT a FROM Aula a JOIN LinhaAula l ON a.id = l.idAula WHERE l.idSocio = :socioId");
         query.setParameter("socioId", socioId);
@@ -241,23 +240,23 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
     }
 
     public static void AdicionarVagaAula(Integer aulaId) {
-          EntityManager entityManager = Database.getEntityManager();
-          if (!entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().begin();
-          }
-          Aula aula = entityManager.find(Aula.class, aulaId);
-          aula.setVagas(aula.getVagas() + 1);
-          entityManager.getTransaction().commit();
+        EntityManager entityManager = Database.getEntityManager();
+        if (!entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().begin();
+        }
+        Aula aula = entityManager.find(Aula.class, aulaId);
+        aula.setVagas(aula.getVagas() + 1);
+        entityManager.getTransaction().commit();
     }
 
     public static void RemoverVagaAula(Integer aulaId) {
-            EntityManager entityManager = Database.getEntityManager();
-            if (!entityManager.getTransaction().isActive()) {
-                    entityManager.getTransaction().begin();
-            }
-            Aula aula = entityManager.find(Aula.class, aulaId);
-            aula.setVagas(aula.getVagas() - 1);
-            entityManager.getTransaction().commit();
+        EntityManager entityManager = Database.getEntityManager();
+        if (!entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().begin();
+        }
+        Aula aula = entityManager.find(Aula.class, aulaId);
+        aula.setVagas(aula.getVagas() - 1);
+        entityManager.getTransaction().commit();
     }
 
     public static void getModalidadeById(int id) {
@@ -293,5 +292,58 @@ public static List<Aula> getAulasBySocioId(Integer socioId) {
         return query.getResultList().size() > 0;
     }
 
+
+    public static void checkAulaStatus() {
+        EntityManager entityManager = Database.getEntityManager();
+        if (!entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().begin();
+        }
+        Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.dataHoraFim < :currentDate AND a.idEstadoaula = 1");
+        query.setParameter("currentDate", Instant.now());
+        List<Aula> aulas = query.getResultList();
+        for (Aula aula : aulas) {
+            aula.setIdEstadoaula(2);
+            entityManager.merge(aula);
+        }
+        entityManager.getTransaction().commit();
+    }
+
+    public int getNumAlunosByIdAula(Integer id) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT COUNT(l.idSocio) FROM LinhaAula l WHERE l.idAula = :id");
+        query.setParameter("id", id);
+        return ((Number) query.getSingleResult()).intValue();
+    }
+
+    public String getEstadoAulaById(Integer id) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT e.estado FROM EstadoAula e, Aula a WHERE a.idEstadoaula = e.idEstadoaula AND a.id = :id");
+        query.setParameter("id", id);
+        return (String) query.getSingleResult();
+    }
+    public static void removeAulasPassadas() {
+        EntityManager entityManager = Database.getEntityManager();
+        if (!entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().begin();
+        }
+        Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.dataHoraFim < :currentDate");
+        query.setParameter("currentDate", Instant.now());
+        List<Aula> aulas = query.getResultList();
+        for (Aula aula : aulas) {
+            LinhaAulaBLL.deleteAllLinhasAulaByAulaId(aula.getId(), entityManager);
+            entityManager.remove(aula);
+        }
+    }
+
+
+    public void createLinhaAula(LinhaAula linhaAula) {
+        EntityManager entityManager = Database.getEntityManager();
+        if (!entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().begin();
+        }
+        entityManager.persist(linhaAula);
+        entityManager.getTransaction().commit();
+    }
 }
+
 

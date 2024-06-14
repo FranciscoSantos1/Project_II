@@ -22,6 +22,9 @@
                     <th>Modalidade</th>
                     <th>Nome Instrutor</th>
                     <th>Vagas disponíveis</th>
+                    <th>Vagas ocupadas</th>
+                    <th>Estado Aula</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +33,9 @@
                     <td th:text="${modalidadeNames[stat.index]}"></td>
                     <td th:text="${instrutorNames[stat.index]}"></td>
                     <td th:text="${aula.vagas}"></td>
+                    <td th:text="${aula.totalLugares - aula.vagas}"></td>
+                    <td th:text="${estadoAulas[stat.index]}"></td>
+
                 </tr>
                 </tbody>
             </table>
@@ -74,7 +80,7 @@
             return;
         }
 
-        console.log('Deleting Aula ID:', id); // Adicionado para verificar o ID
+        console.log('Deleting Aula ID:', id);
 
         if (confirm('Tem a certeza que deseja eliminar a aula selecionada? Esta ação é irreversível!')) {
             $.ajax({
