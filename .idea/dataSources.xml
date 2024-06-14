@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="GinasioDB@localhost" uuid="371baa8e-0e51-4c37-a0eb-ae0f3e5978ab">
+    <data-source source="LOCAL" name="GinasioDB@localhost" uuid="a843f97a-1ad7-4fdc-96b2-f515895a7cc0">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

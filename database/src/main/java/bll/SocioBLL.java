@@ -190,4 +190,5 @@ public class SocioBLL {
         query.setParameter("end", endInstant);
         return query.getResultList();
     }
+
 }
