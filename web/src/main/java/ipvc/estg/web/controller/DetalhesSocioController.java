@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -48,12 +49,14 @@ public class DetalhesSocioController {
     }
 
     @PostMapping("/atualizarSocio")
-    public String atualizarSocio(@ModelAttribute Socio socio, Model model) {
+    public String atualizarSocio(@ModelAttribute Socio socio, RedirectAttributes redirectAttributes) {
         socioBLL.updateSocio(socio);
-        model.addAttribute("socio", socio);
-        return "redirect:/detalhesSocio?id=" + socio.getIdSocio();
+        redirectAttributes.addFlashAttribute("message", "Sócio atualizado com sucesso!");
+        return "redirect:/rececionista";
     }
 }
+
+
 
 
 

@@ -93,11 +93,11 @@ public class HomeController {
 
 
             return "responsavel";
-        } else if (idTipoFuncionario == 3) {
-            List<Socio> socios = socioBLL.getAllSociosWeb();
+        } /*else if (idTipoFuncionario == 3) {
+            List<Socio> socios = socioBLL.getAllSocios();
             model.addAttribute("socios", socios);
             return "rececionista";
-        }
+        }*/
 
         return "home";
     }

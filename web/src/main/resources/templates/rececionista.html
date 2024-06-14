@@ -8,10 +8,13 @@
 <div th:fragment="rececionistaContent">
     <div class="background"></div>
     <div class="content">
-    <div class="header">
-        <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
-    </div>
+        <div class="header">
+            <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+        </div>
         <h2>Lista de Sócios</h2>
+        <div th:if="${message}" class="alert alert-success" role="alert">
+            <p th:text="${message}"></p>
+        </div>
         <table class="socio-table">
             <thead>
             <tr>
@@ -19,6 +22,7 @@
                 <th>Nome</th>
                 <th>Contacto</th>
                 <th>Morada</th>
+                <th>Estado</th>
             </tr>
             </thead>
             <tbody>
@@ -26,7 +30,9 @@
                 <td th:text="${socio.idSocio}"></td>
                 <td th:text="${socio.nome}"></td>
                 <td th:text="${socio.contacto}"></td>
-                <td th:text="${socio.morada}"></td>
+                <td th:text="${socio.rua} + ', ' + ${socio.nPorta} + ', ' + ${socio.codPostal}"></td>
+                <td th:if="${socio.ativo}">Ativo</td>
+                <td th:unless="${socio.ativo}">Inativo</td>
             </tr>
             </tbody>
         </table>
@@ -36,7 +42,7 @@
             <button class="btn btn-details" onclick="viewDetails()">Ver Detalhes</button>
             <button class="btn btn-details" onclick="window.location.href='/reservarVaga'">Reservar vaga</button>
             <button class="btn btn-details" onclick="window.location.href='/agendarSessaoPT'">Agendar sessão PT</button>
-            <button class="btn btn-delete" onclick="window.location.href='/desativarSocio'">Desativar Sócio</button>
+            <button class="btn btn-delete" onclick="deactivateSocio()">Desativar Sócio</button>
         </div>
     </div>
 </div>
@@ -53,6 +59,17 @@
         var id = document.getElementById('selectedSocioId').value;
         if (id) {
             window.location.href = '/detalhesSocio?id=' + encodeURIComponent(id);
+        } else {
+            alert('Por favor, selecione um sócio primeiro.');
+        }
+    }
+
+    function deactivateSocio() {
+        const id = document.getElementById('selectedSocioId').value;
+        if (id) {
+            if (confirm('Tem a certeza que deseja desativar este sócio?')) {
+                window.location.href = '/desativarSocio?id=' + encodeURIComponent(id);
+            }
         } else {
             alert('Por favor, selecione um sócio primeiro.');
         }

@@ -20,11 +20,9 @@
         <div class="details-row"><strong>Plano:</strong> <span th:text="${plano.tipo + ' - ' + plano.descricao + ' - ' + plano.valor} + '€'"></span></div>
     </div>
     <div class="button-container">
-        <button onclick="window.history.back()" class="btn btn-back">Voltar</button>
-        <a th:href="@{/editarSocio(id=${socio.idSocio})}">
-            <button class="btn btn-edit">Editar</button>
-        </a>
-        <button class="btn btn-payment">Registar pagamento</button>
+        <a href="/rececionista" class="btn btn-back">Voltar</a>
+        <a th:href="@{/editarSocio(id=${socio.idSocio})}" class="btn btn-edit">Editar</a>
+        <a th:href="@{/emitirRecibo(idSocio=${socio.idSocio})}" class="btn btn-payment">Registar pagamento</a>
     </div>
 </div>
 </body>

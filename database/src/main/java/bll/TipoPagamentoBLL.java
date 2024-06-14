@@ -2,9 +2,11 @@ package bll;
 
 import entity.TipoPagamento;
 import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TipoPagamentoBLL {
 
     public static TipoPagamento findTipoPagamentoById(int id) {

@@ -8,7 +8,9 @@ import entity.TipoPagamento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReciboBLL {
     public static void createRecibo(Recibo recibo) {
         EntityManager entityManager = Database.getEntityManager();

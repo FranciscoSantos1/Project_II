@@ -29,7 +29,8 @@ public class LoginController {
     public String verifyLogin(@RequestParam("email") String email,
                               @RequestParam("password") String password,
                               Model model,
-                              RedirectAttributes redirectAttributes) {
+                              RedirectAttributes redirectAttributes,
+                              @ModelAttribute("funcionario") Funcionario funcionario){
 
         if (funcionarioBLL.verifyLogin(email, password)) {
             System.out.println("Login efetuado com sucesso.");
@@ -37,6 +38,8 @@ public class LoginController {
             Funcionario loggedFuncionario = funcionarioBLL.getFuncionarioByEmail(email);
             if (loggedFuncionario != null) {
                 model.addAttribute("funcionario", loggedFuncionario);
+                 if (loggedFuncionario.getIdTipofuncionario() == 3)
+                    return "redirect:/rececionista";
                 return "redirect:/home";
             } else {
                 redirectAttributes.addFlashAttribute("loginError", "Erro ao obter informações do funcionário. Tente novamente.");

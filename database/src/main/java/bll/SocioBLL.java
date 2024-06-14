@@ -159,6 +159,17 @@ public class SocioBLL {
         }
     }
 
+    //get all socios
+    public static List<Socio> getAllSocios() {
+        EntityManager entityManager = Database.getEntityManager();
+        try {
+            Query query = entityManager.createQuery("SELECT s FROM Socio s ORDER BY s.nome", Socio.class);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null; // Retorna null se nenhum resultado for encontrado
+        }
+    }
+
     //get socio by id for web
     public static Socio getSocioById(int id) {
         EntityManager entityManager = Database.getEntityManager();

@@ -2,9 +2,11 @@ package bll;
 
 import entity.EstadoPagamento;
 import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EstadoPagamentoBLL {
 
     public static EstadoPagamento findEstadoPagamentoById(int id) {

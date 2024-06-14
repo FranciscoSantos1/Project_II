@@ -24,4 +24,5 @@ module ipvc.estg.desktop {
 
     requires Ginasio;
     requires org.hibernate.orm.core;
+    requires java.sql;
 }
