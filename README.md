@@ -49,6 +49,6 @@ A versão web foi desenvolvida utilizando Spring Web MVC e Thymeleaf. Esta vers�
 - **Gestão de Atletas**: Adição, edição e remoção de informações de atletas.
 - **Associação de Aulas**: Associar atletas a aulas individuais ou em grupo.
 
-Desenvolvido por: Francisco Santos @FranciscoSantos1, João Araújo @jlimaaraujo
+Desenvolvido por: Francisco Santos [@FranciscoSantos1](https://github.com/FranciscoSantos1), João Araújo [jlimaaraujo](https://github.com/jlimaaraujo)
 
 Instituto Politécnico de Viana do Castelo (IPVC) - 2024
