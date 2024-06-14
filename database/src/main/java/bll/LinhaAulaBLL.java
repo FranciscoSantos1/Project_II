@@ -6,13 +6,16 @@ import entity.LinhaAula;
 import entity.Socio;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class LinhaAulaBLL {
     public static void createLinhaAula(LinhaAula linhaAula) {
         EntityManager entityManager = Database.getEntityManager();
@@ -54,8 +57,6 @@ public class LinhaAulaBLL {
         entityManager.merge(linhaAula);
         entityManager.getTransaction().commit();
     }
-
-
 
 
     public static List<Socio> getSociosByAulaId(int aulaId) {
@@ -106,5 +107,18 @@ public class LinhaAulaBLL {
         Query query = entityManager.createQuery("SELECT s.nome FROM Socio s, LinhaAula l WHERE l.idSocio = s.idSocio AND l.idAula = :aulaId");
         query.setParameter("aulaId", aulaId);
         return query.getResultList();
+    }
+
+    public LinhaAula getLinhaAulaByIds(int idAula, int idSocio) {
+        EntityManager entityManager = Database.getEntityManager();
+        Query query = entityManager.createQuery("SELECT l FROM LinhaAula l WHERE l.idAula = :idAula AND l.idSocio = :idSocio");
+        query.setParameter("idAula", idAula);
+        query.setParameter("idSocio", idSocio);
+
+        try {
+            return (LinhaAula) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // Retorna null quando não há resultado
+        }
     }
 }

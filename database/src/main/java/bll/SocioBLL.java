@@ -163,10 +163,10 @@ public class SocioBLL {
     public static List<Socio> getAllSocios() {
         EntityManager entityManager = Database.getEntityManager();
         try {
-            Query query = entityManager.createQuery("SELECT s FROM Socio s ORDER BY s.nome", Socio.class);
+            Query query = entityManager.createQuery("SELECT s FROM Socio s ORDER BY s.ativo DESC", Socio.class);
             return query.getResultList();
         } catch (NoResultException e) {
-            return null; // Retorna null se nenhum resultado for encontrado
+            return null;
         }
     }
 

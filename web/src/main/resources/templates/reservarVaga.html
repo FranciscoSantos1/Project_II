@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Reservar Vaga</title>
+  <link rel="stylesheet" type="text/css" href="rececionista.css">
+</head>
+<body>
+<div class="content">
+  <div class="background"></div>
+  <div class="header">
+    <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
+    <h1 th:text="'Reservar Vaga - Sócio nº: ' + ${idSocio}"></h1>
+  </div>
+  <form th:action="@{/reservarVaga}" method="post" class="add-form">
+    <div class="form-row">
+      <label for="aula">Selecione uma aula:</label>
+      <select id="aula" name="idAula">
+        <option th:each="aula : ${aulas}" th:value="${aula.id}" th:text="${aula.dataHoraComeco} + ' - ' + ${aula.localAula} + ' - ' + ${modalidades[aula.id]} + ' - ' + ${aula.vagas} + ' vagas disponíveis'"></option>
+      </select>
+    </div>
+    <input type="hidden" name="idSocio" th:value="${idSocio}" required>
+    <div class="button-container">
+      <button type="submit" class="btn btn-save">Reservar</button>
+      <button type="button" onclick="window.location.href='/rececionista'" class="btn btn-cancel">Cancelar</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

@@ -40,7 +40,7 @@
         <div class="button-container">
             <button class="btn btn-add" onclick="window.location.href='/addSocio'">Adicionar Sócio</button>
             <button class="btn btn-details" onclick="viewDetails()">Ver Detalhes</button>
-            <button class="btn btn-details" onclick="window.location.href='/reservarVaga'">Reservar vaga</button>
+            <button class="btn btn-details" onclick="reservarVaga()">Reservar vaga</button>
             <button class="btn btn-details" onclick="window.location.href='/agendarSessaoPT'">Agendar sessão PT</button>
             <button class="btn btn-delete" onclick="deactivateSocio()">Desativar Sócio</button>
         </div>
@@ -70,6 +70,15 @@
             if (confirm('Tem a certeza que deseja desativar este sócio?')) {
                 window.location.href = '/desativarSocio?id=' + encodeURIComponent(id);
             }
+        } else {
+            alert('Por favor, selecione um sócio primeiro.');
+        }
+    }
+
+    function reservarVaga() {
+        var id = document.getElementById('selectedSocioId').value;
+        if (id) {
+            window.location.href = '/reservarVaga?idSocio=' + encodeURIComponent(id);
         } else {
             alert('Por favor, selecione um sócio primeiro.');
         }
