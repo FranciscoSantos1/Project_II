@@ -22,16 +22,22 @@ public class AddAulaIndividualController {
 
     private final AulaBLL aulaBLL;
     private final SocioBLL socioBLL;
+    private final FuncionarioBLL funcionarioBLL;
 
     @Autowired
-    public AddAulaIndividualController(AulaBLL aulaBLL, SocioBLL socioBLL) {
+    public AddAulaIndividualController(AulaBLL aulaBLL, SocioBLL socioBLL, FuncionarioBLL funcionarioBLL) {
         this.aulaBLL = aulaBLL;
         this.socioBLL = socioBLL;
+        this.funcionarioBLL = funcionarioBLL;
     }
 
     @GetMapping("/addAulaIndividual")
     public String showAddAulaIndividualForm(Model model) {
         List<Socio> socios = socioBLL.getAllSociosWeb();
+        Funcionario funcionario = (Funcionario) model.getAttribute("funcionario");
+        List<Funcionario> funcionarios = funcionarioBLL.getAllInstrutores();
+        model.addAttribute("funcionarios", funcionarios);
+        model.addAttribute("funcionario", funcionario);
         model.addAttribute("socios", socios);
         return "addAulaIndividual";
     }
@@ -42,6 +48,7 @@ public class AddAulaIndividualController {
                                        @RequestParam String hora,
                                        @RequestParam String duracao,
                                        @RequestParam int socioId,
+                                       @RequestParam int funcionarioId,
                                        Model model) {
         try {
             LocalDate localDate = LocalDate.parse(data);
@@ -64,7 +71,12 @@ public class AddAulaIndividualController {
             newAula.setDataHoraFim(dataHoraFim);
             newAula.setIdModalidade(11);
             newAula.setDuracao(durationTime);
-            newAula.setIdFuncionario(funcionario.getIdFuncionario());
+            if (funcionario.getIdTipofuncionario() == 3){
+                newAula.setIdFuncionario(funcionarioId);
+            } else if (funcionario.getIdTipofuncionario() == 1) {
+                newAula.setIdFuncionario(funcionario.getIdFuncionario());
+            }
+            //newAula.setIdFuncionario(funcionario.getIdFuncionario());
 
 
             aulaBLL.createAula(newAula);
@@ -82,7 +94,11 @@ public class AddAulaIndividualController {
             System.out.println("After creating linha aula");
 
             model.addAttribute("message", "Aula individual adicionada com sucesso!");
-            return "redirect:/home";
+            if (funcionario.getIdTipofuncionario() == 3){
+                return "redirect:/rececionista";
+            } else {
+                return "redirect:/home";
+            }
         } catch (Exception e) {
             model.addAttribute("error", "Erro ao adicionar aula individual: " + e.getMessage());
             return "addAulaIndividual";

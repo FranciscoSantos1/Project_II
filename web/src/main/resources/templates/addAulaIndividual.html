@@ -8,8 +8,7 @@
 <body>
 <div class="background"></div>
 <div class="container">
-    <div class="header">
-    </div>
+
     <div class="content">
         <img src="images/gym-logo1.png" alt="GymMaster Logo" class="logo">
         <h1>Adicionar aula Individual</h1>
@@ -42,6 +41,15 @@
                     <tr th:each="socio : ${socios}">
                         <option th:value="${socio.idSocio}" th:text="${socio.nome}"></option>
                     </tr>
+                </select>
+            </div>
+            <div class="form-group" th:if="${funcionario.idTipofuncionario == 3}">
+                <label for="funcionario">Instrutor</label>
+                <select id="funcionario" name="funcionarioId" required>
+                    <option value="">Escolha o instrutor</option>
+                    <div th:each="funcionario : ${funcionarios}">
+                        <option th:value="${funcionario.idFuncionario}" th:text="${funcionario.nome}"></option>
+                    </div>
                 </select>
             </div>
             <div class="button-container">
