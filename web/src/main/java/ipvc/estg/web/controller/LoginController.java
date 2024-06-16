@@ -15,6 +15,11 @@ public class LoginController {
     @Autowired
     private FuncionarioBLL funcionarioBLL;
 
+    @GetMapping("/")
+    public String defaultPageRedirect() {
+        return "redirect:/login";
+    }
+
     @ModelAttribute("funcionario")
     public Funcionario setUpFuncionario() {
         return new Funcionario();
