@@ -109,7 +109,6 @@
 
     <build>
         <plugins>
-            <!-- Plugin para garantir a versão do Java -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
