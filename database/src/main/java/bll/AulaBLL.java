@@ -73,7 +73,7 @@ public class AulaBLL {
             System.out.println("Sócio Nome para a Aula ID " + id + ": " + socioNome); // Adicione este log
             return socioNome;
         } catch (Exception e) {
-            e.printStackTrace(); // Adicione isto para ver detalhes do erro no log
+            e.printStackTrace();
             return "N/A";
         }
     }
@@ -275,7 +275,7 @@ public class AulaBLL {
         List<Aula> aulasDeGrupo = new ArrayList<>();
 
         for (Modalidade modalidade : modalidades) {
-            Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.idModalidade = :idModalidade AND a.totalLugares > 1");
+            Query query = entityManager.createQuery("SELECT a FROM Aula a WHERE a.idModalidade = :idModalidade AND a.vagas >= 1");
             query.setParameter("idModalidade", modalidade.getIdModalidade());
             List<Aula> aulas = query.getResultList();
             aulasDeGrupo.addAll(aulas);
