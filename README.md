@@ -23,7 +23,7 @@ Using the Java Persistence API (JPA), we created the entities that represent the
 
 
 
-### Desktop Version
+## Desktop Version
 
 The desktop version was developed using JavaFX to create a rich and interactive graphical interface. The desktop application allows users to:
 
@@ -31,11 +31,11 @@ The desktop version was developed using JavaFX to create a rich and interactive 
 - Schedule, edit and cancel classes
 - View timetables and availability
 
-### Web version
+## Web version
 
 The web version was developed using Spring Web MVC and Thymeleaf. This version offers similar functionalities to the desktop version, allowing users to manage information and timetables via a web browser.
 
-## Features
+### Features
 
 ### Classes
 
@@ -46,7 +46,7 @@ The web version was developed using Spring Web MVC and Thymeleaf. This version o
 ### Coaches and Athletes
 
 - **Coach Management**: Adding, editing and removing coach information.
-- **Athlete Management Adding, editing and removing athlete information.
+- **Athlete Management** Adding, editing and removing athlete information.
 - **Class Association**: Associate athletes with individual or group classes.
 
 Developed by: Francisco Santos [@FranciscoSantos1](https://github.com/FranciscoSantos1), João Araújo [jlimaaraujo](https://github.com/jlimaaraujo)
