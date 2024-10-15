@@ -39,15 +39,15 @@ The web version was developed using Spring Web MVC and Thymeleaf. This version o
 
 ### Classes
 
-- Schedule Classes**: Allows trainers to schedule new classes, specifying the name, date, time, duration and location.
-- Manage Lessons**: Allows you to edit and cancel lessons that have already been scheduled.
-- View Classes**: Displays a list of classes with details such as date, time, discipline, location, type of class, participating member and state.
+- **Schedule Classes**: Allows trainers to schedule new classes, specifying the name, date, time, duration and location.
+- **Manage Lessons**: Allows you to edit and cancel lessons that have already been scheduled.
+- **View Classes**: Displays a list of classes with details such as date, time, discipline, location, type of class, participating member and state.
 
 ### Coaches and Athletes
 
-- Coach Management**: Adding, editing and removing coach information.
-- Athlete Management Adding, editing and removing athlete information.
-- Class Association**: Associate athletes with individual or group classes.
+- **Coach Management**: Adding, editing and removing coach information.
+- **Athlete Management Adding, editing and removing athlete information.
+- **Class Association**: Associate athletes with individual or group classes.
 
 Developed by: Francisco Santos [@FranciscoSantos1](https://github.com/FranciscoSantos1), João Araújo [jlimaaraujo](https://github.com/jlimaaraujo)
 
